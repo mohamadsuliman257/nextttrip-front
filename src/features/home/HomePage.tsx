@@ -10,8 +10,8 @@ const HomePage = () => {
     <div className="w-full">
       <Hero />
       <Features />
-      <Destinations />
       <HowItWorks />
+      <Destinations />
       <Gallery />
       <CallToAction />
     </div>

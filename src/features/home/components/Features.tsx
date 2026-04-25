@@ -1,9 +1,10 @@
 import { Route, MapPin, Users, Globe } from "lucide-react";
+import type { ElementType } from "react";
 
 interface FeatureItem {
   title: string;
   desc: string;
-  icon: React.ElementType;
+  icon: ElementType;
 }
 
 const features: FeatureItem[] = [
@@ -31,9 +32,11 @@ const features: FeatureItem[] = [
 
 const Features = () => {
   return (
-    <section className="px-8 py-16 mb-10  w-3/4 mx-auto            
-">
-      <h3 className="text-5xl text-primary-700 font-bold text-center mb-10">
+    <section className="px-8  w-3/4 mx-auto">
+      <h3 
+        className="text-5xl text-primary-700 font-bold text-center mb-10"
+        data-aos="fade-up"
+      >
         مميزات المنصة
       </h3>
 
@@ -41,9 +44,11 @@ const Features = () => {
         {features.map((f, i) => {
           const Icon = f.icon;
           return (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="px-8 py-10 bg-white/80 shadow-lg shadow-secondary-700 rounded-lg text-center hover:shadow-2xl hover:bg-secondary-50 transition flex flex-col justify-between h-full"
+              data-aos="zoom-in-up"
+              data-aos-delay={i * 150}
             >
               <div>
                 <h4 className="text-xl font-semibold mb-4 text-secondary-500">
@@ -55,7 +60,6 @@ const Features = () => {
                 </p>
               </div>
 
-              {/* الأيقونة في الأسفل */}
               <div className="flex justify-center mt-4">
                 <Icon className="w-12 h-12 text-primary-600" />
               </div>

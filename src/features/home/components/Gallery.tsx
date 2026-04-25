@@ -11,7 +11,7 @@ const destinations = [
 
 export default function MasonryGallery() {
   return (
-    <div className="px-5 py-10 w-3/4 mx-auto mb-10 bg-linear-30 from-primary-400 to-secondary-100 rounded-3xl">
+    <div className="px-5 py-10 w-3/4 mx-auto mt-70 mb-10 bg-linear-30 from-primary-400 to-secondary-100 rounded-3xl">
       <h3 className="text-5xl text-primary-700 font-bold text-center mb-10">
         أجمل الأماكن
       </h3>
@@ -20,6 +20,9 @@ export default function MasonryGallery() {
           <div
             key={i}
             className="relative mb-4 overflow-hidden rounded-xl group cursor-pointer"
+            data-aos="flip-left"
+            data-aos-delay={i * 200}
+            data-aos-duration="1000"
           >
             <img
               src={item.image}
@@ -30,15 +33,7 @@ export default function MasonryGallery() {
               group-hover:brightness-125
               "
             />
-
-            {/* Overlay */}
-            <div
-              className="absolute inset-0 
-            bg-black/20 
-            group-hover:bg-black/40 
-            transition-all duration-700"
-            ></div>
-
+           
             {/* Text */}
             <h3
               className="absolute bottom-4 left-4 

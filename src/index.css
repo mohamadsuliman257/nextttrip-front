@@ -21,7 +21,6 @@ html {
   @import "tailwindcss";
 
 @theme {
-  --color-primary: #763f9e; /* البنفسجي الجديد */
   --color-primary-50: #f5f0fa;
   --color-primary-100: #e6dbf2;
   --color-primary-200: #d0bfe6;
@@ -179,17 +178,13 @@ html {
 
 @keyframes floatUpDown {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-2px); }
   100% { transform: translateY(0); }
 }
 
 .btn-animated {
-  background: linear-gradient(90deg, var(--color-primary-600), var(--color-secondary-300));
+  /* background-color: var(--color-secondary-500); */
+  background: linear-gradient(90deg, var(--color-primary-300), var(--color-secondary-300));
   background-size: 200% 200%;
   animation: gradientMove 4s ease infinite, floatUpDown 2.5s ease-in-out infinite;
-}
-
-
-x {
-  background-image: radial-gradient();
 }

@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay,  Navigation } from "swiper/modules";
 import "swiper/swiper.css";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -29,15 +29,14 @@ export default function HeroSlider() {
   ];
 
   return (
-    <div className="relative max-h- w-3/5 mx-auto h-[500px]">
+    <div className="relative max-h- w-3/5 lg:w-3/6 mx-auto h-[400px] mt-10 mb-50">
       <h3 className="text-5xl text-primary-700 font-bold text-center mb-10">
         أكثر الأماكن زيارة
       </h3>
 
       <Swiper
-        modules={[Autoplay, Pagination, Navigation]}
+        modules={[Autoplay,  Navigation]}
         autoplay={{ delay: 3500 }}
-        pagination={{ clickable: true }}
         navigation={{
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -69,7 +68,7 @@ export default function HeroSlider() {
             >
               {/* الصندوق الجانبي الشفاف */}
               <div
-                className="absolute bottom-2 right-2 h-50
+                className="absolute bottom-2 right-2 h-40 w-1/3
                 bg-primary-100/70 border border-secondary-600 
                 text-secondary-600 text-shadow-2xs text-shadow-primary-900  p-6 rounded-xl max-w-sm"
               >

@@ -1,6 +1,5 @@
 const CallToAction = () => {
   return (
-    // <section className="mt-20 py-20 bg-linear-30  from-primary-200 to-primary-800  text-secondary-50 text-center text-shadow-2xs text-shadow-secondary-100"
     <section className="mt-20 py-20 bg-linear-100  from-primary-400  via-primary-800  to-primary-400 text-secondary-50 text-center text-shadow-2xs text-shadow-secondary-100"
       style={{ backgroundColor: "linear-gradient: " }}
     >

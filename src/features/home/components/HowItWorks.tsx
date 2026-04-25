@@ -7,16 +7,41 @@ const steps: string[] = [
 
 const HowItWorks = () => {
   return (
-    <section className="px-8 py-16 my-50 shadow-sm border-8 shadow-secondary-500 w-3/5 mx-auto
-    bg-secondary-50/30"
+    <section
+      className="px-8 py-16 my-40 shadow-sm border-8 shadow-secondary-500 w-3/5 mx-auto bg-secondary-50/30"
     >
-      <h3 className="text-5xl text-primary-700 font-bold text-center mb-20">كيف تعمل المنصة؟</h3>
+      {/* Title Animation */}
+      <h3
+        data-aos="flip-up"
+        data-aos-duration="1000"
+        data-aos-delay="50"
+        className="text-5xl text-primary-700 font-bold text-center mb-20"
+      >
+        كيف تعمل المنصة؟
+      </h3>
 
       <div className="flex flex-col md:flex-row justify-center gap-20">
         {steps.map((s, i) => (
-          <div key={i} className="text-center">
-            <div className="text-4xl font-bold text-secondary-600 mb-2">{i + 1}</div>
-            <p className="text-gray-700 text-lg">{s}</p>
+          <div
+            key={i}
+            data-aos="zoom-in-up"
+            data-aos-delay={i * 200}
+            data-aos-duration="700"
+            className="text-center group"
+          >
+            {/* Number circle animation */}
+            <div className="relative">
+              <div className="text-4xl font-bold text-secondary-600 mb-2 transition-transform duration-300 group-hover:scale-110">
+                {i + 1}
+              </div>
+
+              {/* small glow effect */}
+              <div className="w-10 h-10 bg-secondary-400/20 rounded-full absolute -top-2 left-1/2 -translate-x-1/2 blur-md opacity-0 group-hover:opacity-100 transition" />
+            </div>
+
+            <p className="text-gray-700 text-lg transition-colors duration-300 group-hover:text-primary-700">
+              {s}
+            </p>
           </div>
         ))}
       </div>

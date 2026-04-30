@@ -33,12 +33,12 @@ const features: FeatureItem[] = [
 const Features = () => {
   return (
     <section className="px-8  w-3/4 mx-auto">
-      <h3 
-        className="text-5xl text-primary-700 font-bold text-center mb-10"
+      <h2
+        className="heading-primary"
         data-aos="fade-up"
       >
         مميزات المنصة
-      </h3>
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {features.map((f, i) => {

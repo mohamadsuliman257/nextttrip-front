@@ -30,9 +30,9 @@ export default function HeroSlider() {
 
   return (
     <div className="relative max-h- w-3/5 lg:w-3/6 mx-auto h-[400px] mt-10 mb-50">
-      <h3 className="text-5xl text-primary-700 font-bold text-center mb-10">
+      <h2 className="heading-primary">
         أكثر الأماكن زيارة
-      </h3>
+      </h2>
 
       <Swiper
         modules={[Autoplay,  Navigation]}

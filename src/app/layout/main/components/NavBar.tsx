@@ -6,7 +6,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-      <nav className="px-8 py-3 w-full flex items-top justify-between relative">
+      <nav className="px-8 py-3 w-full flex items-top justify-between  absolute top-0">
 
         {/* زر الموبايل */}
         <button
@@ -19,9 +19,9 @@ const NavBar = () => {
         {/* القائمة */}
         <ul
           className={`
-          flex justify-between w-3/5  text-secondary-600 font-medium text-xl transition-all pt-5
+          flex justify-between w-3/5  text-secondary-600 font-medium text-base md:text-xl transition-all pt-5
           md:flex md:flex-row md:static
-          ${open ? "flex flex-col absolute top-20 right-8 bg-white shadow-lg p-6 rounded-xl gap-6" : "hidden md:flex"}
+          ${open ? "flex flex-col absolute top-20 right-8 bg-white/95  shadow-lg p-6 rounded-xl gap-6 z-40" : "hidden md:flex"}
         `}
         >
           <li className="text-primary-700 hover:text-primary-500 transition">
@@ -41,15 +41,17 @@ const NavBar = () => {
           </li>
 
           <li className="hover:text-primary-500 transition">
-            <Link to="/contact-us">تسجيل الدخول</Link>
+            <Link to="/login">تسجيل الدخول</Link>
           </li>
         </ul>
         {/* Logo */}
+       <Link to="/">
         <img
           src="/logo.png"
           alt="NextTrip Syria Logo"
           className="w-40 h-auto"
         />
+        </Link>
       </nav>
   );
 };

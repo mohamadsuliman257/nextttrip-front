@@ -28,11 +28,11 @@ const BirdLogo = () => {
 };
 export default function Hero() {
   return (
-    <section className="h-screen">
-      <div className="max-w-5xl mx-auto text-center pt-20">
+    <section className="h-screen flex flex-col justify-center">
+      <div className="max-w-[80%] md:max-w-2xl mx-auto text-center">
+
         {/* العنوان */}
-        <h1
-          className="text-4xl md:text-4xl font-bold leading-tight mb-6 text-primary-500"
+        <h1 className="heading-primary"
           data-aos="fade-up"
           data-aos-delay="0"
         >
@@ -41,7 +41,7 @@ export default function Hero() {
 
         {/* الوصف */}
         <p
-          className="text-lg font-bold md:text-xl text-secondary-800 max-w-2xl mx-auto mb-7 px-6"
+          className="text-sm md:text-xl font-bold text-secondary-800 max-w-2xl mx-auto mb-9 px-6"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -52,7 +52,7 @@ export default function Hero() {
         {/* زر CTA */}
 
         <button
-          className="mx-auto flex px-10 py-2 text-secondary-900 rounded-lg shadow-xl btn-animated text-xl"
+          className="mx-auto flex px-2 md:px-10 py-0.5 md:py-2 text-secondary-900 rounded-lg shadow-xl btn-animated  text-base md:text-xl"
           data-aos="zoom-out"
           data-aos-delay="600"
         >

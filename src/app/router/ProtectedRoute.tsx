@@ -1,13 +1,23 @@
-// import { Navigate } from "react-router-dom";
-// import { useAuthStore } from "@/features/auth/store/useAuthStore";
-import type { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
 
-export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  // const token = useAuthStore((s) => s.token);
+type ProtectedRouteProps = {
+  children: React.ReactNode;
+  role: "user" | "guide" | "admin";
+};
 
-  // if (!token) {
-  //   return <Navigate to="/login" replace />;
-  // }
+export default function ProtectedRoute({
+  children,
+  role,
+}: ProtectedRouteProps) {
+  const storedUser = localStorage.getItem("user");
+
+  if (!storedUser) return <Navigate to="/login" />;
+
+  const user = JSON.parse(storedUser);
+
+  if (role == user.role) {
+    return <Navigate to="/unauthorized" />;
+  }
 
   return children;
-};
+}

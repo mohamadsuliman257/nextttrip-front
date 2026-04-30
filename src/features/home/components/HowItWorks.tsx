@@ -11,14 +11,14 @@ const HowItWorks = () => {
       className="px-8 py-16 my-40 shadow-sm border-8 shadow-secondary-500 w-3/5 mx-auto bg-secondary-50/30"
     >
       {/* Title Animation */}
-      <h3
+      <h2
         data-aos="flip-up"
         data-aos-duration="1000"
         data-aos-delay="50"
-        className="text-5xl text-primary-700 font-bold text-center mb-20"
+        className="heading-primary"
       >
         كيف تعمل المنصة؟
-      </h3>
+      </h2>
 
       <div className="flex flex-col md:flex-row justify-center gap-20">
         {steps.map((s, i) => (

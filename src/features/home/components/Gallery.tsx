@@ -12,9 +12,9 @@ const destinations = [
 export default function MasonryGallery() {
   return (
     <div className="px-5 py-10 w-3/4 mx-auto mt-70 mb-10 bg-linear-30 from-primary-400 to-secondary-100 rounded-3xl">
-      <h3 className="text-5xl text-primary-700 font-bold text-center mb-10">
+      <h2 className="heading-primary">
         أجمل الأماكن
-      </h3>
+      </h2>
       <div className="columns-1 sm:columns-2 lg:columns-4 gap-4 p-4">
         {destinations.map((item, i) => (
           <div

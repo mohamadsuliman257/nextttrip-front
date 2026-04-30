@@ -15,12 +15,11 @@ const MainLayout = () => {
     });
   }, []);
   const loading = false;
-  return (      
-    <div className="min-h-screen bg-gray-50" dir="rtl"
-      style={{ backgroundImage: "url(/syria-map.svg), radial-gradient(#ffffff50 , #763f9e50  , #14b8a650  )" , backgroundSize: "100% 100%" , backgroundAttachment: "fixed" }}
-    // style={{ backgroundImage: "url(/syria-map.svg), linear-gradient(135deg,#763f9e50 40%, #14b8a650 55% , #ffffff)" , backgroundSize: "100% 100%" , backgroundAttachment: "fixed" }}
-
-      >
+  return (
+    <div
+      className="min-h-screen bg-gray-50    
+                bg-[url('/syria-map.svg'),radial-gradient(#ffffff50,#763f9e20,#14b8a620)]
+                bg-size-[100%_100%]   bg-fixed " dir="rtl" >
       <NavBar />
 
       <main className="flex-1">

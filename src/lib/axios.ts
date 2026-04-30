@@ -1,0 +1,52 @@
+// util/axios.ts
+import axios, { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
+
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000/api";
+
+const api = axios.create({
+  baseURL: API_BASE,  
+  timeout: 10000,
+});
+
+interface ErrorResponse {
+  message?: string;
+  errors?: Record<string, string[]>;
+}
+
+const handleError = (error: AxiosError<ErrorResponse>) => {
+  const status = error.response?.status;
+  let errorData = error.response?.data;
+
+  console.log("axios-log", status, errorData);
+  console.log("axios-log", error);
+
+
+  switch (status) {
+    case 401:
+      toast.error("انتهت صلاحية الجلسة سيتم تحويلك إلى صفحة الدخول");
+      window.location.href = "/login";
+      break;
+
+    case 403:
+      toast.error("لا يوجد لديك صلاحيات ");
+      break;
+
+    case 422:
+      toast.error("البيانات المدخلة غير صحيحة");
+      errorData = { ...errorData, errors: errorData?.errors || {} };
+      break;
+
+    default:
+      toast.error(errorData?.message || "حدث خطأ غير متوقع");
+  }
+
+  return Promise.reject(error);
+};
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => handleError(error)
+);
+
+export default api;

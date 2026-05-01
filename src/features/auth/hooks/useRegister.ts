@@ -3,7 +3,8 @@ import toast from "react-hot-toast";
 import { registerUser } from "../api/register.api";
 import { useNavigate } from "react-router-dom";
 
-export default function useRegister() {
+export default function useRegister(setError :any) {
+
   const navigate = useNavigate();
 
   return useMutation({
@@ -22,6 +23,18 @@ export default function useRegister() {
         navigate("/guide/dashboard");
       } else {
         navigate("/user/interests");
+      }
+    },
+    onError: (error: any) => {
+    const backendErrors = error.response?.data?.errors as Record<string, string[]>;
+
+      if (backendErrors) {
+        Object.entries(backendErrors).forEach(([field, messages ]) => {
+          setError(field as any, {
+            type: "server",
+            message: messages[0],
+          });
+        });
       }
     },
   });

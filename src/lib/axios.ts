@@ -15,13 +15,15 @@ interface ErrorResponse {
 }
 
 const handleError = (error: AxiosError<ErrorResponse>) => {
-  const status = error.response?.status;
+  let status = error.response?.status;
   let errorData = error.response?.data;
 
-  console.log("axios-log", status, errorData);
+  // console.log("axios-log", status, errorData);
   console.log("axios-log", error);
 
-
+  if (error.message === "Network Error" && !error.response) 
+       status = 503;
+  
   switch (status) {
     case 401:
       toast.error("انتهت صلاحية الجلسة سيتم تحويلك إلى صفحة الدخول");
@@ -35,6 +37,10 @@ const handleError = (error: AxiosError<ErrorResponse>) => {
     case 422:
       toast.error("البيانات المدخلة غير صحيحة");
       errorData = { ...errorData, errors: errorData?.errors || {} };
+      break;
+
+    case 503:
+      toast.error("الخادم غير متوفر حالياً. يرجى المحاولة لاحقاً.");
       break;
 
     default:

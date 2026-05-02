@@ -14,7 +14,7 @@ const Footer = () => {
   ];
   return (
     <footer
-      className="bg-white border-t-4 border-primary-light pt-20 pb-10 px-8"
+      className="bg-white border-t-4 border-primary-light pt-20 pb-10 px-8 z-50 relative"
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">

@@ -11,7 +11,7 @@ const destinations = [
 
 export default function MasonryGallery() {
   return (
-    <div className="px-5 py-10 w-3/4 mx-auto mt-70 mb-10 bg-linear-30 from-primary-400 to-secondary-100 rounded-3xl">
+    <div className="max-w-[90%] md:max-w-4xl mx-auto  pt-10  mt-70 mb-10 bg-linear-30 from-primary-400 to-secondary-100 rounded-3xl">
       <h2 className="heading-primary">
         أجمل الأماكن
       </h2>

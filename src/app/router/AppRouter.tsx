@@ -4,6 +4,8 @@ import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import MainLayout from "../layout/main/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import guideRoutes from "./guide.route";
+import adminRoutes from "./admin.route";
 
 const router = createBrowserRouter([
   {
@@ -19,16 +21,10 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      {
-        path: "/user/interests",
-        element: (
-          <ProtectedRoute role="user" >
-            <HomePage />
-          </ProtectedRoute>
-        ),
-      },
     ],
   },
+  ...guideRoutes,
+  ...adminRoutes,
   {
     path: "/login",
     element: <LoginPage />,

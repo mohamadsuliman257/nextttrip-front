@@ -8,7 +8,7 @@ const steps: string[] = [
 const HowItWorks = () => {
   return (
     <section
-      className="px-8 py-16 my-40 shadow-sm border-8 shadow-secondary-500 w-3/5 mx-auto bg-secondary-50/30"
+      className="max-w-[90%] md:max-w-4xl mx-auto py-16 my-40 shadow-sm border-8 shadow-secondary-500  bg-secondary-50/30"
     >
       {/* Title Animation */}
       <h2

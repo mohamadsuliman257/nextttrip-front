@@ -136,7 +136,7 @@ export default function RegisterPage() {
       {/* LEFT SIDE — LOGO */}
       <div className="order-1 md:order-2 flex flex-col justify-center items-center md:w-1/2 text-center">
         <Link to="/">
-          <img src="/logo.png" alt="NextTrip Logo" className="w-40 md:w-60 lg:w-[250px]" />
+          <img src="/logo.png" alt="NextTrip Logo" className="w-40 md:w-60 lg:w-62.5" />
         </Link>
         <p className="text-gray-700 mt-2 text-sm md:text-base max-w-sm">انضم إلى منصة NextTrip واستمتع بتجربة سفر ذكية داخل سوريا.</p>
       </div>

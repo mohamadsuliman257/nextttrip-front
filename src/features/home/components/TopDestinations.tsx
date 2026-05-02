@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay,  Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/swiper.css";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -29,13 +29,11 @@ export default function HeroSlider() {
   ];
 
   return (
-    <div className="relative max-h- w-3/5 lg:w-3/6 mx-auto h-[400px] mt-10 mb-50">
-      <h2 className="heading-primary">
-        أكثر الأماكن زيارة
-      </h2>
+    <div className="max-w-[90%] md:max-w-4xl mx-auto relative  lg:w-3/6  h-[400px] mt-10 mb-50">
+      <h2 className="heading-primary">أكثر الأماكن زيارة</h2>
 
       <Swiper
-        modules={[Autoplay,  Navigation]}
+        modules={[Autoplay, Navigation]}
         autoplay={{ delay: 3500 }}
         navigation={{
           nextEl: ".swiper-button-next",
@@ -62,18 +60,15 @@ export default function HeroSlider() {
         </div>
         {slides.map((slide, i) => (
           <SwiperSlide key={i}>
-            <div
-              className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${slide.image})` }}
-            >
+            <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${slide.image})` }}>
               {/* الصندوق الجانبي الشفاف */}
               <div
-                className="absolute bottom-2 right-2 h-40 w-1/3
-                bg-primary-100/70 border border-secondary-600 
-                text-secondary-600 text-shadow-2xs text-shadow-primary-900  p-6 rounded-xl max-w-sm"
-              >
-                <h2 className="text-3xl font-bold mb-3">{slide.title}</h2>
-                <p className="mb-4 text-xl">{slide.description}</p>
+                className="
+                    absolute bottom-3 right-3 bg-primary-100/70 border border-secondary-600 
+                    text-secondary-600 backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6  
+                    w-[85%] sm:w-[60%] md:w-[40%] lg:w-[30%] h-auto text-sm sm:text-base md:text-lg " >
+                <h2 className="text-2xl font-bold mb-3">{slide.title}</h2>
+                <p className="mb-4 text-lg">{slide.description}</p>
               </div>
             </div>
           </SwiperSlide>

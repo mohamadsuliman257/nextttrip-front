@@ -32,7 +32,7 @@ const features: FeatureItem[] = [
 
 const Features = () => {
   return (
-    <section className="px-8  w-3/4 mx-auto">
+    <section className="max-w-[90%] md:max-w-4xl mx-auto">
       <h2
         className="heading-primary"
         data-aos="fade-up"

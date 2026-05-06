@@ -46,7 +46,7 @@ const Features = () => {
           return (
             <div
               key={i}
-              className="px-8 py-10 bg-white/80 shadow-lg shadow-secondary-700 rounded-lg text-center hover:shadow-2xl hover:bg-secondary-50 transition flex flex-col justify-between h-full"
+              className="max-w-80 mx-auto px-8 py-10 bg-white/80 shadow-sm shadow-secondary-700 rounded-lg text-center hover:shadow-md hover:bg-secondary-50 transition flex flex-col justify-between h-full"
               data-aos="zoom-in-up"
               data-aos-delay={i * 150}
             >

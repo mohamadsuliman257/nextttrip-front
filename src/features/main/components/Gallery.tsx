@@ -12,9 +12,7 @@ const destinations = [
 export default function MasonryGallery() {
   return (
     <div className="max-w-[90%] md:max-w-4xl mx-auto  pt-10  mt-70 mb-10 bg-linear-30 from-primary-400 to-secondary-100 rounded-3xl">
-      <h2 className="heading-primary">
-        أجمل الأماكن
-      </h2>
+      <h2 className="heading-primary">أجمل الأماكن</h2>
       <div className="columns-1 sm:columns-2 lg:columns-4 gap-4 p-4">
         {destinations.map((item, i) => (
           <div
@@ -27,20 +25,12 @@ export default function MasonryGallery() {
             <img
               src={item.image}
               alt={item.name}
+              loading="lazy"
               className="w-full h-auto object-cover 
-              transition-all duration-1000 
-              group-hover:scale-125 
-              group-hover:brightness-125
-              "
+              transition-all duration-1000 group-hover:scale-125  group-hover:brightness-125"
             />
-           
-            {/* Text */}
-            <h3
-              className="absolute bottom-4 left-4 
-            text-white text-xl font-bold drop-shadow-lg"
-            >
-              {item.name}
-            </h3>
+
+            <h3 className="absolute bottom-4 left-4 text-white text-xl font-bold drop-shadow-lg">{item.name}</h3>
           </div>
         ))}
       </div>

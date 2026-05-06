@@ -1,35 +1,47 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { registerUser } from "../api/register.api";
-import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/features/auth/store/authStore";
 
-export default function useRegister(setError :any) {
+// شكل البيانات القادمة من API
+type RegisterResponse = {
+  data: {
+    user: {
+      id: number;
+      name: string;
+      email: string;
+      role: "user" | "guide" | "admin";
+    };
+    token: string;
+  };
+};
 
-  const navigate = useNavigate();
+export default function useRegister(setError: any) {
+  const { login: setLogin } = useAuthStore();
+  // const setLogin = useAuthStore((state) => state.login);
 
-  return useMutation({
+  return useMutation<RegisterResponse, any, FormData>({
     mutationFn: (formData: FormData) => registerUser(formData),
 
-    onSuccess: (data) => {
+    onSuccess: (res) => {
       toast.success("تم إنشاء الحساب بنجاح");
-      console.log(data)
-      localStorage.setItem("user", JSON.stringify(data.data.user));
-      localStorage.setItem("token", data.data.token);
 
-      toast.success("Welcome back!");
-      const role = data.user.role;
+      const { user, token } = res.data;
 
-      if (role === "guide") {
-        navigate("/guide/dashboard");
-      } else {
-        navigate("/user/interests");
-      }
+      // تخزين الجلسة في Zustand
+      setLogin(user, token);
+
+      toast.success("Welcome!");     
     },
-    onError: (error: any) => {
-    const backendErrors = error.response?.data?.errors as Record<string, string[]>;
+
+    onError: (error) => {
+      const backendErrors = error.response?.data?.errors as Record<
+        string,
+        string[]
+      >;
 
       if (backendErrors) {
-        Object.entries(backendErrors).forEach(([field, messages ]) => {
+        Object.entries(backendErrors).forEach(([field, messages]) => {
           setError(field as any, {
             type: "server",
             message: messages[0],

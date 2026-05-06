@@ -11,12 +11,9 @@ import {
   MapPin 
 } from "lucide-react";
 import { useState } from "react";
-import useAuthStore from "@/features/auth/store/authStore";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
-  const user = useAuthStore((set) => set.user);
-  const logout = useAuthStore((set) => set.logout);
 
   const links = [
     { to: "/guide", icon: Home, label: "الرئيسية" },
@@ -67,7 +64,7 @@ export default function Sidebar() {
 
         {/* صورة واسم المرشد */}
         <img src="/avatar.png" alt="Guide" className="w-32 rounded-full mb-3" />
-        <h2 className="font-bold text-lg">{user?.name}</h2>
+        <h2 className="font-bold text-lg">أحمد الخطيب</h2>
         <p className="text-sm text-secondary-800 mb-6">مرشد سياحي</p>
 
         {/* روابط القائمة */}
@@ -91,7 +88,7 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        <button className="flex py-2 px-3 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-400/60 hover:text-primary-50" onClick={logout}>
+        <button className="flex py-2 px-3 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-400/60 hover:text-primary-50" >
           <LogOut size={18} /> تسجيل الخروج
         </button>
       </aside>

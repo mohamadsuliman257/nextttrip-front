@@ -8,9 +8,9 @@ import PlacesChart from "../components/PlacesChart";
 
 export default function AdminHomePage() {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 pb-50">
       {/* البطاقات */}
-      <section className="grid grid-cols-1 md:grid-cols-4 gap-2">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
         <StatsCard title="المستخدمون" value="1200" icon="👤" />
         <StatsCard title="المرشدون" value="85" icon="🧭" />
         <StatsCard title="الأماكن" value="340" icon="📍" />

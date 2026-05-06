@@ -22,7 +22,7 @@ const MainLayout = () => {
                 bg-size-[100%_100%]  bg-fixed " dir="rtl" style={{ backgroundSize: "100% 100vh" }}>
       <NavBar />
 
-      <main className="flex-1">
+      <main className="flex-1 px-1 md:px-5">
         <Outlet />
       </main>
 

@@ -8,7 +8,7 @@ export default function AdminLayout() {
   const loading = false;
   return (
     <>
-      <div className="flex min-h-screen  bg-radial  from-secondary-600/30 to-secondary-700/20">
+      <div className="flex min-h-screen  bg-linear-180  from-secondary-600/30 via-secondary-700/20  to-primary-100">
         <Sidebar />
         <div className="flex-1 flex flex-col">
           <Header />

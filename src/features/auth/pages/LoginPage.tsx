@@ -31,7 +31,7 @@ export default function LoginForm() {
           <h2 className="heading-primary font-bold text-secondary-800/85 text-center ">تسجيل الدخول</h2>
 
           <FormField label="البريد الإلكتروني" name="email" register={register} errors={errors} type="email" />
-          <FormField label="كلمة المرور" name="password" register={register} errors={errors} type="email" />
+          <FormField label="كلمة المرور" name="password" register={register} errors={errors} type="password" />
 
           <button type="submit" disabled={isPending} className="w-full py-1 md:py-3 rounded-lg gradient-primary text-white font-semibold">
             {isPending ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}

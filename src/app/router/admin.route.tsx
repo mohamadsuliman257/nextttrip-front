@@ -10,9 +10,9 @@ const adminRoutes  = [
       {
         index: true,
         element: (
-          // <ProtectedRoute role="admin">
+          <ProtectedRoute role="admin">
             <AdminHomePage />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
     ],

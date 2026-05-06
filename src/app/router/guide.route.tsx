@@ -2,7 +2,7 @@ import GuideLayout from "@/app/layout/guide/GuideLayout";
 import GuideHomePage from "@/features/guide/home/pages/GuideHomePage";
 import ProtectedRoute from "./ProtectedRoute";
 
-const guideRoutes  = [
+const guideRoutes = [
   {
     path: "/guide",
     element: <GuideLayout />,
@@ -10,12 +10,12 @@ const guideRoutes  = [
       {
         index: true,
         element: (
-          // <ProtectedRoute role="guide">
+          <ProtectedRoute role="guide">
             <GuideHomePage />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
     ],
-  }
+  },
 ];
 export default guideRoutes;

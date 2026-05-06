@@ -1,23 +1,33 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "@/features/home/HomePage";
+import HomePage from "@/features/main/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import MainLayout from "../layout/main/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import guideRoutes from "./guide.route";
 import adminRoutes from "./admin.route";
+import Forbidden from "./Forbidden";
+import { GuestRoute } from "./GuestRoute";
+import UserHomePage from "@/features/user/home/pages/UserHomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      { index: true, element: <HomePage /> },
+      { 
+        index: true, 
+        element: <HomePage /> 
+      },
       {
-        path: "/guide/dashboard",
+        path: "/about",
+        element: <HomePage />,
+      },
+      {
+        path: "/user",
         element: (
-          <ProtectedRoute role="guide">
-            <HomePage />
+          <ProtectedRoute role="user">
+            <UserHomePage />
           </ProtectedRoute>
         ),
       },
@@ -27,11 +37,23 @@ const router = createBrowserRouter([
   ...adminRoutes,
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <GuestRoute>
+        <LoginPage />
+      </GuestRoute>
+    ),
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: (
+      <GuestRoute>
+        <RegisterPage />
+      </GuestRoute>
+    ),
+  },
+  {
+    path: "/unauthorized",
+    element: <Forbidden />,
   },
 ]);
 

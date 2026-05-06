@@ -81,18 +81,19 @@ export default function RegisterPage() {
                 <span>مرشد</span>
               </label>
             </div>
-              <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-3 px-3">
-                {/* USER FIELDS */}
-                <FormField label="الاسم" name="name" register={register} errors={errors} />
+            <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-3 px-3">
+              {/* USER FIELDS */}
+              <FormField label="الاسم" name="name" register={register} errors={errors} />
 
-                <FormField label="البريد الإلكتروني" name="email" type="email" register={register} errors={errors} />
+              <FormField label="البريد الإلكتروني" name="email" type="email" register={register} errors={errors} />
 
-                <FormField label="كلمة المرور" name="password" type="password" register={register} errors={errors} />
+              <FormField label="كلمة المرور" name="password" type="password" register={register} errors={errors} />
 
-                <FormField label="تأكيد كلمة المرور" name="password_confirmation" type="password" register={register} errors={errors} />
+              <FormField label="تأكيد كلمة المرور" name="password_confirmation" type="password" register={register} errors={errors} />
 
-                {/* GUIDE FIELDS */}
-                {role === "guide" && (
+              {/* GUIDE FIELDS */}
+              {role === "guide" && (
+                <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField label="الجنس" name="gender" register={register} errors={errors}>
                       <option value="">اختر الجنس</option>
@@ -107,21 +108,21 @@ export default function RegisterPage() {
                     <FormField label="رقم الهاتف" name="phone" register={register} errors={errors} />
 
                     <FormField label="السعر اليومي" name="price_per_day" type="number" register={register} errors={errors} />
-
-                    <FormField label="السيرة التعريفية" name="bio" type="textarea" register={register} errors={errors} />
-
-                    <FormField label="الصورة الشخصية" name="avatar" type="file" register={register} errors={errors} />
                   </div>
-                )}
+                  <FormField label="السيرة التعريفية" name="bio" type="textarea" register={register} errors={errors} />
 
-                <button
-                  type="submit"
-                  disabled={isPending}
-                  className="w-full py-2 md:py-3 rounded-lg gradient-primary text-white font-semibold"
-                >
-                  {isPending ? "جاري التحميل..." : "إنشاء الحساب"}
-                </button>
-              </form>
+                  <FormField label="الصورة الشخصية" name="avatar" type="file" register={register} errors={errors} />
+                </>
+              )}
+
+              <button
+                type="submit"
+                disabled={isPending}
+                className="w-full py-2 md:py-3 rounded-lg gradient-primary text-white font-semibold"
+              >
+                {isPending ? "جاري التحميل..." : "إنشاء الحساب"}
+              </button>
+            </form>
 
             <div className="text-center mt-6 text-gray-700">
               لديك حساب بالفعل؟

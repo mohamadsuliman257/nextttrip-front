@@ -1,28 +1,36 @@
+import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { login } from "../api/login.api";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import  useAuthStore  from "@/features/auth/store/authStore";
+
+// شكل البيانات القادمة من API
+type LoginResponse = {
+  data: {
+    user: {
+      id: number;
+      name: string;
+      email: string;
+      role: "user" | "guide" | "admin";
+    };
+    token: string;
+  };
+};
 
 const useLogin = () => {
-  const navigate = useNavigate();   // ← هنا المكان الصحيح
+  const setLogin = useAuthStore((state) => state.login);
 
-  return useMutation({
+  return useMutation<LoginResponse, Error>({
     mutationFn: login,
 
-    onSuccess: (data) => {
-      localStorage.setItem("user", JSON.stringify(data.data.user));
-      localStorage.setItem("token", data.data.token);
+    onSuccess: (res) => {
+      const { user, token } = res.data;
 
-      toast.success("Welcome back!");
+      setLogin(user, token); 
+    },
 
-      const role = data.data.user.role;
-
-      if (role === "guide") {
-        navigate("/guide/dashboard");
-      } else {
-        navigate("/user/interests");
-      }
-    }
+    onError: () => {
+      toast.error("Invalid credentials");
+    },
   });
 };
 

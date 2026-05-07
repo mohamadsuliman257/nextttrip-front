@@ -1,11 +1,9 @@
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import { Outlet } from "react-router-dom";
-import FooterSkeleton from "../shared/components/FooterSkeleton";
 import Footer from "../shared/components/Footer";
 
 export default function AdminLayout() {
-  const loading = false;
   return (
     <>
       <div className="flex min-h-screen  bg-linear-180  from-secondary-600/30 via-secondary-700/20  to-primary-100">
@@ -17,7 +15,7 @@ export default function AdminLayout() {
           </main>
         </div>
       </div>
-      {loading ? <FooterSkeleton /> : <Footer />}
+      <Footer />
     </>
   );
 }

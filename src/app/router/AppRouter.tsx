@@ -1,15 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "@/features/main/pages/HomePage";
-import About from "@/features/main/pages/About";
+import About from "@/features/main/pages/AboutPage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import MainLayout from "../layout/main/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import guideRoutes from "./guide.route";
 import adminRoutes from "./admin.route";
-import Forbidden from "./Forbidden";
 import { GuestRoute } from "./GuestRoute";
 import UserHomePage from "@/features/user/home/pages/UserHomePage";
+import ForbiddenPage from "@/features/main/pages/ForbiddenPage";
+import NotFoundPage from "@/features/main/pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +55,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/unauthorized",
-    element: <Forbidden />,
+    element: <ForbiddenPage />,
   },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
+
 ]);
 
 export const AppRouter = () => <RouterProvider router={router} />;

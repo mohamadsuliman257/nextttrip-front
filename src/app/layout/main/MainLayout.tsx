@@ -5,7 +5,6 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import Footer from "../shared/components/Footer";
-import FooterSkeleton from "../shared/components/FooterSkeleton";
 
 const MainLayout = () => {
   useEffect(() => {
@@ -14,7 +13,6 @@ const MainLayout = () => {
       once: true, // الحركة تظهر مرة واحدة فقط
     });
   }, []);
-  const loading = false;
   return (
     <div
       className="min-h-screen bg-gray-50    
@@ -26,7 +24,7 @@ const MainLayout = () => {
         <Outlet />
       </main>
 
-      {loading ? <FooterSkeleton /> : <Footer />}
+      <Footer />
     </div>
   );
 };

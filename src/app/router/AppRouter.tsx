@@ -4,13 +4,12 @@ import About from "@/features/main/pages/AboutPage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import MainLayout from "../layout/main/MainLayout";
-import ProtectedRoute from "./ProtectedRoute";
 import guideRoutes from "./guide.route";
 import adminRoutes from "./admin.route";
-import { GuestRoute } from "./GuestRoute";
-import UserHomePage from "@/features/user/home/pages/UserHomePage";
+import { GuestRoute } from "./components/GuestRoute";
 import ForbiddenPage from "@/features/main/pages/ForbiddenPage";
 import NotFoundPage from "@/features/main/pages/NotFoundPage";
+import userRoutes from "./tourist.route";
 
 const router = createBrowserRouter([
   {
@@ -25,14 +24,7 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
-      {
-        path: "/user",
-        element: (
-          <ProtectedRoute role="user">
-            <UserHomePage />
-          </ProtectedRoute>
-        ),
-      },
+      ...userRoutes
     ],
   },
   ...guideRoutes,

@@ -6,7 +6,7 @@ export type User = {
   id: number;
   name: string;
   email: string;
-  role: "user" | "guide" | "admin";
+  role: "tourist" | "guide" | "admin";
 };
 
 // شكل الـ store

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const userSchema = z.object({
+export const touristSchema = z.object({
   name: z.string().min(2, "الاسم قصير جداً"),
   email: z.string().email("بريد غير صالح"),
   password: z.string().min(6, "كلمة المرور قصيرة"),
@@ -10,4 +10,4 @@ export const userSchema = z.object({
   path: ["password_confirmation"],
 });
 
-export type UserFormData = z.infer<typeof userSchema>;
+export type TouristFormData = z.infer<typeof touristSchema>;

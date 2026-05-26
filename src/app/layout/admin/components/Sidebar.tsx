@@ -18,8 +18,8 @@ export default function Sidebar() {
   // حالة فتح القوائم الفرعية
   const [openMenus, setOpenMenus] = useState({});
 
-  const toggleMenu = (label ) => {
-    setOpenMenus((prev) => ({ ...prev, [label]: !prev[label] }));
+  const toggleMenu = (label :any ) => {
+    setOpenMenus((prev :any) => ({ ...prev, [label]: !prev[label] }));
   };
 // console.log(openMenus);
   const menu = [
@@ -111,7 +111,7 @@ export default function Sidebar() {
         </h2>
 
         <nav className="flex flex-col gap-2 px-4 text-lg">
-          {menu.map((item) => {
+          {menu.map((item ) => {
             const Icon = item.icon;
 
             // عنصر رئيسي بدون children

@@ -1,6 +1,6 @@
 import GuideLayout from "@/app/layout/guide/GuideLayout";
 import GuideHomePage from "@/features/guide/home/pages/GuideHomePage";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const guideRoutes = [
   {

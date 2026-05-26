@@ -4,7 +4,7 @@ import  useAuthStore  from "@/features/auth/store/authStore";
 
 type ProtectedRouteProps = {
   children: ReactNode;
-  role: "user" | "guide" | "admin";
+  role: "tourist" | "guide" | "admin";
 };
 
 export default function ProtectedRoute({ children, role }: ProtectedRouteProps) {

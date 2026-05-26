@@ -3,20 +3,20 @@ import { useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { userSchema, type UserFormData } from "../schemas/userSchema";
+import { touristSchema, type TouristFormData } from "../schemas/touristSchema";
 import { guideSchema, type GuideFormData } from "../schemas/guideSchema";
 import useRegister from "../hooks/useRegister";
 import { Link } from "react-router-dom";
 
 import FormField from "@/components/FormField";
 
-type RegisterFormData = UserFormData & Partial<GuideFormData>;
+type RegisterFormData = TouristFormData & Partial<GuideFormData>;
 
 export default function RegisterPage() {
-  const [role, setRole] = useState<"user" | "guide">("user");
+  const [role, setRole] = useState<"tourist" | "guide">("tourist");
 
   const form = useForm<RegisterFormData>({
-    resolver: zodResolver(role === "user" ? userSchema : guideSchema) as Resolver<RegisterFormData>,
+    resolver: zodResolver(role === "tourist" ? touristSchema : guideSchema) as Resolver<RegisterFormData>,
   });
 
   const {
@@ -63,8 +63,8 @@ export default function RegisterPage() {
                 <input
                   type="radio"
                   value="user"
-                  checked={role === "user"}
-                  onChange={() => setRole("user")}
+                  checked={role === "tourist"}
+                  onChange={() => setRole("tourist")}
                   className="w-4 h-4 accent-primary-600"
                 />
                 <span>مستخدم</span>

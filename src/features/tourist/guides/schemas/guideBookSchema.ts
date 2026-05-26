@@ -1,0 +1,27 @@
+import { z } from "zod";
+
+export const guideBookSchema = z.object({
+   start_date: z
+        .string()
+        .min(1, "Start date is required"),
+        
+  day_count: z
+    .number({
+      required_error: "عدد الأيام مطلوب",
+      invalid_type_error: "عدد الأيام يجب أن يكون رقمًا",
+    })
+    .min(1, "يجب أن يكون يومًا واحدًا على الأقل")
+    .max(30, "الحد الأقصى 30 يومًا"),
+
+  description: z.string().optional(),
+});
+
+export type BookingForm = z.input<typeof guideBookSchema>;
+
+/**
+ * return type CreateBookingInput = {
+  start_date: string;
+  day_count: number;
+  note?: string;
+};
+ */

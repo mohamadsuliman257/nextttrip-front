@@ -3,7 +3,7 @@
 interface Place {
   placeName: string;
   userName: string;
-  userType: "user" | "guide";
+  userType: "tourist" | "guide";
   date: string;
   status: "approved" | "pending" | "rejected";
 }

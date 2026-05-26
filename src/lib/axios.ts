@@ -1,4 +1,5 @@
 // util/axios.ts
+import useAuthStore from "@/features/auth/store/authStore";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
 
@@ -8,6 +9,21 @@ const api = axios.create({
   baseURL: API_BASE,  
   timeout: 10000,
 });
+
+
+// 🟦 إضافة التوكن قبل كل طلب
+api.interceptors.request.use(
+  (config) => {
+    const token = useAuthStore.getState().token; // ← الوصول للتوكن بدون hook
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 interface ErrorResponse {
   message?: string;

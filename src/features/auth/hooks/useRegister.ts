@@ -3,25 +3,13 @@ import toast from "react-hot-toast";
 import { registerUser } from "../api/register.api";
 import useAuthStore from "@/features/auth/store/authStore";
 
-// شكل البيانات القادمة من API
-type RegisterResponse = {
-  data: {
-    user: {
-      id: number;
-      name: string;
-      email: string;
-      role: "user" | "guide" | "admin";
-    };
-    token: string;
-  };
-};
 
 export default function useRegister(setError: any) {
-  const { login: setLogin } = useAuthStore();
-  // const setLogin = useAuthStore((state) => state.login);
+  // const { login: setLogin } = useAuthStore();
+  const setLogin = useAuthStore((state) => state.login);
 
-  return useMutation<RegisterResponse, any, FormData>({
-    mutationFn: (formData: FormData) => registerUser(formData),
+  return useMutation({
+    mutationFn: (data : FormData) => registerUser(data),
 
     onSuccess: (res) => {
       toast.success("تم إنشاء الحساب بنجاح");
@@ -34,7 +22,7 @@ export default function useRegister(setError: any) {
       toast.success("Welcome!");     
     },
 
-    onError: (error) => {
+    onError: (error : any) => {
       const backendErrors = error.response?.data?.errors as Record<
         string,
         string[]

@@ -21,7 +21,7 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (data: LoginFormData) => mutate(data);
+  const onSubmit = (data: LoginFormData) => mutate(data );
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row md:bg-linear-0 from-primary-200/40 via-secondary-100 to-primary-200/40 ">

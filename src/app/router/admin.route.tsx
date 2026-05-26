@@ -1,4 +1,4 @@
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "../layout/admin/AdminLayout";
 import AdminHomePage from "@/features/admin/home/pages/AdminHomePage";
 

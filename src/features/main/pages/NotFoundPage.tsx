@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const ForbiddenPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-radial to-primary-100/50 from-secondary-100/30 text-center px-6">
-      <h1 className="text-7xl font-bold text-secondary-600 mb-4">403</h1>
+      <h1 className="text-7xl font-bold text-secondary-600 mb-4">404</h1>
 
       <h2 className="text-2xl font-semibold text-gray-800 mb-2">الصفحة غير موجودة</h2>
 

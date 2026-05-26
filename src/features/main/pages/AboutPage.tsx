@@ -38,21 +38,21 @@ export const ABOUT_CONTENT = {
 const AboutPage: React.FC = () => {
   return (
     <main className="w-full bg-gray-50/40 text-primary-700 pt-15">
-      <section className="max-w-5xl mx-auto px-4 py-12">
+      <section className="max-w-5xl mx-auto md:px-[20%] py-12">
 
         {/* العنوان + المقدمة */}
-        <header className="mb-10 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3">
+        <header className="mb-5 text-center">
+          <h1 className="text-2xl md:text-3xl font-bold mb-3">
             {ABOUT_CONTENT.title}
           </h1>
-          <p className="text-gray-600 leading-relaxed mt-11 md:w-[50%] mx-auto">
+          <p className="text-gray-600 leading-relaxed mt-11 text-xl ">
             {ABOUT_CONTENT.intro}
           </p>
         </header>
 
         {/* الرؤية والرسالة */}
-        <section className="grid md:grid-cols-2 gap-8 mb-10">
-          <div className="bg-white rounded-lg shadow-sm p-6">
+        <section className="mb-10 space-y-5">
+          <div className="bg-white/30 rounded-full text-center shadow-xl p-4" >
             <h2 className="text-xl font-semibold mb-3">
               {ABOUT_CONTENT.vision.title}
             </h2>
@@ -61,7 +61,7 @@ const AboutPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white/30 rounded-full text-center shadow-xl p-4" >
             <h2 className="text-xl font-semibold mb-3">
               {ABOUT_CONTENT.mission.title}
             </h2>

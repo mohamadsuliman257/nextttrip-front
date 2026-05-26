@@ -4,22 +4,16 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import  useAuthStore  from "@/features/auth/store/authStore";
 
 const publicLinks = [
-  { label: "الرئيسية", to: "/" },
   { label: "خطط رحلتك", to: "/plan" },
-  { label: "احجز مرشدك", to: "/guides" },  
+  { label: "احجز مرشدك", to: "/tourist/guides" },  
   { label: "حول المنصة", to: "/about" },
 ];
-
-const getDashboardLink = (role: "user" | "guide" | "admin") => {
-  if (role === "admin") return "/admin";
-  if (role === "guide") return "/guide";
-  return "/user";
-};
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuthStore();
-
+  const role = user?.role;
+  const homeUrl = user? role ===  "admin"? "/admin" : role === "guide" ?"/guide":"tourist" : "/";
   return (
     <nav className="px-8 py-3 w-full flex items-top justify-between absolute top-0">
 
@@ -39,6 +33,9 @@ const NavBar = () => {
           ${open ? "flex flex-col absolute top-20 right-8 bg-white/95 shadow-lg p-6 rounded-xl gap-6 z-40" : "hidden lg:flex"}
         `}
       >
+        <li className="hover:text-primary-500 transition">
+            <Link to={homeUrl}>الصفحة الريسية</Link>
+          </li>
         {publicLinks.map((link) => (
           <li key={link.to} className="hover:text-primary-500 transition">
             <Link to={link.to}>{link.label}</Link>
@@ -58,11 +55,7 @@ const NavBar = () => {
             <span className="flex gap-1">{user.name} <ChevronDown/> </span>
 
             {/* القائمة المنسدلة */}
-            <ul className="absolute hidden  group-hover:flex flex-col bg-white   border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-40 z-50">
-
-              <li className="hover:text-primary-500 transition">
-                <Link to={getDashboardLink(user.role)}>لوحة التحكم</Link>
-              </li>               
+            <ul className="absolute hidden  group-hover:flex flex-col bg-white   border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-40 z-50">              
 
               <li
                 className="hover:text-primary-500 transition cursor-pointer"
@@ -80,7 +73,7 @@ const NavBar = () => {
         <img
           src="/logo.png"
           alt="NextTrip Syria Logo"
-          className="w-40 h-auto"
+          className="w-20 md:w-40 h-auto"
         />
       </Link>
     </nav>

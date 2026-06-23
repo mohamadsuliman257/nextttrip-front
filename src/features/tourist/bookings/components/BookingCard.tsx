@@ -110,7 +110,7 @@ export default function BookingCard({ booking }: Props) {
             تفاصيل
           </button>
 
-          {booking.can_review && (
+          {booking.can_tourist_review && (
             <button
               onClick={() => setShowReview(true)}
               className="mt-4 w-40 mx-auto py-1 bg-secondary-400 text-white rounded-lg flex items-center justify-center gap-2 hover:bg-primary-600 transition"

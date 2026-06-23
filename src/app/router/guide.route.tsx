@@ -2,6 +2,7 @@ import GuideLayout from "@/app/layout/guide/GuideLayout";
 import GuideHomePage from "@/features/guide/home/pages/GuideHomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GuideProfilePage from "@/features/guide/profile/pages/GuideProfilePage";
+import AllBookingsPage from "@/features/guide/bookings/pages/AllBookingsPage";
 
 const guideRoutes = [
   {
@@ -22,7 +23,7 @@ const guideRoutes = [
       },
       {
         path: 'bookings',
-        element: <GuideHomePage />
+        element: <AllBookingsPage />
       },
       {
         path: 'reviews',

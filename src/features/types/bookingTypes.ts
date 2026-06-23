@@ -10,16 +10,16 @@ export interface Review {
     rating: number;
     comment: string;
 }
-interface Tourist{
-    user: {
-        name: string
-    }
-}
+// interface Tourist{
+//     user: {
+//         name: string
+//     }
+// }
 
 export interface Booking {
     booking_id: number;
     
-    tourist: Tourist;
+    // tourist: Tourist;
     
     guide_name: string;
     guide_avatar: string;
@@ -35,8 +35,8 @@ export interface Booking {
 
     review?: Review | null;
 
-    can_cancel: boolean;
-    can_review: boolean;
+    can_tourist_cancel: boolean;
+    can_tourist_review: boolean;
 
     created_at: string,
 }

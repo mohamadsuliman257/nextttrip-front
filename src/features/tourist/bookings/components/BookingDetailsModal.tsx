@@ -93,7 +93,7 @@ export default function BookingDetailsModal({ booking_id, onClose }: Props) {
                     </button>
 
                     {/* زر الإلغاء داخل التفاصيل */}
-                    {booking.can_cancel && (
+                    {booking.can_tourist_cancel && (
                         <button
                             onClick={() => setShowCancel(true)}
                             className="mt-3 w-25 py-2 bg-rose-400 text-gray-800 rounded-lg hover:bg-rose-500"

@@ -27,7 +27,7 @@ export default function Sidebar() {
     { to: "/guide/suggest-place", icon: MapPin, label: "اقتراح مكان" },
     
   ];
-
+  
   return (
     <>
       {/* زر فتح القائمة في الجوال */}
@@ -76,6 +76,7 @@ export default function Sidebar() {
             <NavLink
               key={to}
               to={to}
+              end={true}
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-3 py-2 px-3 rounded-md transition ${

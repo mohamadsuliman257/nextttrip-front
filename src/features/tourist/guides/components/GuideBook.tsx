@@ -6,7 +6,7 @@ import {
   guideBookSchema,
   type BookingForm,
 } from "../schemas/guideBookSchema";
-import type { Guide } from "../types/bookingTypes";
+import type { Guide } from "../types/booking.types";
 import useAuthStore from "@/features/auth/store/authStore";
 
 interface Props {
@@ -16,7 +16,6 @@ interface Props {
 export function GuideBook({ guide }: Props) {
   const navigate = useNavigate();
 
-  // 👈 هذا هو المكان الصحيح لاستدعاء حالة المستخدم
   const user = useAuthStore((state) => state.user);
 
   const {
@@ -34,7 +33,7 @@ export function GuideBook({ guide }: Props) {
   const totalPrice = dayCount * guide.daily_price;
 
   const onSubmit = (data: BookingForm) => {
-    // 👈 التحقق من تسجيل الدخول
+    //  التحقق من تسجيل الدخول
 
     if (!user) {
       navigate("/login", {
@@ -45,7 +44,7 @@ export function GuideBook({ guide }: Props) {
       return;
     }
 
-    // 👈 إذا كان مسجل دخول → نكمل الحجز
+    //  إذا كان مسجل دخول → نكمل الحجز
     mutate(
       {
         guideId: Number(guide.guide_id),
@@ -58,7 +57,7 @@ export function GuideBook({ guide }: Props) {
   };
 
   return (
-    <div className="flex flex-col justify-end ">
+    <div className="flex flex-col justify-end w-full flex-1">
       <h1 className="text-lg md:text-xl font-bold text-secondary-500 md:text-center mb-2 px-3">
         أدخل بيانات الحجز
       </h1>
@@ -104,7 +103,7 @@ export function GuideBook({ guide }: Props) {
 
         {/* الملاحظة */}
         <div>
-          <label>ملاحظة (اختياري)</label>
+          <label>وصف </label>
           <textarea
             {...register("description")}
             className="w-full border p-2 rounded h-24"

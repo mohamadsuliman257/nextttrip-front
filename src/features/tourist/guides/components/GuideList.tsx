@@ -1,5 +1,5 @@
 import { GuideCard } from "../components/GuideCard";
-import type { Guide } from "../types/bookingTypes";
+import type { Guide } from "../types/booking.types";
 
 export function GuideList({ data }: { data: Guide[] }) {
   return (

@@ -10,10 +10,17 @@ export interface Review {
     rating: number;
     comment: string;
 }
+interface Tourist{
+    user: {
+        name: string
+    }
+}
 
 export interface Booking {
     booking_id: number;
-
+    
+    tourist: Tourist;
+    
     guide_name: string;
     guide_avatar: string;
 

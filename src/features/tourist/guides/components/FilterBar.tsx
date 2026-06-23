@@ -1,6 +1,6 @@
 import { CitySelect } from "@/features/lookups/components/CitySelect";
 import { LanguageSelect } from "@/features/lookups/components/LanguageSelect";
-import type { Filters } from "../types/bookingTypes";
+import type { Filters } from "../types/booking.types";
 
 interface Props {
   filters: Filters;

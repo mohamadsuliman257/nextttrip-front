@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGuides } from "../hooks/useGuides";
 import { FiltersBar } from "../components/FilterBar";
 import { GuideList } from "../components/GuideList";
-import type { Filters } from "../types/bookingTypes";
+import type { Filters } from "../types/booking.types";
 
 export function GuidesPage() {
   const [filters, setFilters] = useState<Filters>({

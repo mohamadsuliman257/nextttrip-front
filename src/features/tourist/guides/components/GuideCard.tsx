@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { Guide } from "../types/bookingTypes";
+import type { Guide } from "../types/booking.types";
 import RatingStars from "@/components/RatingStars";
 
 

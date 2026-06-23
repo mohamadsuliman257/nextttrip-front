@@ -12,7 +12,7 @@ import {
   Hourglass,
   Star,
 } from "lucide-react";
-import type { Booking } from "../types/bookingTypes";
+import type { Booking } from "../../../types/bookingTypes";
 import ReviewModal from "./ReviewModal";
 
 interface Props {

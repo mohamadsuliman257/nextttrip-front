@@ -5,11 +5,12 @@ type Props = {
   errors: any;
   type?: string;
   children?: React.ReactNode; // للـ select
+  col?: number
 };
 
-export default function FormField({ label, name, register, errors, type = "text", children }: Props) {
+export default function FormField({ label, name, register, errors, type = "text", children , col=1}: Props) {
   return (
-    <div>
+    <div className={`md:col-span-${col}`}>
       <label className="text-secondary-800 font-medium">{label}</label>
 
       {children ? (

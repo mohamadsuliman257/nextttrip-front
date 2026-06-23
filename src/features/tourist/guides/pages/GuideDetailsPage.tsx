@@ -7,17 +7,26 @@ export function GuideDetailsPage() {
   const { guideId } = useParams();
   const { data: guide, isLoading } = useGuideDetails(Number(guideId));
 
-  if (isLoading) return <p>جاري التحميل...</p>;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-2xl text-primary-500">جاري التحميل ...</p>
+      </div>
+    );
+  }
+
   guide.gender = guide.gender == 'M' ? 'امرأة' : 'رجل';
+  
   return (
     <div className="py-20 md:px-[20%] ">
       {/* الاسم  */}
       <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-6 px-3">
-        {guide.name} تفاصيل وحجز المرشد
+         تفاصيل وحجز المرشد : <span className="text-secondary-500">{guide.name}</span>
       </h1>
-      <div className="flex  mx-auto bg-white/50 p-3 px-6 rounded-xl border-2 border-secondary-500">
+      <div className="flex flex-wrap mx-auto bg-white/50 p-3 px-6 rounded-xl border-2 border-secondary-500">
 
-        <div className="w-100 flex-1">
+        <div className="w-full flex-1">
           {/* صورة المرشد */}
           <img
             src={guide.avatar}

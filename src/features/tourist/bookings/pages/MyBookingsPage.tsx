@@ -1,6 +1,6 @@
 import BookingCard from "../components/BookingCard";
 import { useMyBookings } from "../hooks/useMyBookings";
-import type { Booking } from "../../../types/bookingTypes";
+import type { Booking } from "../types/bookingTypes";
 
 export default function MyBookingsPage() {
   const { data, isLoading, isError } = useMyBookings();

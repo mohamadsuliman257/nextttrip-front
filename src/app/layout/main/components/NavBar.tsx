@@ -35,7 +35,7 @@ const NavBar = () => {
         `}
       >
         <li className="hover:text-primary-500 transition">
-            <Link to={homeUrl}>الصفحة الريسية</Link>
+            <Link to={homeUrl}>الصفحة الرئيسية</Link>
           </li>
         {publicLinks.map((link) => (
           <li key={link.to} className="hover:text-primary-500 transition">
@@ -56,8 +56,19 @@ const NavBar = () => {
             <span className="flex gap-1">{user.name} <ChevronDown/> </span>
 
             {/* القائمة المنسدلة */}
-            <ul className="absolute hidden  group-hover:flex flex-col bg-white   border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-40 z-50">              
+            <ul className="absolute hidden  group-hover:flex flex-col bg-white   border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-50 z-50">              
 
+              <Link to="tourist/my-bookings"
+                className="hover:text-primary-500 transition cursor-pointer"
+              >
+                حجوزاتي للمرشدين
+               
+              </Link>
+              <Link to="tourist/reviews"
+                className="hover:text-primary-500 transition cursor-pointer"
+              >
+                تقييماتي للمرشدين
+              </Link>
               <li
                 className="hover:text-primary-500 transition cursor-pointer"
                 onClick={() => logout(() => navigate("/"))}

@@ -7,8 +7,7 @@ export default function UserHomePage() {
   const userCards = [
     {
       title: "تفضيلاتي ورغباتي",
-      subtitle: " الميول",
-      to: "/user/preferences",
+      to: "/tourist/preferences",
       icon: Compass,
       borderColor: "border-primary-500",
       iconColor: "text-primary-500",
@@ -16,17 +15,15 @@ export default function UserHomePage() {
     },
     {
       title: "رحلاتي لسوريا",
-      subtitle: "3 رحلات ",
-      to: "/user/trip",
+      to: "/tourist/trip",
       icon: Heart,
       borderColor: "border-secondary-500",
       iconColor: "text-secondary-600",
       titleColor: "text-secondary-800",
     },
     {
-      title: "تقييماتي للأمكنة",
-      subtitle: "4 أماكن",
-      to: "/user/place",
+      title: "تقييماتي للمرشدين",
+      to: "/tourist/reviews",
       icon: Star,
       borderColor: "border-primary-300",
       iconColor: "text-primary-300",
@@ -34,7 +31,6 @@ export default function UserHomePage() {
     },
     {
       title: "حجوزاتي للمرشدين",
-      subtitle: "2 مرشد",
       to: "/tourist/my-bookings",
       icon: StarsIcon,
       borderColor: "border-secondary-200",
@@ -43,8 +39,7 @@ export default function UserHomePage() {
     },
     {
       title: "خريطة تفاعلية",
-      subtitle: "اماكن قريبة",
-      to: "/user/guide",
+      to: "/tourist/guide",
       icon: Globe,
       borderColor: "border-yellow-200",
       iconColor: "text-yellow-300",
@@ -65,14 +60,13 @@ export default function UserHomePage() {
             <Link key={index} to={card.to}>
               <div
                 className={`
-                   bg-white shadow-md rounded-xl p-1 border-t-4 border-r-4 text-center hover:translate-y-[-10px] transition skew-y-20 skew-x-5               
+                   bg-white shadow-md rounded-xl pt-2 pb-5 border-t-4 border-r-4 text-center hover:translate-y-[-10px] transition skew-y-20 skew-x-5               
             ${card.borderColor}
           `}
               >
                 <div className="text-center space-y-2">
                   <Icon className={`w-full ${card.iconColor}`} size={30} />
                     <h3 className={`text-xs md:text-lg font-semibold ${card.titleColor}`}>{card.title}</h3>
-                    <p className="text-xs md:text-lg text-secondary-600">{card.subtitle}</p>
                 </div>
               </div>
             </Link>

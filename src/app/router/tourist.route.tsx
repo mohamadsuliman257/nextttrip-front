@@ -3,6 +3,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "@/features/tourist/home/pages/HomePage";
 import { GuidesPage } from "@/features/tourist/guides/pages/GuidesPage";
 import { GuideDetailsPage } from "@/features/tourist/guides/pages/GuideDetailsPage";
+import TouristReviewsPage from "@/features/tourist/reviews/pages/TouristReviewsPage";
 
 const userRoutes = [
   {
@@ -15,6 +16,12 @@ const userRoutes = [
     path: "/tourist/my-bookings",
     element: <ProtectedRoute role="tourist">
       <MyBookingsPage />
+    </ProtectedRoute>,
+  },  
+  {
+    path: "/tourist/reviews",
+    element: <ProtectedRoute role="tourist">
+      <TouristReviewsPage />
     </ProtectedRoute>,
   },  
   {

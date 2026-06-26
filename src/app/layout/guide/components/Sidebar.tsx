@@ -1,19 +1,25 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { 
-  Home, 
-  Star, 
-  Briefcase, 
-  LogOut, 
-  Menu, 
-  X, 
-  Bell, 
-  User, 
-  MapPin 
+import {
+  Home,
+  Star,
+  Briefcase,
+  LogOut,
+  Menu,
+  X,
+  Bell,
+  User,
+  MapPin
 } from "lucide-react";
 import { useState } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
+import type { GuideDashboardResponse } from "@/features/guide/home/type";
 
-export default function Sidebar() {
+type Props = {
+  guide: GuideDashboardResponse["guide"];
+};
+
+
+export default function Sidebar({guide} :Props) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
@@ -25,9 +31,9 @@ export default function Sidebar() {
     { to: "/guide/reviews", icon: Star, label: "التقييمات" },
     { to: "/guide/notifications", icon: Bell, label: "الإشعارات" },
     { to: "/guide/suggest-place", icon: MapPin, label: "اقتراح مكان" },
-    
+
   ];
-  
+
   return (
     <>
       {/* زر فتح القائمة في الجوال */}
@@ -66,7 +72,11 @@ export default function Sidebar() {
         </button>
 
         {/* صورة واسم المرشد */}
-        <img src="/avatar.png" alt="Guide" className="w-32 rounded-full mb-3" />
+        <img
+          src={guide.avatar ?? "/avatar.png"}
+          className="w-16 h-16 rounded-full"
+        />
+
         <h2 className="font-bold text-lg">{user?.name}</h2>
         <p className="text-sm text-secondary-800 mb-6">مرشد سياحي</p>
 
@@ -79,10 +89,9 @@ export default function Sidebar() {
               end={true}
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-3 py-2 px-3 rounded-md transition ${
-                  isActive
-                    ? "bg-primary-200"
-                    : "hover:bg-primary-400/60 hover:text-primary-50"
+                `flex items-center gap-3 py-2 px-3 rounded-md transition ${isActive
+                  ? "bg-primary-200"
+                  : "hover:bg-primary-400/60 hover:text-primary-50"
                 }`
               }
             >

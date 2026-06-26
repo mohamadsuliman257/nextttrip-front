@@ -1,32 +1,16 @@
 interface Booking {
-  tourist: string;
-  date: string;
-  days: string;
+  id: number;
+  name: string;       // اسم السائح
+  date_range: string; // من الباك
+  duration: string;   // "3 أيام"
   status: "pending" | "accepted" | "rejected";
 }
 
-export default function RecentBookingsTable() {
-  const bookings: Booking[] = [
-    {
-      tourist: "علي سعيد",
-      date: "10 - 12 مايو 2024",
-      days: "3 أيام",
-      status: "pending",
-    },
-    {
-      tourist: "ليلى حسن",
-      date: "5 - 7 مايو 2024",
-      days: "2 أيام",
-      status: "accepted",
-    },
-    {
-      tourist: "مايكل جونز",
-      date: "1 - 4 أبريل 2024",
-      days: "4 أيام",
-      status: "rejected",
-    },
-  ];
+interface Props {
+  bookings: Booking[];
+}
 
+export default function RecentBookingsTable({ bookings }: Props) {
   const statusColors: Record<string, string> = {
     pending: "text-orange-600 bg-orange-100",
     accepted: "text-green-600 bg-green-100",
@@ -56,11 +40,11 @@ export default function RecentBookingsTable() {
         </thead>
 
         <tbody>
-          {bookings.map((b, i) => (
-            <tr key={i} className="hover:bg-gray-50">
-              <td className="p-1 border">{b.tourist}</td>
-              <td className="p-1 border">{b.date}</td>
-              <td className="p-1 border">{b.days}</td>
+          {bookings.map((b) => (
+            <tr key={b.id} className="hover:bg-gray-50">
+              <td className="p-1 border">{b.name}</td>
+              <td className="p-1 border">{b.date_range}</td>
+              <td className="p-1 border">{b.duration}</td>
               <td className="p-1 border">
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[b.status]}`}

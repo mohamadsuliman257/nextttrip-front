@@ -4,98 +4,101 @@ import BookingDetailsModal from "../components/BookingDetailsModal";
 import type { Booking, BookingStatus } from "../type/booking.type";
 import BookingStatusFilter from "../components/BookingStatusFilter";
 
-
 export default function AllBookingsPage() {
   const [status, setStatus] = useState<BookingStatus | undefined>(undefined);
-
   const { data: bookings, isLoading, error } = useGuideBookings({ status });
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+
+  const getStatusBadge = (status: BookingStatus) => {
+    switch (status) {
+      case "pending":
+        return "bg-yellow-100 text-yellow-700 border-yellow-300";
+      case "accepted":
+        return "bg-green-100 text-green-700 border-green-300";
+      case "rejected":
+        return "bg-red-100 text-red-700 border-red-300";
+      case "completed":
+        return "bg-blue-100 text-blue-700 border-blue-300";
+      case "cancelled_by_tourist":
+      case "cancelled_by_guide":
+        return "bg-red-200 text-red-800 border-red-400";
+      default:
+        return "bg-gray-100 text-gray-700 border-gray-300";
+    }
+  };
+
+  const columns = [
+    { key: "booking_id", label: "#" },
+    { key: "tourist_name", label: "السائح" },
+    { key: "start_date", label: "التاريخ", format: (v: string) => v.split("T")[0] },
+    { key: "day_count", label: "الأيام" },
+    { key: "total_price", label: "السعر", format: (v: number) => `${v} ل.س` },
+
+    {
+      key: "status",
+      label: "الحالة",
+      format: (v: BookingStatus) => (
+        <span
+          className={`px-2 py-1 text-xs rounded-full border ${getStatusBadge(v)}`}
+        >
+          {v}
+        </span>
+      ),
+    },
+  ];
 
   if (isLoading) return <p>جاري التحميل...</p>;
   if (error) return <p>حدث خطأ أثناء جلب البيانات</p>;
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
-      {/* العنوان + الفلترة */}
+
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">جميع الحجوزات</h1>
-
-        <BookingStatusFilter
-          value={status}
-          onChange={setStatus}
-        />
-
+        <BookingStatusFilter value={status} onChange={setStatus} />
       </div>
 
-      {/* جدول الحجوزات */}
       <div className="overflow-x-auto border rounded-lg">
         <table className="min-w-full text-right">
           <thead className="bg-gray-100 text-sm">
             <tr>
-              <th className="px-3 py-2">#</th>
-              <th className="px-3 py-2">السائح</th>
-              <th className="px-3 py-2">التاريخ</th>
-              <th className="px-3 py-2">الأيام</th>
-              <th className="px-3 py-2">السعر</th>
-              <th className="px-3 py-2">الحالة</th>
+              {columns.map(col => (
+                <th key={col.key} className="px-3 py-2">{col.label}</th>
+              ))}
               <th className="px-3 py-2">إجراءات</th>
             </tr>
           </thead>
 
           <tbody>
-            {bookings.map((booking: Booking) => {
-              const formattedDate = booking.start_date.split("T")[0];
+            {bookings.map((booking: Booking) => (
+              <tr key={booking.booking_id} className="border-b text-sm">
 
-              return (
-                <tr key={booking.booking_id} className="border-b text-sm">
-                  <td className="px-3 py-2">{booking.booking_id}</td>
-                  <td className="px-3 py-2">{booking.tourist_name}</td>
-                  <td className="px-3 py-2">{formattedDate}</td>
-                  <td className="px-3 py-2">{booking.day_count}</td>
-                  <td className="px-3 py-2">{booking.total_price} ل.س</td>
-                  <td className="px-3 py-2">{booking.status}</td>
+                {columns.map(col => {
+                  const value = booking[col.key as keyof Booking];
+                  const display = col.format ? col.format(value as any) : value;
 
-                  <td className="px-3 py-2">
-                    <div className="flex gap-2">
+                  return (
+                    <td key={col.key} className="px-3 py-2">
+                      {display}
+                    </td>
+                  );
+                })}
 
-                      {/* زر التفاصيل */}
-                      <button
-                        onClick={() => setSelectedBooking(booking)}
-                        className="px-3 py-1 bg-blue-600 text-white rounded"
-                      >
-                        التفاصيل
-                      </button>
+                <td className="px-3 py-2">
+                  <button
+                    onClick={() => setSelectedBooking(booking)}
+                    className="px-3 py-1 bg-blue-600 text-white rounded"
+                  >
+                    التفاصيل
+                  </button>
+                </td>
 
-                      {/* قبول */}
-                      {booking.can_guide_react && (
-                        <button className="px-3 py-1 bg-green-600 text-white rounded">
-                          قبول
-                        </button>
-                      )}
-
-                      {/* رفض */}
-                      {booking.can_guide_react && (
-                        <button className="px-3 py-1 bg-red-600 text-white rounded">
-                          رفض
-                        </button>
-                      )}
-
-                      {/* إلغاء */}
-                      {booking.can_guide_cancel && (
-                        <button className="px-3 py-1 bg-red-700 text-white rounded">
-                          إلغاء
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      {/* مودال التفاصيل */}
       {selectedBooking && (
         <BookingDetailsModal
           booking={selectedBooking}

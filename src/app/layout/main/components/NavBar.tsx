@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import  useAuthStore  from "@/features/auth/store/authStore";
 
@@ -10,6 +10,7 @@ const publicLinks = [
 ];
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuthStore();
   const role = user?.role;
@@ -59,7 +60,7 @@ const NavBar = () => {
 
               <li
                 className="hover:text-primary-500 transition cursor-pointer"
-                onClick={logout}
+                onClick={() => logout(() => navigate("/"))}
               >
                 تسجيل الخروج
               </li>

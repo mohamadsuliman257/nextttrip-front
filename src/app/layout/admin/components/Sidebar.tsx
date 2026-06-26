@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   Users,
   MapPin,
@@ -9,19 +9,23 @@ import {
   Bell,
   Database,
   ChevronDown,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
+import useAuthStore from "@/features/auth/store/authStore";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   // حالة فتح القوائم الفرعية
   const [openMenus, setOpenMenus] = useState({});
 
-  const toggleMenu = (label :any ) => {
-    setOpenMenus((prev :any) => ({ ...prev, [label]: !prev[label] }));
+  const toggleMenu = (label: any) => {
+    setOpenMenus((prev: any) => ({ ...prev, [label]: !prev[label] }));
   };
-// console.log(openMenus);
+  // console.log(openMenus);
   const menu = [
     {
       label: "الرئيسية / الإحصائيات",
@@ -111,7 +115,7 @@ export default function Sidebar() {
         </h2>
 
         <nav className="flex flex-col gap-2 px-4 text-lg">
-          {menu.map((item ) => {
+          {menu.map((item) => {
             const Icon = item.icon;
 
             // عنصر رئيسي بدون children
@@ -122,10 +126,9 @@ export default function Sidebar() {
                   to={item.to}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 py-2 px-3 rounded-md transition ${
-                      isActive
-                        ? "bg-secondary-100"
-                        : "hover:bg-secondary-300/60"
+                    `flex items-center gap-3 py-2 px-3 rounded-md transition ${isActive
+                      ? "bg-secondary-100"
+                      : "hover:bg-secondary-300/60"
                     }`
                   }
                 >
@@ -148,9 +151,8 @@ export default function Sidebar() {
                   </span>
                   <ChevronDown
                     size={18}
-                    className={`transition ${
-                      openMenus[item.label] ? "rotate-180" : ""
-                    }`}
+                    className={`transition ${openMenus[item.label] ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
@@ -172,6 +174,9 @@ export default function Sidebar() {
             );
           })}
         </nav>
+        <button className="flex py-2 px-6 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-400/60 hover:text-primary-50" onClick={() => logout(() => navigate("/"))}>
+          <LogOut size={18} /> تسجيل الخروج
+        </button>
       </aside>
     </>
   );

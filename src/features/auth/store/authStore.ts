@@ -15,7 +15,7 @@ type AuthState = {
   token: string | null;
 
   login: (user: User, token: string) => void;
-  logout: () => void;
+  logout: (callback: () => void) => void;
 };
 
  const useAuthStore = create<AuthState>()(
@@ -26,11 +26,15 @@ type AuthState = {
 
       login: (user, token) => set({ user, token }),
 
-      logout: () => set({ user: null, token: null }),
+      logout: (callback) => {
+        set({ user: null, token: null });
+        if (callback) callback(); // ← هنا السحر
+      },
     }),
     {
-      name: "auth-storage", // المفتاح داخل localStorage
+      name: "auth-storage",
     }
   )
 );
+
 export default useAuthStore;    

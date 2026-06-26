@@ -7,5 +7,5 @@ export interface GetBookingsParams {
 
 export const getBookings = async (params?: GetBookingsParams) : Promise<Booking[]>=> {
   const response = await api.get("/guide/bookings" , { params });
-  return response.data.data;
+  return response.data.data ;
 };

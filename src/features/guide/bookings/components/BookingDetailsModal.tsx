@@ -13,7 +13,7 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
     const [showRejectModal, setShowRejectModal] = useState(false);
     const [showCancelModal, setShowCancelModal] = useState(false);
 
-    const {mutate} = useAlterBooking();
+    const { mutate } = useAlterBooking();
 
     // إزالة الوقت من التاريخ
     const formattedDate = booking.start_date.split("T")[0];
@@ -99,32 +99,63 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
 
                 {showAcceptModal && (
                     <AlterBookingModal
-                        bookingId={booking.booking_id}
+                        touristName={booking.tourist_name}
                         onClose={() => setShowAcceptModal(false)}
-                        onConfirm={(note) => mutate({ id: booking.booking_id, note , action: 'accept'})}
+                        onConfirm={(note) =>
+                            mutate(
+                                { id: booking.booking_id, note, action: "accept" },
+                                {
+                                    onSuccess: () => {
+                                        setShowAcceptModal(false); // إغلاق مودال القبول
+                                        onClose(); // إغلاق مودال التفاصيل
+                                    },
+                                }
+                            )
+                        }
                         action={{ name: "accept", value: "قبول" }}
-
                     />
                 )}
 
+
                 {showRejectModal && (
                     <AlterBookingModal
-                        bookingId={booking.booking_id}
+                        touristName={booking.tourist_name}
                         onClose={() => setShowRejectModal(false)}
-                        onConfirm={(note) => mutate({ id: booking.booking_id, note , action: 'reject' })}
+                        onConfirm={(note) =>
+                            mutate(
+                                { id: booking.booking_id, note, action: "reject" },
+                                {
+                                    onSuccess: () => {
+                                        setShowRejectModal(false);
+                                        onClose();
+                                    },
+                                }
+                            )
+                        }
                         action={{ name: "reject", value: "رفض" }}
                     />
                 )}
 
-                {showCancelModal && (
-                    <AlterBookingModal                    
-                        bookingId={booking.booking_id}
-                        onClose={() => setShowCancelModal(false)}
-                        onConfirm={(note) => mutate({ id: booking.booking_id, note , action: 'cancel'})}
-                        action={{ name: "cancel", value: "إلغاء" }}
 
+                {showCancelModal && (
+                    <AlterBookingModal
+                        touristName={booking.tourist_name}
+                        onClose={() => setShowCancelModal(false)}
+                        onConfirm={(note) =>
+                            mutate(
+                                { id: booking.booking_id, note, action: "cancel" },
+                                {
+                                    onSuccess: () => {
+                                        setShowCancelModal(false);
+                                        onClose();
+                                    },
+                                }
+                            )
+                        }
+                        action={{ name: "cancel", value: "إلغاء" }}
                     />
                 )}
+
 
             </div>
         </div>

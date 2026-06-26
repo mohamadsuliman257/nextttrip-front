@@ -71,8 +71,8 @@ export default function UserHomePage() {
               >
                 <div className="text-center space-y-2">
                   <Icon className={`w-full ${card.iconColor}`} size={30} />
-                    <h3 className={`text-xs md:text-md font-semibold ${card.titleColor}`}>{card.title}</h3>
-                    <p className="text-xs md:text-md text-secondary-600">{card.subtitle}</p>
+                    <h3 className={`text-xs md:text-lg font-semibold ${card.titleColor}`}>{card.title}</h3>
+                    <p className="text-xs md:text-lg text-secondary-600">{card.subtitle}</p>
                 </div>
               </div>
             </Link>

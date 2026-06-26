@@ -3,6 +3,7 @@ import GuideHomePage from "@/features/guide/home/pages/GuideHomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GuideProfilePage from "@/features/guide/profile/pages/GuideProfilePage";
 import AllBookingsPage from "@/features/guide/bookings/pages/AllBookingsPage";
+import GuideReviewsPage from "@/features/guide/reviews/pages/GuideReviewsPage";
 
 const guideRoutes = [
   {
@@ -27,7 +28,7 @@ const guideRoutes = [
       },
       {
         path: 'reviews',
-        element: <GuideHomePage />
+        element: <GuideReviewsPage />
       },
       {
         path: 'notifications',

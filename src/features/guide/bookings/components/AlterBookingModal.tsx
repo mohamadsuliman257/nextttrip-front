@@ -1,23 +1,23 @@
 import { useState } from "react";
 
 interface Props {
-  bookingId: number;
+  touristName: string;
   onConfirm: (note: string) => void;
   onClose: () => void;
-  action:  { name: string , value:string};
+  action: { name: string, value: string };
 }
 
-export default function AlterBookingModal({ bookingId, onConfirm, onClose ,action }: Props) {
+export default function AlterBookingModal({ touristName, onConfirm, onClose, action }: Props) {
   const [note, setNote] = useState("");
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg">
 
-        <h2 className="text-xl font-bold mb-4 text-red-600">{action.value} الحجز</h2>
+        <h2 className="text-xl font-bold mb-4 text-primary-600">{action.value} الحجز</h2>
 
         <p className="text-gray-700 mb-3">
-          هل تريد {action.value} الحجز رقم <strong>{bookingId}</strong>؟
+          هل تريد {action.value} الحجز الخاص بالسائح <strong>{touristName}</strong>؟
         </p>
 
         <textarea
@@ -37,7 +37,7 @@ export default function AlterBookingModal({ bookingId, onConfirm, onClose ,actio
 
           <button
             onClick={() => onConfirm(note)}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg"
+            className="px-4 py-2 bg-primary-600 text-white rounded-lg"
           >
             تأكيد {action.value}
           </button>

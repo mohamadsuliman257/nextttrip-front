@@ -10,7 +10,6 @@ interface Props {
 
 export default function BookingDetailsModal({ booking_id, onClose }: Props) {
     const [showCancel, setShowCancel] = useState(false);
-    console.log(booking_id);
     const { data: booking, isLoading } = useBookingDetails(booking_id);
 
     if (isLoading) {

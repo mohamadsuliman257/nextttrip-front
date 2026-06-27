@@ -53,6 +53,7 @@ const handleError = (error: AxiosError<ErrorResponse>) => {
     case 422:
       toast.error("البيانات المدخلة غير صحيحة");
       errorData = { ...errorData, errors: errorData?.errors || {} };
+      console.log(errorData);
       break;
 
     case 503:

@@ -4,6 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import GuideProfilePage from "@/features/guide/profile/pages/GuideProfilePage";
 import AllBookingsPage from "@/features/guide/bookings/pages/AllBookingsPage";
 import GuideReviewsPage from "@/features/guide/reviews/pages/GuideReviewsPage";
+import GuideNotificationsPage from "@/features/notifications/pages/GuideNotificationsPage";
 
 const guideRoutes = [
   {
@@ -32,7 +33,7 @@ const guideRoutes = [
       },
       {
         path: 'notifications',
-        element: <GuideHomePage />
+        element: <GuideNotificationsPage />
       },
       {
         path: 'suggest-place',

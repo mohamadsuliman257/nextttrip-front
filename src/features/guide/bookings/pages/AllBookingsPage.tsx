@@ -47,7 +47,13 @@ export default function AllBookingsPage() {
     },
   ];
 
-  if (isLoading) return <p>جاري التحميل...</p>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-2xl text-primary-500">جاري تحميل البيانات...</p>
+      </div>
+    );
+  }
   if (error) return <p>حدث خطأ أثناء جلب البيانات</p>;
 
   return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CancelBookingModal from "./CancelBookingModal";
 import { useBookingDetails } from "../hooks/useMyBookings";
-import type { Log } from "../../../types/bookingTypes";
+import type { Log } from "../types/bookingTypes";
 
 interface Props {
     booking_id: number;

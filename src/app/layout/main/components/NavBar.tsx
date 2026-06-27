@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
-import  useAuthStore  from "@/features/auth/store/authStore";
+import useAuthStore from "@/features/auth/store/authStore";
+import NotificationBell from "@/features/notifications/components/NotificationBell";
 
 const publicLinks = [
   { label: "خطط رحلتك", to: "/plan" },
-  { label: "احجز مرشدك", to: "/tourist/guides" },  
+  { label: "احجز مرشدك", to: "/tourist/guides" },
   { label: "حول المنصة", to: "/about" },
 ];
 
@@ -14,7 +15,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuthStore();
   const role = user?.role;
-  const homeUrl = user? role ===  "admin"? "/admin" : role === "guide" ?"/guide":"tourist" : "/";
+  const homeUrl = user ? role === "admin" ? "/admin" : role === "guide" ? "/guide" : "tourist" : "/";
   return (
     <nav className="px-8 py-3 w-full flex items-top justify-between absolute top-0">
 
@@ -35,8 +36,8 @@ const NavBar = () => {
         `}
       >
         <li className="hover:text-primary-500 transition">
-            <Link to={homeUrl}>الصفحة الرئيسية</Link>
-          </li>
+          <Link to={homeUrl}>الصفحة الرئيسية</Link>
+        </li>
         {publicLinks.map((link) => (
           <li key={link.to} className="hover:text-primary-500 transition">
             <Link to={link.to}>{link.label}</Link>
@@ -53,22 +54,25 @@ const NavBar = () => {
         {/* إذا كان مسجل دخول */}
         {user && (
           <li className="relative group cursor-pointer text-secondary-600">
-            <span className="flex gap-1">{user.name} <ChevronDown/> </span>
+            <span className="flex gap-1">{user.name} <ChevronDown /> </span>
 
             {/* القائمة المنسدلة */}
-            <ul className="absolute hidden  group-hover:flex flex-col bg-white   border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-50 z-50">              
+            <ul className="absolute hidden  group-hover:flex flex-col bg-white   border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-50 z-50">
+              {user.role == "tourist" &&
+                <>
+                  <Link to="tourist/my-bookings"
+                    className="hover:text-primary-500 transition cursor-pointer"
+                  >
+                    حجوزاتي للمرشدين
 
-              <Link to="tourist/my-bookings"
-                className="hover:text-primary-500 transition cursor-pointer"
-              >
-                حجوزاتي للمرشدين
-               
-              </Link>
-              <Link to="tourist/reviews"
-                className="hover:text-primary-500 transition cursor-pointer"
-              >
-                تقييماتي للمرشدين
-              </Link>
+                  </Link>
+                  <Link to="tourist/reviews"
+                    className="hover:text-primary-500 transition cursor-pointer"
+                  >
+                    تقييماتي للمرشدين
+                  </Link>
+                </>
+              }
               <li
                 className="hover:text-primary-500 transition cursor-pointer"
                 onClick={() => logout(() => navigate("/"))}
@@ -78,6 +82,7 @@ const NavBar = () => {
             </ul>
           </li>
         )}
+        {user && <NotificationBell />}
       </ul>
 
       {/* Logo */}

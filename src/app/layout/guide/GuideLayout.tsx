@@ -11,13 +11,12 @@ export default function GuideLayout() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-2xl text-primary-500">جاري تحميل المرشدين...</p>
+        <p className="text-2xl text-primary-500">جاري تحميل بياناتك ...</p>
       </div>
     );
   }
 
   const guide = data.guide;
-  const stats = data.stats;
 
 
   return (

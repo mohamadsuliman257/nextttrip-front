@@ -30,7 +30,7 @@ export default function Sidebar({guide} :Props) {
     { to: "/guide/bookings", icon: Briefcase, label: "طلبات الحجز" },
     { to: "/guide/reviews", icon: Star, label: "التقييمات" },
     { to: "/guide/notifications", icon: Bell, label: "الإشعارات" },
-    { to: "/guide/suggest-place", icon: MapPin, label: "اقتراح مكان" },
+    // { to: "/guide/suggest-place", icon: MapPin, label: "اقتراح مكان" },
 
   ];
 

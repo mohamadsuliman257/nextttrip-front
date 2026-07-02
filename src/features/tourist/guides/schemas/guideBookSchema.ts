@@ -14,7 +14,7 @@ export const guideBookSchema = z.object({
     .min(1, "يجب أن يكون يومًا واحدًا على الأقل")
     .max(30, "الحد الأقصى 30 يومًا"),
 
-  description: z.string().optional(),
+  description: z.string().min(1,  "جقل الملاحظة مطلوب")    
 });
 
 export type BookingForm = z.input<typeof guideBookSchema>;

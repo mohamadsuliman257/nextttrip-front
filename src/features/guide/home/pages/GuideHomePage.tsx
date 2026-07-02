@@ -4,7 +4,7 @@ import RecentBookingsTable from "../components/RecentBookingsTable";
 import { useGuideDashboard } from "../hooks/useGuideDashboard";
 
 export default function GuideHomePage() {
-  const { data, isLoading } = useGuideDashboard();
+  const { data , isLoading } = useGuideDashboard();
 
   if (isLoading) {
     return (

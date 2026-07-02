@@ -8,6 +8,7 @@ import {
 } from "../schemas/guideBookSchema";
 import type { Guide } from "../types/booking.types";
 import useAuthStore from "@/features/auth/store/authStore";
+import FormField from "@/components/FormField";
 
 interface Props {
   guide: Guide;
@@ -66,49 +67,19 @@ export function GuideBook({ guide }: Props) {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-2 bg-white/50 p-5 border-2 rounded-2xl border-primary-300"
       >
-        {/* التاريخ */}
-        <div>
-          <label>تاريخ الحجز</label>
-          <input
-            type="date"
-            {...register("start_date")}
-            className="w-full border p-2 rounded"
-          />
-          {errors.start_date && (
-            <p className="text-red-500">{errors.start_date.message}</p>
-          )}
-        </div>
 
-        {/* عدد الأيام */}
-        <div>
-          <label>عدد الأيام</label>
-          <input
-            type="number"
-            {...register("day_count", { valueAsNumber: true })}
-            className="w-full border p-2 rounded"
-            min={1}
-            max={30}
-          />
-          {errors.day_count && (
-            <p className="text-red-500">{errors.day_count.message}</p>
-          )}
-        </div>
+        <FormField label="تاريخ الحجز" name="start_date" register={register} errors={errors} type="date" />
+
+        <FormField label="عدد الأيام" name="day_count" register={register} errors={errors} type="number" options={{ valueAsNumber: true }} />
 
         {/* السعر الكلي */}
         {dayCount > 0 && (
           <div className="bg-primary-100 p-3 rounded-lg text-primary-700 font-semibold">
-            السعر الكلي: {totalPrice.toLocaleString()}
+             {totalPrice.toLocaleString()}
           </div>
         )}
 
-        {/* الملاحظة */}
-        <div>
-          <label>وصف </label>
-          <textarea
-            {...register("description")}
-            className="w-full border p-2 rounded h-24"
-          />
-        </div>
+        <FormField label="وصف" name="description" register={register} errors={errors} type="textarea" />
 
         <div className="flex gap-3">
           <button

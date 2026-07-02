@@ -23,11 +23,11 @@ const Footer = () => {
   const icons = [
     { Icon: Mail, to: "mailto: support@nexttrip.sy" },
     { Icon: Phone, to: "tel: +963 999 999 999" },
-    
+
   ];
 
   return (
-    
+
     <footer
       className="bg-white border-t-4 border-primary-light md:ps-30 pt-20 pb-10 px-8 z-50 relative bg-radial from-white via-secondary-100/10 to-primary-300/20"
       style={{ backgroundSize: "100% 100%" }}
@@ -37,7 +37,9 @@ const Footer = () => {
         {/* LOGO + ABOUT */}
         <div>
           <div className="mb-4">
-            <img src="/logo.png" alt="NextTrip Syria Logo" className="w-20 md:w-40 h-auto" />
+            <Link to="/">
+              <img src="/logo.png" alt="NextTrip Syria Logo" className="w-20 md:w-40 h-auto" />
+            </Link>
           </div>
 
           <p className="text-gray-600 leading-relaxed">{brief}</p>

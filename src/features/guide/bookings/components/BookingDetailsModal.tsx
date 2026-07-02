@@ -13,7 +13,7 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
     const [showRejectModal, setShowRejectModal] = useState(false);
     const [showCancelModal, setShowCancelModal] = useState(false);
 
-    const { mutate } = useAlterBooking();
+    const { mutate , isPending } = useAlterBooking();
 
     // إزالة الوقت من التاريخ
     const formattedDate = booking.start_date.split("T")[0];
@@ -152,6 +152,7 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
                                 }
                             )
                         }
+                        isPending={isPending}
                         action={{ name: "cancel", value: "إلغاء" }}
                     />
                 )}

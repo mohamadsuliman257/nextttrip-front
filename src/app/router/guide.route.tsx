@@ -5,6 +5,7 @@ import GuideProfilePage from "@/features/guide/profile/pages/GuideProfilePage";
 import AllBookingsPage from "@/features/guide/bookings/pages/AllBookingsPage";
 import GuideReviewsPage from "@/features/guide/reviews/pages/GuideReviewsPage";
 import GuideNotificationsPage from "@/features/notifications/pages/GuideNotificationsPage";
+import NotFoundPage from "@/features/main/pages/NotFoundPage";
 
 const guideRoutes = [
   {
@@ -37,7 +38,7 @@ const guideRoutes = [
       },
       {
         path: 'suggest-place',
-        element: <GuideHomePage />
+        element: <NotFoundPage />
       },
     ],
   },

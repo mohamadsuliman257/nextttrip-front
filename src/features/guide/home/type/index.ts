@@ -23,5 +23,4 @@ export interface GuideDashboardResponse {
     status: string;
     date_range: string;
   }[];
-  calendar: number[];
 }

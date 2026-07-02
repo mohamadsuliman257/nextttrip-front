@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ForbiddenPage = () => {
+const NotFoundPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-radial to-primary-100/50 from-secondary-100/30 text-center px-6">
       <h1 className="text-7xl font-bold text-secondary-600 mb-4">404</h1>
@@ -16,4 +16,4 @@ const ForbiddenPage = () => {
   );
 };
 
-export default ForbiddenPage;
+export default NotFoundPage;

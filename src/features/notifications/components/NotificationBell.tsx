@@ -5,7 +5,6 @@ import { useMarkAllAsRead } from "../hooks/useMarkAllAsRead";
 import { Bell, X } from "lucide-react";
 import type { Notification } from "../type/notification.type";
 import NotificationPreview from "./NotificationPreview";
-import { Link } from "react-router-dom";
 
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
@@ -31,7 +30,10 @@ export default function NotificationBell() {
     <div className="relative">
 
       {/* زر الجرس */}
-      <button onClick={openPreview} className="relative cursor-pointer">
+      <button className="relative cursor-pointer"
+        onClick={openPreview}
+        disabled={markAllAsRead.isPending}>
+          
         <Bell className="w-11 h-11 text-primary-500" />
 
         {unreadCount > 0 && (
@@ -44,7 +46,9 @@ export default function NotificationBell() {
       {/* المودال */}
       {open && (
         <div className="absolute right-0 mt-3 w-80 bg-white shadow-lg rounded-lg p-3 z-50 border">
-          <button className="absolute left-1 top-1 text-red-700" onClick={closePreview}>
+          <button className="absolute left-1 top-1 text-red-700"
+            onClick={closePreview}
+            disabled={markAllAsRead.isPending}>
             <X />
           </button>
           <h3 className="font-bold mb-2">الإشعارات الجديدة</h3>
@@ -59,7 +63,7 @@ export default function NotificationBell() {
             <div key={n.id} className="border-b py-2">
               <NotificationPreview notification={n} />
             </div>
-          ))}          
+          ))}
 
         </div>
       )}

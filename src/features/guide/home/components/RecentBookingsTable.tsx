@@ -15,12 +15,14 @@ export default function RecentBookingsTable({ bookings }: Props) {
     pending: "text-orange-600 bg-orange-100",
     accepted: "text-green-600 bg-green-100",
     rejected: "text-red-600 bg-red-100",
+    completed: "text-blue-600 bg-blue-100",
   };
 
   const statusLabels: Record<string, string> = {
     pending: "قيد الانتظار",
     accepted: "مقبول",
     rejected: "مرفوض",
+    completed: "مكتمل"
   };
 
   return (

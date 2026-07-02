@@ -5,9 +5,10 @@ interface Props {
   onConfirm: (note: string) => void;
   onClose: () => void;
   action: { name: string, value: string };
+  isPending: boolean
 }
 
-export default function AlterBookingModal({ touristName, onConfirm, onClose, action }: Props) {
+export default function AlterBookingModal({ touristName, onConfirm, onClose, action, isPending }: Props) {
   const [note, setNote] = useState("");
 
   return (
@@ -36,6 +37,8 @@ export default function AlterBookingModal({ touristName, onConfirm, onClose, act
           </button>
 
           <button
+            disabled={isPending}
+            
             onClick={() => onConfirm(note)}
             className="px-4 py-2 bg-primary-600 text-white rounded-lg"
           >

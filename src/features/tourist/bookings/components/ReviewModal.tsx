@@ -53,7 +53,8 @@ export default function ReviewModal( {bookingId , onClose } :any ) {
             إلغاء
           </button>
 
-          <button
+          <button 
+            disabled={isPending}
             onClick={() => mutate( {bookingId , comment , rating})}
             className="w-1/2 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
           >

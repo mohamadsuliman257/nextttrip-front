@@ -113,6 +113,7 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
                             )
                         }
                         action={{ name: "accept", value: "قبول" }}
+                        isPending={isPending}
                     />
                 )}
 
@@ -133,6 +134,7 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
                             )
                         }
                         action={{ name: "reject", value: "رفض" }}
+                        isPending={isPending}
                     />
                 )}
 
@@ -152,8 +154,8 @@ export default function BookingDetailsModal({ booking, onClose }: Props) {
                                 }
                             )
                         }
-                        isPending={isPending}
                         action={{ name: "cancel", value: "إلغاء" }}
+                        isPending={isPending}
                     />
                 )}
 

@@ -24,7 +24,7 @@ export default function AlterBookingModal({ touristName, onConfirm, onClose, act
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder={`سبب ${action.value} (إجباري)`}
+          placeholder={`سبب ${action.value} (خياري)`}
           className="w-full border rounded-lg p-2 h-28"
         />
 
@@ -42,7 +42,7 @@ export default function AlterBookingModal({ touristName, onConfirm, onClose, act
             onClick={() => onConfirm(note)}
             className="px-4 py-2 bg-primary-600 text-white rounded-lg"
           >
-            تأكيد {action.value}
+            {isPending ? `جاري ${action.value}...` : `تأكيد ${action.value}`}
           </button>
         </div>
       </div>

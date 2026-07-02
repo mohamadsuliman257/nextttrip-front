@@ -6,7 +6,7 @@ import RatingStars from "@/components/RatingStars";
 export function GuideCard(guide: Guide) {
   const navigator = useNavigate();
   return (
-    <div className="flex flex-col text-center max-w-100 border border-primary-600/30 rounded-xl p-4 shadow-lg hover:shadow-md transition bg-white/60">
+    <div className="flex flex-col text-center max-w-100 border border-primary-600/30 rounded-xl p-4 shadow-lg hover:shadow-md transition bg-white/60 mx-auto">
       <div className="text-center w-full">
         <img
           src={guide.avatar}

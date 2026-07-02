@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUnreadNotifications } from "../hooks/useUnreadNotifications";
 import { useUnreadCount } from "../hooks/useUnreadCount";
 import { useMarkAllAsRead } from "../hooks/useMarkAllAsRead";
@@ -8,6 +8,7 @@ import NotificationPreview from "./NotificationPreview";
 
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   const { data: unread = [] } = useUnreadNotifications();
   const { data: { count: unreadCount = 0 } = { count: 0 } } = useUnreadCount();
@@ -20,20 +21,37 @@ export default function NotificationBell() {
   const closePreview = () => {
     setOpen(false);
 
-    // عند إغلاق المودال → نجعل كل الإشعارات مقروءة
     if (unreadCount > 0) {
       markAllAsRead.mutate();
     }
   };
 
+  // إغلاق النافذة عند النقر خارجها
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        closePreview();
+      }
+    };
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
   return (
     <div className="relative">
 
       {/* زر الجرس */}
-      <button className="relative cursor-pointer"
+      <button
+        className="relative cursor-pointer"
         onClick={openPreview}
-        disabled={markAllAsRead.isPending}>
-          
+        disabled={markAllAsRead.isPending}
+      >
         <Bell className="w-11 h-11 text-primary-500" />
 
         {unreadCount > 0 && (
@@ -43,14 +61,20 @@ export default function NotificationBell() {
         )}
       </button>
 
-      {/* المودال */}
+      {/* نافذة الإشعارات */}
       {open && (
-        <div className="absolute right-0 mt-3 w-80 bg-white shadow-lg rounded-lg p-3 z-50 border">
-          <button className="absolute left-1 top-1 text-red-700"
+        <div
+          ref={modalRef}
+          className="absolute right-0 mt-3 w-80 bg-white shadow-lg rounded-lg p-3 z-50 border border-primary-300"
+        >
+          <button
+            className="absolute left-1 top-1 text-primary-400"
             onClick={closePreview}
-            disabled={markAllAsRead.isPending}>
+            disabled={markAllAsRead.isPending}
+          >
             <X />
           </button>
+
           <h3 className="font-bold mb-2">الإشعارات الجديدة</h3>
 
           {unread.length === 0 && (
@@ -60,14 +84,12 @@ export default function NotificationBell() {
           )}
 
           {unread.slice(0, 5).map((n: Notification) => (
-            <div key={n.id} className="border-b py-2">
+            <div key={n.id} className="border-b border-primary-300 py-2">
               <NotificationPreview notification={n} />
             </div>
           ))}
-
         </div>
       )}
     </div>
   );
 }
-

@@ -29,7 +29,7 @@ const Footer = () => {
   return (
 
     <footer
-      className="bg-white border-t-4 border-primary-light md:ps-30 pt-20 pb-10 px-8 z-50 relative bg-radial from-white via-secondary-100/10 to-primary-300/20"
+      className="bg-white border-t-2 border-gray-400 md:ps-30 pt-20 pb-10 px-8 z-50 relative bg-radial from-white via-secondary-100/10 to-primary-300/20"
       style={{ backgroundSize: "100% 100%" }}
       dir="rtl"
     >

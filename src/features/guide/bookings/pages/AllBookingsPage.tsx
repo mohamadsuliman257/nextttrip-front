@@ -28,7 +28,6 @@ export default function AllBookingsPage() {
   };
 
   const columns = [
-    { key: "booking_id", label: "#" },
     { key: "tourist_name", label: "السائح" },
     { key: "start_date", label: "التاريخ", format: (v: string) => v.split("T")[0] },
     { key: "day_count", label: "الأيام" },
@@ -64,10 +63,10 @@ export default function AllBookingsPage() {
         <BookingStatusFilter value={status} onChange={setStatus} />
       </div>
 
-      <div className="overflow-x-auto border rounded-lg">
+      <div className="overflow-x-auto  rounded-lg">
         <table className="min-w-full text-right">
           <thead className="bg-gray-100 text-sm">
-            <tr>
+            <tr className="border border-primary-200">
               {columns.map(col => (
                 <th key={col.key} className="px-3 py-2">{col.label}</th>
               ))}
@@ -77,7 +76,7 @@ export default function AllBookingsPage() {
 
           <tbody>
             {bookings.map((booking: Booking) => (
-              <tr key={booking.booking_id} className="border-b text-sm">
+              <tr key={booking.booking_id} className="border border-primary-200 text-sm">
 
                 {columns.map(col => {
                   const value = booking[col.key as keyof Booking];

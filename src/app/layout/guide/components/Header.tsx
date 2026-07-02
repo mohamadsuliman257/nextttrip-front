@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Header() {
 
   return (
-    <header className="flex items-center justify-between   px-20 py-3 ">
+    <header className="flex items-center justify-between  ps-20  pe-5 py-3 ">
      
     <NotificationBell/>
       <Link to="/">

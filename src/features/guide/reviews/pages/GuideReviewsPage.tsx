@@ -36,7 +36,7 @@ const GuideReviewsPage = () => {
     });
 
   return (
-    <div style={{ padding: "24px" }}>
+    <div className="p-2">
       <SummaryCard
         averageRating={data?.average_rating ?? 0}
         totalReviews={data?.total_reviews ?? 0}

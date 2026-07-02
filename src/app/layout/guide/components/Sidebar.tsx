@@ -39,7 +39,7 @@ export default function Sidebar({guide} :Props) {
       {/* زر فتح القائمة في الجوال */}
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden fixed top-4 right-4 bg-primary-200 shadow p-2 rounded-full z-50"
+        className="md:hidden fixed top-7 right-4 bg-primary-200 shadow p-2 rounded-full z-50"
       >
         <Menu size={22} />
       </button>

@@ -6,15 +6,16 @@ type Props = {
   ratingsDistribution: RatingDistribution;
 };
 
-const SummaryCard = ({ averageRating, totalReviews, ratingsDistribution  }: Props) => {
+const SummaryCard = ({ averageRating, totalReviews, ratingsDistribution }: Props) => {
   const safeAverage = averageRating ?? 0;
   const safeTotal = totalReviews ?? 0;
 
   return (
-    <div className="border border-gray-200 rounded-2xl p-6 mb-6 bg-gray-50 flex gap-10 justify-between">
-      
-      {/* القسم الأيسر: التقييم العام */}
-      <div className="min-w-[180px]">
+    <div className="border border-gray-200 rounded-2xl p-6 mb-6 bg-gray-50 
+            flex flex-col md:flex-row gap-6 md:gap-10 justify-between">
+
+      {/* القسم الأيسر */}
+      <div className="w-full md:w-[180px]">
         <h2 className="mb-2 text-lg font-semibold text-gray-800">تقييم المرشد</h2>
 
         <div className="text-4xl font-bold text-yellow-500">
@@ -24,7 +25,7 @@ const SummaryCard = ({ averageRating, totalReviews, ratingsDistribution  }: Prop
         <p className="mt-1 text-gray-600">عدد التقييمات: {safeTotal}</p>
       </div>
 
-      {/* القسم الأيمن: توزيع النجوم */}
+      {/* القسم الأيمن */}
       <div className="flex-1">
         <h3 className="mb-3 text-md font-semibold text-gray-800">توزيع النجوم</h3>
 
@@ -34,13 +35,8 @@ const SummaryCard = ({ averageRating, totalReviews, ratingsDistribution  }: Prop
 
           return (
             <div key={star} className="flex items-center mb-3 gap-3">
-              
-              {/* عدد النجوم */}
-              <div className="w-[70px] text-right text-gray-700">
-                {star} ⭐
-              </div>
+              <div className="w-[70px] text-right text-gray-700">{star} ⭐</div>
 
-              {/* شريط التقدم */}
               <div className="flex-1 bg-gray-200 h-3 rounded-md overflow-hidden">
                 <div
                   className="h-full bg-yellow-500 rounded-md transition-all duration-300"
@@ -48,14 +44,13 @@ const SummaryCard = ({ averageRating, totalReviews, ratingsDistribution  }: Prop
                 />
               </div>
 
-              {/* العدد */}
               <div className="w-6 text-center text-gray-700">{count}</div>
             </div>
           );
         })}
       </div>
     </div>
-  );
+  )
 };
 
 export default SummaryCard;

@@ -9,6 +9,8 @@ import useRegister from "../hooks/useRegister";
 import { Link } from "react-router-dom";
 
 import FormField from "@/components/FormField";
+import { LanguageSelect } from "@/features/lookups/components/LanguageSelect";
+import { Controller } from "react-hook-form";
 
 type RegisterFormData = TouristFormData & Partial<GuideFormData>;
 
@@ -37,6 +39,12 @@ export default function RegisterPage() {
         }
         return;
       }
+      
+      if (key === "languages" && Array.isArray(value)) {
+        value.forEach((id) => formData.append("languages[]", String(id)));
+        return;
+      }
+      
       formData.append(key, value as any);
     });
 
@@ -101,13 +109,32 @@ export default function RegisterPage() {
                       <option value="F">أنثى</option>
                     </FormField>
 
-                    <FormField label="اللغات" name="languages" register={register} errors={errors} />
+                    {/* <FormField label="اللغات" name="languages" register={register} errors={errors} /> */}
+                    <Controller
+                      name="languages"
+                      control={form.control}
+                      render={({ field }) => (
+                        <div className="md:col-span-1">
+                          <label className="text-secondary-800 font-medium">اللغات</label>
+
+                          <LanguageSelect
+                            value={field.value || []}
+                            onChange={(val) => field.onChange(val)}
+                          />
+
+                          {errors.languages && (
+                            <p className="text-red-500">{errors.languages.message}</p>
+                          )}
+                        </div>
+                      )}
+                    />
+
 
                     <FormField label="تاريخ الميلاد" name="DOB" type="date" register={register} errors={errors} />
 
                     <FormField label="رقم الهاتف" name="phone" register={register} errors={errors} />
 
-                    <FormField label="السعر اليومي" name="price_per_day" type="number" register={register} errors={errors} />
+                    <FormField label="السعر اليومي" name="daily_price" type="number" register={register} errors={errors} />
                   </div>
                   <FormField label="السيرة التعريفية" name="bio" type="textarea" register={register} errors={errors} />
 

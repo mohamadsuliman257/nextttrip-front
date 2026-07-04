@@ -22,9 +22,7 @@ export const guideSchema = z
       required_error: "الرجاء اختيار الجنس",
     }),
 
-    languages: z.string({
-      required_error: "اللغات مطلوبة",
-    }).min(2, { message: "أدخل لغة واحدة على الأقل" }),
+    languages: z.array(z.number()),
 
     DOB: z.string({
       required_error: "تاريخ الميلاد مطلوب",
@@ -34,7 +32,7 @@ export const guideSchema = z
       required_error: "رقم الهاتف مطلوب",
     }).min(8, { message: "رقم الهاتف غير صالح" }),
 
-    price_per_day: z.preprocess(
+    daily_price: z.preprocess(
       (val) => Number(val),
       z.number({
         required_error: "السعر مطلوب",

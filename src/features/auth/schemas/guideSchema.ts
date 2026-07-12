@@ -53,6 +53,7 @@ export const guideSchema = z
           (file instanceof FileList && file.length > 0),
         "الرجاء اختيار صورة صحيحة"
       ),
+    role: z.enum(["tourist", "guide"]),
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "كلمتا المرور غير متطابقتين",

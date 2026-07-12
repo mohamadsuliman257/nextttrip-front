@@ -9,17 +9,16 @@ export default function useRegister(setError: any) {
   const setLogin = useAuthStore((state) => state.login);
 
   return useMutation({
-    mutationFn: (data : FormData) => registerUser(data),
+    mutationFn: (data : any) => registerUser(data),
 
     onSuccess: (res) => {
-      toast.success("تم إنشاء الحساب بنجاح");
+      toast.success("اهلا وسهلا");
 
       const { user, token } = res.data;
 
       // تخزين الجلسة في Zustand
       setLogin(user, token);
 
-      toast.success("Welcome!");     
     },
 
     onError: (error : any) => {

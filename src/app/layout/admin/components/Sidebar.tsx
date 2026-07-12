@@ -10,13 +10,14 @@ import {
   Database,
   ChevronDown,
   LogOut,
+  CheckCircle,
 } from "lucide-react";
 import { useState } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { logout } = useAuthStore();
   const [open, setOpen] = useState(false);
 
   // حالة فتح القوائم الفرعية
@@ -36,36 +37,32 @@ export default function Sidebar() {
       label: "إدارة الجداول الأساسية",
       icon: Database,
       children: [
-        { label: "المدن", to: "/admin/lookups/cities" },
-        { label: "أنواع الأمكنة", to: "/admin/lookups/place-types" },
-        { label: "أنواع الاهتمامات", to: "/admin/lookups/interests" },
-        { label: "اللغات", to: "/admin/lookups/languages" },
-        { label: "وحدات الأسعار", to: "/admin/lookups/price-units" },
+        { label: "المدن", to: "/admin/cities" },
+        { label: "أنواع الأماكن", to: "/admin/categories" },
+        { label: "الاهتمامات", to: "/admin/interests" },
+        { label: "اللغات", to: "/admin/languages" },
       ],
     },
     {
       label: "إدارة المستخدمين",
       icon: Users,
-      children: [
-        { label: "السياح", to: "/admin/users/tourists" },
-        { label: "المرشدون", to: "/admin/users/guides" },
-      ],
+      to: "/admin/users",
     },
     {
-      label: "الوجهات السياحية",
-      to: "/admin/destinations",
+      label: "اقتراحات الأماكن",
+      to: "/admin/suggested-places",
+      icon: CheckCircle,
+    },
+    {
+      label: "إدارة الأماكن",
+      to: "/admin/places",
       icon: MapPin,
     },
     {
       label: "إشعارات الأماكن",
       to: "/admin/notifications",
       icon: Bell,
-    },
-    {
-      label: "الإعدادات",
-      to: "/admin/settings",
-      icon: Settings,
-    },
+    }
   ];
 
   return (

@@ -5,6 +5,7 @@ export const touristSchema = z.object({
   email: z.string().email("بريد غير صالح"),
   password: z.string().min(6, "كلمة المرور قصيرة"),
   password_confirmation: z.string(),
+  role: z.enum(["tourist", "guide"]),
 }).refine((data) => data.password === data.password_confirmation, {
   message: "كلمتا المرور غير متطابقتين",
   path: ["password_confirmation"],

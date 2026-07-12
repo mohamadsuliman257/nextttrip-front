@@ -1,5 +1,4 @@
 // auth/pages/RegisterPage.tsx
-import { useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,10 +14,10 @@ import { Controller } from "react-hook-form";
 type RegisterFormData = TouristFormData & Partial<GuideFormData>;
 
 export default function RegisterPage() {
-  const [role, setRole] = useState<"tourist" | "guide">("tourist");
-
   const form = useForm<RegisterFormData>({
-    resolver: zodResolver(role === "tourist" ? touristSchema : guideSchema) as Resolver<RegisterFormData>,
+    defaultValues: {
+      role: "tourist",
+    },
   });
 
   const {
@@ -26,31 +25,19 @@ export default function RegisterPage() {
     handleSubmit,
     formState: { errors },
     setError,
+    watch,
   } = form;
+
   const { mutate, isPending } = useRegister(setError);
 
+  const currentRole = watch("role");
+
+  // تحديد الـ resolver ديناميكياً بناءً على القيمة الحالية المراقبة
+  const resolver = zodResolver(currentRole === "tourist" ? touristSchema : guideSchema);
+  form.control._options.resolver = resolver as Resolver<RegisterFormData>;
+
   const onSubmit = (data: RegisterFormData) => {
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      if (key === "avatar") {
-        if (value instanceof FileList && value.length > 0) {
-          formData.append("avatar", value[0]);
-        }
-        return;
-      }
-      
-      if (key === "languages" && Array.isArray(value)) {
-        value.forEach((id) => formData.append("languages[]", String(id)));
-        return;
-      }
-      
-      formData.append(key, value as any);
-    });
-
-    formData.append("role", role);
-
-    mutate(formData);
+    mutate(data);
   };
 
   const onError = (errors: any) => {
@@ -61,34 +48,15 @@ export default function RegisterPage() {
     <div className="min-h-screen flex flex-col md:flex-row md:bg-linear-0 from-primary-200/40 via-secondary-100 to-primary-200/40 ">
       {/* RIGHT SIDE — FORM */}
       <div className="order-2 md:order-1 flex-1 bg-white overflow-y-auto h-screen">
-        <div className="mt-0 md:mt-10  flex  justify-center mb-10">
+        <div className="mt-0 md:mt-10 flex justify-center mb-10">
           <div className="w-full max-w-lg space-y-6">
             <h2 className="heading-primary font-bold text-secondary-800/85 text-center ">إنشاء حساب</h2>
 
-            {/* اختيار الدور */}
             <div className="flex items-center justify-center gap-6 mb-2 md:mb-6">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="user"
-                  checked={role === "tourist"}
-                  onChange={() => setRole("tourist")}
-                  className="w-4 h-4 accent-primary-600"
-                />
-                <span>مستخدم</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="guide"
-                  checked={role === "guide"}
-                  onChange={() => setRole("guide")}
-                  className="w-4 h-4 accent-primary-600"
-                />
-                <span>مرشد</span>
-              </label>
+              <FormField label="مستخدم" name="role" type="radio" value="tourist" register={register} errors={errors} />
+              <FormField label="مرشد" name="role" type="radio" value="guide" register={register} errors={errors} />
             </div>
+
             <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-3 px-3">
               {/* USER FIELDS */}
               <FormField label="الاسم" name="name" register={register} errors={errors} />
@@ -100,7 +68,7 @@ export default function RegisterPage() {
               <FormField label="تأكيد كلمة المرور" name="password_confirmation" type="password" register={register} errors={errors} />
 
               {/* GUIDE FIELDS */}
-              {role === "guide" && (
+              {currentRole === "guide" && (
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField label="الجنس" name="gender" register={register} errors={errors}>
@@ -109,7 +77,6 @@ export default function RegisterPage() {
                       <option value="F">أنثى</option>
                     </FormField>
 
-                    {/* <FormField label="اللغات" name="languages" register={register} errors={errors} /> */}
                     <Controller
                       name="languages"
                       control={form.control}
@@ -128,7 +95,6 @@ export default function RegisterPage() {
                         </div>
                       )}
                     />
-
 
                     <FormField label="تاريخ الميلاد" name="DOB" type="date" register={register} errors={errors} />
 

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUsers } from "../api/getUsers.api";
 import { updateUserStatus } from "../api/updateUserStatus.api";
+import { makeAdmin } from "../api/makeAdmin.api";
 import type { UserFilters } from "../types/user.type";
 import toast from "react-hot-toast";
 
@@ -18,8 +19,21 @@ export function useUsers(filters?: UserFilters) {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
       toast.success("تم تحديث حالة المستخدم بنجاح");
     },
-    onError: () => {
-      toast.error("فشل تحديث حالة المستخدم");
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.message || "فشل تحديث حالة المستخدم";
+      toast.error(errorMessage);
+    },
+  });
+
+  const makeAdminMutation = useMutation({
+    mutationFn: (id: number) => makeAdmin(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      toast.success("تم تحويل المستخدم إلى مدير نظام بنجاح");
+    },
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.message || "فشل تحويل المستخدم إلى مدير نظام";
+      toast.error(errorMessage);
     },
   });
 
@@ -27,6 +41,7 @@ export function useUsers(filters?: UserFilters) {
     users: usersQuery.data || [],
     isLoading: usersQuery.isLoading,
     updateUserStatus: updateStatusMutation.mutate,
-    isUpdating: updateStatusMutation.isPending,
+    makeAdmin: makeAdminMutation.mutate,
+    isUpdating: updateStatusMutation.isPending || makeAdminMutation.isPending,
   };
 }

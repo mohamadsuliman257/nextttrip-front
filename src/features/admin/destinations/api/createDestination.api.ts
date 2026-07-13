@@ -19,7 +19,14 @@ export async function createDestination(data: any): Promise<void> {
   if (data.recommended_times && data.recommended_times.length > 0) {
     data.recommended_times.forEach((time: string) => formData.append("recommended_times[]", time));
   }
-  if (data.opening_hours) formData.append("opening_hours", data.opening_hours);
+  if (data.opening_hours) {
+    const hoursArray = typeof data.opening_hours === 'string' 
+      ? data.opening_hours.split(',').map(h => h.trim()).filter(h => h)
+      : data.opening_hours;
+    if (hoursArray.length > 0) {
+      hoursArray.forEach((hour: string) => formData.append("opening_hours[]", hour));
+    }
+  }
   if (data.average_rating) formData.append("average_rating", data.average_rating.toString());
   if (data.reviews_count) formData.append("reviews_count", data.reviews_count.toString());
   if (data.latitude) formData.append("latitude", data.latitude.toString());
@@ -37,7 +44,21 @@ export async function createDestination(data: any): Promise<void> {
     });
   }
   
-  await axios.post("/admin/destinations", formData, {
+  // Handle existing images (for edit mode)
+  if (data.existing_images && data.existing_images.length > 0) {
+    data.existing_images.forEach((image: string) => {
+      formData.append("existing_images[]", image);
+    });
+  }
+  
+  // Handle images to delete
+  if (data.images_to_delete && data.images_to_delete.length > 0) {
+    data.images_to_delete.forEach((imageId: number) => {
+      formData.append("images_to_delete[]", imageId.toString());
+    });
+  }
+  
+  await axios.post("/admin/places", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

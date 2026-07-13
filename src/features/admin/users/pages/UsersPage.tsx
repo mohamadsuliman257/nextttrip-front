@@ -6,10 +6,14 @@ import type { UserFilters as UserFiltersType, AccountStatus } from "../types/use
 
 export default function UsersPage() {
   const [filters, setFilters] = useState<UserFiltersType>({});
-  const { users, isLoading, updateUserStatus, isUpdating } = useUsers(filters);
+  const { users, isLoading, updateUserStatus, makeAdmin, isUpdating } = useUsers(filters);
 
   const handleStatusChange = (id: number, status: AccountStatus) => {
     updateUserStatus({ id, data: { status } });
+  };
+
+  const handleMakeAdmin = (id: number) => {
+    makeAdmin(id);
   };
 
   if (isLoading) {
@@ -29,6 +33,7 @@ export default function UsersPage() {
       <UserTable
         users={users}
         onStatusChange={handleStatusChange}
+        onMakeAdmin={handleMakeAdmin}
         isUpdating={isUpdating}
       />
     </div>

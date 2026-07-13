@@ -20,8 +20,8 @@ export default function AdminModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className={`w-full rounded-xl bg-white p-6 shadow-xl ${maxWidthClassName}`}>
-        <div className="mb-4 flex items-center justify-between gap-3">
+      <div className={`w-full rounded-xl bg-white shadow-xl ${maxWidthClassName} flex flex-col max-h-[calc(100vh-40px)]`}>
+        <div className="p-6 flex items-center justify-between gap-3 border-b">
           <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
           <button
             type="button"
@@ -32,7 +32,9 @@ export default function AdminModal({
             <X size={24} />
           </button>
         </div>
-        {children}
+        <div className="p-6 overflow-y-auto flex-1">
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -53,7 +53,8 @@ export default function SuggestedPlaceTable({ suggestedPlaces, onApprove, onReje
                 <td className="p-3 border">{place.name}</td>
                 <td className="p-3 border">{place.city_id || "-"}</td>
                 <td className="p-3 border">{place.user_name}</td>
-                <td className="p-3 border">{userTypeConfig[place.user_type].label}</td>
+                {/* <td className="p-3 border">{userTypeConfig[place.user_type].label}</td> */}
+                <td>x</td>
                 <td className="p-3 border">
                   {place.created_at ? new Date(place.created_at).toLocaleDateString('ar-EG') : '-'}
                 </td>

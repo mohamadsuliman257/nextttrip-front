@@ -39,7 +39,7 @@ export default function UserHomePage() {
     },
     {
       title: "خريطة تفاعلية",
-      to: "/tourist/guide",
+      to: "/tourist/map",
       icon: Globe,
       borderColor: "border-yellow-200",
       iconColor: "text-yellow-300",

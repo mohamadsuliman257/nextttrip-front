@@ -5,7 +5,11 @@ import { GuidesPage } from "@/features/tourist/guides/pages/GuidesPage";
 import { GuideDetailsPage } from "@/features/tourist/guides/pages/GuideDetailsPage";
 import TouristReviewsPage from "@/features/tourist/reviews/pages/TouristReviewsPage";
 import TouristNotificationsPage from "@/features/notifications/pages/TouristNotificationsPage";
+
+import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPage";
+
 import LeafletMapPage from "@/features/tourist/map/pages/LeafletMapPage";
+
 
 const userRoutes = [
   {
@@ -40,6 +44,12 @@ const userRoutes = [
     path: "/tourist/reviews",
     element: <ProtectedRoute role="tourist">
       <TouristReviewsPage />
+    </ProtectedRoute>,
+  },
+  {
+    path: "/tourist/trip",
+    element: <ProtectedRoute role="tourist">
+      <TripPlannerPage />
     </ProtectedRoute>,
   },
   {

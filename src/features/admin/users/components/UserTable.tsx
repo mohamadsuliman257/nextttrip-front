@@ -24,46 +24,44 @@ const userTypeConfig: Record<"guide" | "tourist" | "admin", { label: string }> =
 export default function UserTable({ users, onStatusChange, onMakeAdmin, isUpdating }: UserTableProps) {
   const { user: currentUser } = useAuthStore();
   return (
-    <div className="bg-white shadow rounded-xl p-5 border border-purple-200">
-      <h3 className="text-xl font-semibold text-primary-900 mb-4">المستخدمون</h3>
-
+    <div className="bg-white shadow rounded-xl border border-primary-200 mb-10 p-2">
       <table className="w-full text-right border-collapse">
         <thead>
           <tr className="bg-primary-50 text-primary-900">
-            <th className="p-3 border">#</th>
-            <th className="p-3 border">الاسم</th>
-            <th className="p-3 border">البريد الإلكتروني</th>
-            <th className="p-3 border">الهاتف</th>
-            <th className="p-3 border">نوع المستخدم</th>
-            <th className="p-3 border">حالة الحساب</th>
-            <th className="p-3 border">تغيير الحالة</th>
-            <th className="p-3 border">الإجراءات</th>
+            <th className="p-3 border border-primary-200">#</th>
+            <th className="p-3 border border-primary-200">الاسم</th>
+            <th className="p-3 border border-primary-200">البريد الإلكتروني</th>
+            <th className="p-3 border border-primary-200">الهاتف</th>
+            <th className="p-3 border border-primary-200">نوع المستخدم</th>
+            <th className="p-3 border border-primary-200">حالة الحساب</th>
+            <th className="p-3 border border-primary-200">تغيير الحالة</th>
+            <th className="p-3 border border-primary-200">الإجراءات</th>
           </tr>
         </thead>
 
         <tbody>
           {users.length === 0 ? (
             <tr>
-              <td colSpan={8} className="p-3 border text-center text-gray-500">
+              <td colSpan={8} className="p-3 border border-primary-200 text-center text-gray-500">
                 لا يوجد مستخدمين
               </td>
             </tr>
           ) : (
             users.map((user, index) => (
               <tr key={user.id} className="hover:bg-gray-50">
-                <td className="p-3 border">{index + 1}</td>
-                <td className="p-3 border">{user.name}</td>
-                <td className="p-3 border">{user.email}</td>
-                <td className="p-3 border">{user.phone || "-"}</td>                
-                <td className="p-3 border">{userTypeConfig[user.role].label}</td>
-                <td className="p-3 border">
+                <td className="px-3 py-1 border border-primary-200">{index + 1}</td>
+                <td className="px-3 py-1 border border-primary-200">{user.name}</td>
+                <td className="px-3 py-1 border border-primary-200">{user.email}</td>
+                <td className="px-3 py-1 border border-primary-200">{user.phone || "-"}</td>                
+                <td className="px-3 py-1 border border-primary-200">{userTypeConfig[user.role].label}</td>
+                <td className="px-3 py-1 border border-primary-200">
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${statusConfig[user.status].color}`}
                   >
                     {statusConfig[user.status].label}
                   </span>
                 </td>
-                <td className="p-3 border">
+                <td className="px-3 py-1 border border-primary-200">
                   <select
                     value={user.status}
                     onChange={(e) => onStatusChange(user.id, e.target.value as AccountStatus)}
@@ -76,7 +74,7 @@ export default function UserTable({ users, onStatusChange, onMakeAdmin, isUpdati
                     <option value="closed"> مغلق</option>
                   </select>
                 </td>
-                <td className="p-3 border">
+                <td className="px-3 py-1 border border-primary-200">
                   {user.role === "tourist" && onMakeAdmin && user.id !== currentUser?.id && (
                     <button
                       onClick={() => {

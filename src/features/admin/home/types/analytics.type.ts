@@ -9,6 +9,8 @@ export interface AnalyticsData {
     pending_suggestions: number;
   };
   users: {
+    new_users_this_month: number;
+    new_users_this_week: number;
     by_role: {
       admin: number;
       guide: number;
@@ -18,33 +20,9 @@ export interface AnalyticsData {
       active: number;
       blocked: number;
       unavailable: number;
-    };
-    new_users_this_month: number;
-    new_users_this_week: number;
-  };
-  bookings: {
-    total: number;
-    in_period: number;
-    by_status: {
-      pending: number;
-      accepted: number;
-      rejected: number;
-      completed: number;
-      cancelled: number;
-    };
-    monthly_trend: Array<{
-      month: number;
-      year: number;
-      count: number;
-    }>;
-    weekly_trend: Array<{
-      week: number;
-      year: number;
-      count: number;
-    }>;
-  };
+    };    
+  };  
   places: {
-    total: number;
     by_category: Array<{
       category: string;
       count: number;
@@ -53,35 +31,17 @@ export interface AnalyticsData {
       city: string;
       count: number;
     }>;
-    average_rating: number;
-    total_reviews: number;
-  };
-  trips: {
     total: number;
-    in_period: number;
-    monthly_trend: Array<{
-      month: number;
-      year: number;
-      count: number;
-    }>;
+    average_rating: number;
+    reviews_count: number;
   };
+   
+  bookings:  any;  
+  trips: any;
+
   revenue: {
     total_revenue: number;
-    in_period: number;
-    average_booking_value: number;
-    monthly_revenue: Array<{
-      month: number;
-      year: number;
-      revenue: number;
-    }>;
-  };
-  suggested_places: {
-    total: number;
-    by_status: {
-      pending: number;
-      approved: number;
-      rejected: number;
-    };
-    pending_this_week: number;
-  };
+    last_year_revenue: number;
+    average_booking_value: number;   
+  };  
 }

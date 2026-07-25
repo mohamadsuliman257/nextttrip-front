@@ -15,57 +15,50 @@ const statusConfig: Record<SuggestionStatus, { label: string; color: string }> =
   rejected: { label: "مرفوض", color: "bg-red-100 text-red-700" },
 };
 
-const userTypeConfig: Record<"guide" | "tourist", { label: string }> = {
-  guide: { label: "مرشد" },
-  tourist: { label: "سائح" },
-};
-
 export default function SuggestedPlaceTable({ suggestedPlaces, onApprove, onReject, onView, isUpdating }: SuggestedPlaceTableProps) {
   return (
-    <div className="bg-white shadow rounded-xl p-5 border border-purple-200">
-      <h3 className="text-xl font-semibold text-primary-900 mb-4">اقتراحات الأماكن</h3>
-
+    <div className="bg-white shadow rounded-xl border border-primary-200 mb-10 p-2">
       <table className="w-full text-right border-collapse">
         <thead>
           <tr className="bg-primary-50 text-primary-900">
-            <th className="p-3 border">#</th>
-            <th className="p-3 border">اسم المكان</th>
-            <th className="p-3 border">المدينة</th>
-            <th className="p-3 border">اسم المستخدم</th>
-            <th className="p-3 border">نوع المستخدم</th>
-            <th className="p-3 border">تاريخ الاقتراح</th>
-            <th className="p-3 border">الحالة</th>
-            <th className="p-3 border">الإجراءات</th>
+            <th className="p-3 border border-primary-200">#</th>
+            <th className="p-3 border border-primary-200">اسم المكان</th>
+            <th className="p-3 border border-primary-200">المدينة</th>
+            <th className="p-3 border border-primary-200">اسم المستخدم</th>
+            <th className="p-3 border border-primary-200">نوع المستخدم</th>
+            <th className="p-3 border border-primary-200">تاريخ الاقتراح</th>
+            <th className="p-3 border border-primary-200">الحالة</th>
+            <th className="p-3 border border-primary-200">الإجراءات</th>
           </tr>
         </thead>
 
         <tbody>
           {suggestedPlaces.length === 0 ? (
             <tr>
-              <td colSpan={8} className="p-3 border text-center text-gray-500">
+              <td colSpan={8} className="p-3 border border-primary-200 text-center text-gray-500">
                 لا توجد اقتراحات
               </td>
             </tr>
           ) : (
             suggestedPlaces.map((place, index) => (
               <tr key={place.id} className="hover:bg-gray-50">
-                <td className="p-3 border">{index + 1}</td>
-                <td className="p-3 border">{place.name}</td>
-                <td className="p-3 border">{place.city_id || "-"}</td>
-                <td className="p-3 border">{place.user_name}</td>
-                {/* <td className="p-3 border">{userTypeConfig[place.user_type].label}</td> */}
-                <td>x</td>
-                <td className="p-3 border">
+                <td className="px-3 py-1 border border-primary-200">{index + 1}</td>
+                <td className="px-3 py-1 border border-primary-200">{place.name}</td>
+                <td className="px-3 py-1 border border-primary-200">{place.city_id || "-"}</td>
+                <td className="px-3 py-1 border border-primary-200">{place.user_name}</td>
+                {/* <td className="px-3 py-1 border border-primary-200">{userTypeConfig[place.user_type].label}</td> */}
+                <td className="px-3 py-1 border border-primary-200">x</td>
+                <td className="px-3 py-1 border border-primary-200">
                   {place.created_at ? new Date(place.created_at).toLocaleDateString('ar-EG') : '-'}
                 </td>
-                <td className="p-3 border">
+                <td className="px-3 py-1 border border-primary-200">
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${statusConfig[place.status].color}`}
                   >
                     {statusConfig[place.status].label}
                   </span>
                 </td>
-                <td className="p-3 border">
+                <td className="px-3 py-1 border border-primary-200">
                   <div className="flex gap-2">
                     <button
                       onClick={() => onView(place)}

@@ -34,12 +34,12 @@ export default function DestinationsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">إدارة الأماكن</h1>
+        <h1 className="text-2xl font-bold text-primary-700">إدارة الأماكن</h1>
         <button
           onClick={() => setIsFormVisible(true)}
-          className="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+          className="bg-secondary-600/70 text-white mx-2 px-4 py-2 rounded-lg hover:bg-primary-400 transition-all"
         >
           إضافة مكان جديد
         </button>

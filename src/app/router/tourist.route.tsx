@@ -48,9 +48,7 @@ const userRoutes = [
   },
   {
     path: "/tourist/trip",
-    element: <ProtectedRoute role="tourist">
-      <TripPlannerPage />
-    </ProtectedRoute>,
+    element: <TripPlannerPage />
   },
   {
     path: "/tourist/guides",

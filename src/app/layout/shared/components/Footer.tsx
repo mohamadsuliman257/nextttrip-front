@@ -7,16 +7,16 @@ const copyRight = "© 2026 NextTrip Syria — جميع الحقوق محفوظة
 const Footer = () => {
   // روابط مهمة
   const links = [
-    { label: "خطط رحلتك", to: "/plan" },
-    { label: "احجز مرشدك", to: "/guides" },
+    { label: "خطط رحلتك", to: "/tourist/trip" },
+    { label: "احجز مرشدك", to: "/tourist/guides" },
     { label: "حول المنصة", to: "/about" },
   ];
 
   // بيانات التواصل
   const contact = [
-    { label: "البريد:", value: "support@nexttrip.sy" },
-    { label: "الهاتف:", value: "+963 999 999 999" },
-    { label: "العنوان:", value: "دمشق – سوريا" },
+    { label: "البريد", value: "support@nexttrip.sy", href: "mailto: support@nexttrip.sy" },
+    { label: "الهاتف", value: "+963 999 999 999", href: "tel: +963 999 999 999" },
+    { label: "العنوان", value: "دمشق – سوريا" },
   ];
 
   // أيقونات التواصل
@@ -64,7 +64,9 @@ const Footer = () => {
           <ul className="space-y-2 text-gray-700">
             {contact.map((c, i) => (
               <li key={i}>
-                {c.label} {c.value}
+                <a href={c.href}>
+                  {c.label} : {c.value}
+                </a>
               </li>
             ))}
           </ul>
@@ -75,9 +77,9 @@ const Footer = () => {
                 key={index}
                 className="w-9 h-9 text-secondary-500 rounded-full flex items-center justify-center cursor-pointer hover:bg-primary-light/20 transition"
               >
-                <Link to={icon.to}>
+                <a href={icon.to}>
                   <icon.Icon />
-                </Link>
+                </a>
               </div>
             ))}
           </div>

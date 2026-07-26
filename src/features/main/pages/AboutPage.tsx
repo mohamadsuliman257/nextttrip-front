@@ -37,7 +37,7 @@ export const ABOUT_CONTENT = {
 
 const AboutPage: React.FC = () => {
   return (
-    <main className="w-full bg-gray-50/40 text-primary-700 pt-15">
+    <main className="w-full  text-primary-700">
       <section className="max-w-5xl mx-auto md:px-[20%] py-12">
 
         {/* العنوان + المقدمة */}

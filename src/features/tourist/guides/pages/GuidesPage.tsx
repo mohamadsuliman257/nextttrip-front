@@ -4,7 +4,7 @@ import { FiltersBar } from "../components/FilterBar";
 import { GuideList } from "../components/GuideList";
 import type { Filters } from "../types/booking.types";
 
-export function GuidesPage() {
+export default function GuidesPage() {
   const [filters, setFilters] = useState<Filters>({
     cities: [],
     languages: [],
@@ -22,8 +22,8 @@ export function GuidesPage() {
   }
 
   return (
-    <div className="py-20 md:px-[20%]">
-      <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-6 px-3">
+    <div className="pb-20 md:px-[20%]">
+      <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-10 px-3 -m-10">
         المرشدين
       </h1>
 

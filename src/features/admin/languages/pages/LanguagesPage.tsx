@@ -55,12 +55,12 @@ export default function LanguagesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-gray-900">إدارة اللغات</h1>
+        <h1 className="text-2xl font-bold text-primary-700">إدارة اللغات</h1>
         <button
           onClick={() => setIsFormOpen(true)}
-          className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+          className="bg-secondary-600/70 text-white mx-2 px-4 py-2 rounded-lg hover:bg-primary-400 transition-all"
         >
           إضافة لغة جديدة
         </button>

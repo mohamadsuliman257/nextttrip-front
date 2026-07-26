@@ -5,7 +5,7 @@ import useAuthStore from "@/features/auth/store/authStore";
 import NotificationBell from "@/features/notifications/components/NotificationBell";
 
 const publicLinks = [
-  { label: "خطط رحلتك", to: "/plan" },
+  { label: "خطط رحلتك", to: "/tourist/trip"},
   { label: "احجز مرشدك", to: "/tourist/guides" },
   { label: "حول المنصة", to: "/about" },
 ];

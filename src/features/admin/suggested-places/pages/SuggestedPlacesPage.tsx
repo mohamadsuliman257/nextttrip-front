@@ -38,8 +38,8 @@ export default function SuggestedPlacesPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">إدارة اقتراحات الأماكن</h1>
+    <div className="space-y-3">
+      <h1 className="text-2xl font-bold text-primary-700">إدارة اقتراحات الأماكن</h1>
 
       <SuggestedPlaceTable
         suggestedPlaces={suggestedPlaces}

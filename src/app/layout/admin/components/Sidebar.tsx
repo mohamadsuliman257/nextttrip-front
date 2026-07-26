@@ -1,22 +1,26 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   Users,
-  MapPin,
-  Settings,
   Menu,
   X,
   LayoutDashboard,
   Bell,
-  Database,
   ChevronDown,
   LogOut,
-  CheckCircle,
+  CalendarCheck,
+  Building2,
+  Layers,
+  Heart,
+  Globe,
+  Lightbulb,
+  Building
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useAuthStore();
   const [open, setOpen] = useState(false);
 
@@ -26,6 +30,20 @@ export default function Sidebar() {
   const toggleMenu = (label: any) => {
     setOpenMenus((prev: any) => ({ ...prev, [label]: !prev[label] }));
   };
+
+  // فتح القائمة الفرعية تلقائياً إذا كان المسار الحالي يطابق أحد عناصرها
+  useEffect(() => {
+    menu.forEach((item) => {
+      if (item.children) {
+        const hasActiveChild = item.children.some((child) =>
+          location.pathname === child.to
+        );
+        if (hasActiveChild && !openMenus[item.label]) {
+          setOpenMenus((prev: any) => ({ ...prev, [item.label]: true }));
+        }
+      }
+    });
+  }, [location.pathname]);
   // console.log(openMenus);
   const menu = [
     {
@@ -35,12 +53,11 @@ export default function Sidebar() {
     },
     {
       label: "إدارة الجداول الأساسية",
-      icon: Database,
       children: [
-        { label: "المدن", to: "/admin/cities" },
-        { label: "أنواع الأماكن", to: "/admin/categories" },
-        { label: "الاهتمامات", to: "/admin/interests" },
-        { label: "اللغات", to: "/admin/languages" },
+        { label: "المدن", to: "/admin/cities", icon: Building2 },
+        { label: "أنواع الأماكن", to: "/admin/categories", icon: Layers },
+        { label: "الاهتمامات", to: "/admin/interests", icon: Heart },
+        { label: "اللغات", to: "/admin/languages", icon: Globe },
       ],
     },
     {
@@ -49,20 +66,30 @@ export default function Sidebar() {
       to: "/admin/users",
     },
     {
-      label: "اقتراحات الأماكن",
-      to: "/admin/suggested-places",
-      icon: CheckCircle,
+      label: "الحجوزات ",
+      icon: CalendarCheck,
+      to: "/admin/users",
     },
     {
-      label: "إدارة الأماكن",
-      to: "/admin/places",
-      icon: MapPin,
+      label: "الأماكن ",
+      children: [
+        {
+          label: "اقتراحات الأماكن",
+          to: "/admin/suggested-places",
+          icon: Lightbulb,
+        },
+        {
+          label: "إدارة الأماكن",
+          to: "/admin/places",
+          icon: Building,
+        },
+        {
+          label: "إشعارات الأماكن",
+          to: "/admin/notifications",
+          icon: Bell,
+        }
+      ]
     },
-    {
-      label: "إشعارات الأماكن",
-      to: "/admin/notifications",
-      icon: Bell,
-    }
   ];
 
   return (
@@ -86,9 +113,9 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 right-0 w-64 z-50 h-screen          
+          fixed top-0 right-0 w-64 z-50 h-full
           text-secondary-800 md:bg-white/10 bg-white/90
-          flex flex-col py-6 
+          flex flex-col py-6 overflow-y-auto
           ${open ? "translate-x-0" : "translate-x-full"}
           md:static md:translate-x-0
           transform transition-transform duration-500
@@ -121,6 +148,7 @@ export default function Sidebar() {
                 <NavLink
                   key={item.label}
                   to={item.to}
+                  end
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
                     `flex items-center gap-3 py-2 px-3 rounded-md transition ${isActive
@@ -140,31 +168,38 @@ export default function Sidebar() {
               <div key={item.label}>
                 <button
                   onClick={() => toggleMenu(item.label)}
-                  className="flex items-center justify-between w-full py-2 px-3 rounded-md hover:bg-secondary-300/60"
+                  className="flex items-center  w-full py-2 px-3 rounded-md hover:bg-secondary-300/60 transition"
                 >
-                  <span className="flex items-center gap-3">
-                    <Icon size={18} />
-                    {item.label}
-                  </span>
-                  <ChevronDown
+                   <ChevronDown
                     size={18}
-                    className={`transition ${openMenus[item.label] ? "rotate-180" : ""
+                    className={`me-2 transition ${openMenus[item.label] ? "" : "rotate-90"
                       }`}
                   />
+                  <span>
+                    {item.label}
+                  </span>
                 </button>
 
                 {openMenus[item.label] && (
-                  <div className="ml-6 mt-1 flex flex-col gap-1 text-lg bg-secondary-100/30">
-                    {item.children.map((child) => (
-                      <NavLink
-                        key={child.label}
-                        to={child.to}
-                        onClick={() => setOpen(false)}
-                        className=" ps-10 py-0.5 hover:bg-secondary-300/60"
-                      >
-                        {child.label}
-                      </NavLink>
-                    ))}
+                  <div className="ms-8 ps-2 ml-6 mt-1 flex flex-col gap-1 text-lg ">
+                    {item.children.map((child) => {
+                      const ChildIcon = child.icon;
+                      return (
+                        <NavLink
+                          key={child.label}
+                          to={child.to}
+                          onClick={() => setOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center gap-2 py-1 transition  ${
+                              isActive ? "bg-secondary-100" : "hover:bg-secondary-300/60"
+                            }`
+                          }
+                        >
+                          {ChildIcon && <ChildIcon size={14} />}
+                          {child.label}
+                        </NavLink>
+                      );
+                    })}
                   </div>
                 )}
               </div>

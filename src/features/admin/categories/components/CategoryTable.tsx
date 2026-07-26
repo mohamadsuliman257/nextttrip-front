@@ -10,31 +10,29 @@ interface CategoryTableProps {
 
 export default function CategoryTable({ categories, onEdit, onDelete, isDeleting }: CategoryTableProps) {
   return (
-    <div className="bg-white shadow rounded-xl p-5 border border-purple-200">
-      <h3 className="text-xl font-semibold text-primary-900 mb-4">أنواع الأماكن</h3>
-
+    <div className="bg-white shadow rounded-xl border border-primary-200 mb-10 p-2">
       <table className="w-full text-right border-collapse">
         <thead>
           <tr className="bg-primary-50 text-primary-900">
-            <th className="p-3 border">#</th>
-            <th className="p-3 border">اسم التصنيف</th>
-            <th className="p-3 border">الإجراءات</th>
+            <th className="p-3 border border-primary-200">#</th>
+            <th className="p-3 border border-primary-200">اسم التصنيف</th>
+            <th className="p-3 border border-primary-200">الإجراءات</th>
           </tr>
         </thead>
 
         <tbody>
           {categories.length === 0 ? (
             <tr>
-              <td colSpan={3} className="p-3 border text-center text-gray-500">
+              <td colSpan={3} className="py-1 px-3 border border-primary-200 text-center text-gray-500">
                 لا توجد تصنيفات
               </td>
             </tr>
           ) : (
             categories.map((category, index) => (
               <tr key={category.id} className="hover:bg-gray-50">
-                <td className="p-3 border">{index + 1}</td>
-                <td className="p-3 border">{category.name}</td>
-                <td className="p-3 border">
+                <td className="py-1 px-3 border border-primary-200">{index + 1}</td>
+                <td className="py-1 px-3 border border-primary-200">{category.name}</td>
+                <td className="py-1 px-3 border border-primary-200">
                   <div className="flex gap-2">
                     <button
                       onClick={() => onEdit(category)}

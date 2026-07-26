@@ -14,8 +14,8 @@ const TouristReviewsPage = () => {
   if (error) return <p>حدث خطأ أثناء جلب التقييمات</p>;
 
   return (
-    <div className="py-20 md:px-[20%]">
-      <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-6 px-3">
+    <div className="pb-20 md:px-[20%] min-h-screen -mt-10 ">
+      <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-10 px-3">
         تقييماتي
       </h1>
     

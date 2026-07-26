@@ -1,10 +1,11 @@
-import MyBookingsPage from "@/features/tourist/bookings/pages/MyBookingsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+
+import MyBookingsPage from "@/features/tourist/bookings/pages/MyBookingsPage";
 import HomePage from "@/features/tourist/home/pages/HomePage";
-import { GuidesPage } from "@/features/tourist/guides/pages/GuidesPage";
-import { GuideDetailsPage } from "@/features/tourist/guides/pages/GuideDetailsPage";
+import  GuidesPage  from "@/features/tourist/guides/pages/GuidesPage";
+import  GuideDetailsPage  from "@/features/tourist/guides/pages/GuideDetailsPage";
 import TouristReviewsPage from "@/features/tourist/reviews/pages/TouristReviewsPage";
-import TouristNotificationsPage from "@/features/notifications/pages/TouristNotificationsPage";
+import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 
 import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPage";
 
@@ -20,18 +21,8 @@ const userRoutes = [
   },
   {
     path: '/tourist/notifications',
-    element: <TouristNotificationsPage />
-  },
-  {
-    path: "/tourist",
     element: <ProtectedRoute role="tourist">
-      <HomePage />
-    </ProtectedRoute>,
-  },
-  {
-    path: "/tourist",
-    element: <ProtectedRoute role="tourist">
-      <HomePage />
+      <NotificationsPage />
     </ProtectedRoute>,
   },
   {
@@ -58,16 +49,10 @@ const userRoutes = [
     path: "/tourist/guides/:guideId",
     element: <GuideDetailsPage />
   },
-
   {
     path: "/tourist/map",
-    element: (
-      <ProtectedRoute role="tourist">
-        <LeafletMapPage />
-      </ProtectedRoute>
-    ),
+    element: <LeafletMapPage />
   },
 ];
-
 
 export default userRoutes;

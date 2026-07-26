@@ -3,7 +3,7 @@ import { useGuideDetails } from "../hooks/useGuides";
 import RatingStars from "@/components/RatingStars";
 import { GuideBook } from "../components/GuideBook";
 
-export function GuideDetailsPage() {
+export default function GuideDetailsPage() {
   const { guideId } = useParams();
   const { data: guide, isLoading } = useGuideDetails(Number(guideId));
 

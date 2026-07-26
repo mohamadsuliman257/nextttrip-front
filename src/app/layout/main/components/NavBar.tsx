@@ -46,7 +46,7 @@ const NavBar = () => {
   const closeMenu = () => setOpen(false);
 
   return (
-    <nav className="px-8 py-3 w-full flex items-top justify-between absolute top-0">
+    <nav className="px-8 py-3 w-full flex items-top justify-between top-0">
 
       {/* زر الموبايل */}
       <button

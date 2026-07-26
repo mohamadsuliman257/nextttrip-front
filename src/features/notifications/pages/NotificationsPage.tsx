@@ -1,7 +1,7 @@
 import { useAllNotifications } from "../hooks/useAllNotifications";
 import type { Notification } from "../type/notification.type";
 
-export default function GuideNotificationsPage() {
+export default function NotificationsPage() {
   const { data: notifications = [], isLoading } = useAllNotifications();
 
   if (isLoading) {
@@ -14,7 +14,7 @@ export default function GuideNotificationsPage() {
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
-      <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-6 px-3">
+      <h1 className="text-lg md:text-2xl font-bold text-primary-500 md:text-center mb-6 -mt-12 px-3">
         كافة الإشعارات
       </h1>
 
@@ -40,7 +40,7 @@ export default function GuideNotificationsPage() {
 function NotificationItem({ notification }: { notification: Notification }) {
   const { data, is_read, created_at } = notification;
   const { type } = data;
-  console.log(notification);
+  // console.log(notification);
   return (
     <div
       className={`p-4 rounded-lg border shadow-sm ${is_read ? "bg-white" : "bg-blue-50"

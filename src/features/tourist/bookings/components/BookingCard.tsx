@@ -42,7 +42,7 @@ export default function BookingCard({ booking }: Props) {
 
   return (
     <>
-      <div className="border rounded-xl p-5 shadow-md bg-white/70 hover:shadow-lg transition-all duration-200 space-y-2">
+      <div className="border border-secondary-300 rounded-xl p-5 shadow-md bg-white/70 hover:shadow-lg transition-all duration-200 space-y-2">
 
         {/* Header */}
         <div className="flex justify-between items-center">

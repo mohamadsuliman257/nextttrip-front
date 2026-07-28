@@ -74,6 +74,21 @@ function NotificationItem({ notification }: { notification: Notification }) {
             </>
           )}
 
+          {type === "suggested-place-submitted" && (
+            <>
+              <p className="font-bold">{data.message}</p>
+              <p className="text-sm text-gray-600 mt-1">
+                اسم المكان: {data.place_name}
+              </p>
+              <p className="text-sm text-gray-600 mt-1">
+                المدينة: {data.city_name}
+              </p>
+              <p className="text-sm text-gray-600 mt-1">
+                قدم بواسطة: {data.submitted_by}
+              </p>
+            </>
+          )}
+
           <p className="text-xs text-gray-400 mt-2">{created_at}</p>
         </div>
 

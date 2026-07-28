@@ -5,7 +5,8 @@ const statusColors = {
   accepted: "bg-green-100 text-green-700",
   rejected: "bg-red-100 text-red-700",
   completed: "bg-blue-100 text-blue-700",
-  cancelled: "bg-gray-100 text-gray-700",
+  cancelled_by_tourist: "bg-gray-100 text-gray-700",
+  cancelled_by_guide: "bg-gray-200 text-gray-900",
 };
 
 const statusLabels = {
@@ -13,7 +14,8 @@ const statusLabels = {
   accepted: "مقبول",
   rejected: "مرفوض",
   completed: "مكتمل",
-  cancelled: "ملغي",
+  cancelled_by_tourist: "ملغي من قبل السائح",
+  cancelled_by_guide: "ملغي من قبل المرشد",
 };
 
 export default function BookingTable() {
@@ -53,7 +55,8 @@ export default function BookingTable() {
           <thead>
             <tr className="bg-primary-50 text-primary-600 border-b-2 border-primary-100">
               <th className="p-3 ">المرشد</th>
-              <th className="p-3 ">التاريخ</th>
+              <th className="p-3 ">تاريخ الإنشاء</th>
+              <th className="p-3 ">تاريخ بدء الرحلة</th>
               <th className="p-3 ">السائح</th>
               <th className="p-3 ">الحالة</th>
             </tr>
@@ -64,6 +67,7 @@ export default function BookingTable() {
               <tr key={booking.id} className="hover:bg-gray-50">
                 <td className="p-3 ">{booking.guide?.user?.name || '-'}</td>
                 <td className="p-3 ">{formatDate(booking.created_at)}</td>
+                <td className="p-3 ">{formatDate(booking.start_date)}</td>
                 <td className="p-3 ">{booking.tourist?.name || '-'}</td>
                 <td className="p-3 ">
                   <span

@@ -21,6 +21,17 @@ export default function NotificationPreview({ notification  }: { notification: N
     );
   }
 
+  if (data.type === "suggested-place-submitted") {
+    return (
+      <div>
+        <p className="font-bold">{data.message}</p>
+        <p className="text-sm text-gray-600">
+          {data.place_name} - {data.city_name}
+        </p>
+      </div>
+    );
+  }
+
   return <p>إشعار غير معروف</p>;
 }
 

@@ -3,7 +3,6 @@ export type TripPlannerRequest = {
   longitude: number;
   interests: string[];
   budget: number;
-  days: number;
   season: "winter" | "spring" | "summer" | "autumn";
   weather: "sunny" | "cloudy" | "rainy" | "hot" | "cold";
   preferred_time: "morning" | "afternoon" | "evening" | "sunset";

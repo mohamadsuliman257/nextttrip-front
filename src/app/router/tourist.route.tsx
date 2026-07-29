@@ -12,7 +12,7 @@ import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPa
 import LeafletMapPage from "@/features/tourist/map/pages/LeafletMapPage";
 
 
-const userRoutes = [
+const touristRoutes = [
   {
     path: "/tourist",
     element: <ProtectedRoute role="tourist">
@@ -55,4 +55,4 @@ const userRoutes = [
   },
 ];
 
-export default userRoutes;
+export default touristRoutes;

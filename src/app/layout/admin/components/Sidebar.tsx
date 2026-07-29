@@ -15,17 +15,17 @@ import {
   Lightbulb,
   Building
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode, type RefAttributes } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout } = useAuthStore();
+  const  logout  = useAuthStore((s) => s.logout);
   const [open, setOpen] = useState(false);
 
   // حالة فتح القوائم الفرعية
-  const [openMenus, setOpenMenus] = useState({});
+  const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
 
   const toggleMenu = (label: any) => {
     setOpenMenus((prev: any) => ({ ...prev, [label]: !prev[label] }));
@@ -55,7 +55,7 @@ export default function Sidebar() {
       label: "إدارة الجداول الأساسية",
       children: [
         { label: "المدن", to: "/admin/cities", icon: Building2 },
-        { label: "أنواع الأماكن", to: "/admin/categories", icon: Layers },
+        { label: "تصنيفات الوجهات السياحية", to: "/admin/categories", icon: Layers },
         { label: "الاهتمامات", to: "/admin/interests", icon: Heart },
         { label: "اللغات", to: "/admin/languages", icon: Globe },
       ],
@@ -71,7 +71,7 @@ export default function Sidebar() {
       to: "/admin/users",
     },
     {
-      label: "الأماكن ",
+      label: "الوجهات السياحية ",
       children: [
         {
           label: "اقتراحات الأماكن",
@@ -113,7 +113,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 right-0 w-64 z-50 h-full
+          fixed top-0 right-0 w-78 z-50 h-full
           text-secondary-800 md:bg-white/10 bg-white/90
           flex flex-col py-6 overflow-y-auto
           ${open ? "translate-x-0" : "translate-x-full"}
@@ -140,7 +140,7 @@ export default function Sidebar() {
 
         <nav className="flex flex-col gap-2 px-4 text-lg">
           {menu.map((item) => {
-            const Icon = item.icon;
+            const Icon  = item.icon ;
 
             // عنصر رئيسي بدون children
             if (!item.children) {

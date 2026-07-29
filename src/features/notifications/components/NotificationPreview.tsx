@@ -1,3 +1,5 @@
+import type { Notification } from "../type/notification.type";
+
 export default function NotificationPreview({ notification  }: { notification: Notification }) {
   const {  data } = notification;
 

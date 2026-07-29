@@ -3,6 +3,8 @@ export type TripPlannerRequest = {
   longitude: number;
   interests: string[];
   budget: number;
+  start_date: string;
+  days: number;
   season: "winter" | "spring" | "summer" | "autumn";
   weather: "sunny" | "cloudy" | "rainy" | "hot" | "cold";
   preferred_time: "morning" | "afternoon" | "evening" | "sunset";
@@ -34,6 +36,7 @@ export type TripActivity = {
 
 export type TripDay = {
   day: number;
+  date: string | null;
   total_cost: number;
   total_duration: number;
   total_travel_time: number;
@@ -43,6 +46,8 @@ export type TripDay = {
 export type TripPlan = {
   summary: {
     algorithm: string;
+    start_date: string | null;
+    end_date: string | null;
     days: number;
     pace: string;
     budget: number;

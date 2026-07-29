@@ -4,11 +4,15 @@ import toast from "react-hot-toast";
 import { createSmartTripPlan } from "../api/tripPlanner.api";
 import type { TripPlan, TripPlannerRequest } from "../types/tripPlanner.types";
 
+const today = new Date().toISOString().split("T")[0];
+
 const defaultRequest: TripPlannerRequest = {
   latitude: 33.5138,
   longitude: 36.2765,
   interests: ["historic", "nature"],
   budget: 120,
+  start_date: today,
+  days: 3,
   season: "spring",
   weather: "sunny",
   preferred_time: "morning",
@@ -111,6 +115,29 @@ export default function TripPlannerPage() {
           </label>
 
           <label className="space-y-1 text-sm font-medium">
+            Start date
+            <input
+              className="w-full rounded-lg border px-3 py-2"
+              type="date"
+              min={today}
+              value={form.start_date}
+              onChange={(event) => updateForm("start_date", event.target.value)}
+            />
+          </label>
+
+          <label className="space-y-1 text-sm font-medium">
+            Days
+            <input
+              className="w-full rounded-lg border px-3 py-2"
+              type="number"
+              min={1}
+              max={14}
+              value={form.days}
+              onChange={(event) => updateForm("days", Number(event.target.value))}
+            />
+          </label>
+
+          <label className="space-y-1 text-sm font-medium">
             Season
             <select
               className="w-full rounded-lg border px-3 py-2"
@@ -201,16 +228,18 @@ export default function TripPlannerPage() {
             <div className="rounded-xl bg-white p-5 shadow">
               <h2 className="mb-3 text-xl font-semibold text-primary-500">Trip summary</h2>
               <div className="grid gap-3 text-sm md:grid-cols-4">
-                <span>Program: daily</span>
+                <span>Days: {plan.summary.days}</span>
+                <span>Start: {plan.summary.start_date}</span>
                 <span>Places: {plan.summary.total_places}</span>
                 <span>Cost: {plan.summary.total_cost}</span>
-                <span>Travel: {plan.summary.total_travel_time} min</span>
               </div>
             </div>
 
             {plan.days.map((day) => (
               <div key={day.day} className="rounded-xl bg-white p-5 shadow">
-                <h3 className="mb-4 text-lg font-semibold text-secondary-600">Daily program</h3>
+                <h3 className="mb-4 text-lg font-semibold text-secondary-600">
+                  Day {day.day}{day.date ? ` - ${day.date}` : ""}
+                </h3>
                 <div className="space-y-3">
                   {day.activities.map((activity) => (
                     <div key={activity.place_id} className="rounded-lg border p-4">

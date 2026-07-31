@@ -27,8 +27,8 @@ export default function DestinationTable({destinations , handleEdit , handleDele
               <tr key={destination.id} className="hover:bg-gray-50">
                 <td className="p-3 border">{index + 1}</td>
                 <td className="p-3 border">{destination.name}</td>
-                <td className="p-3 border">{destination.city_id}</td>
-                <td className="p-3 border">{destination.category_id}</td>
+                <td className="p-3 border">{destination.city?.name || destination.city_id}</td>
+                <td className="p-3 border">{destination.category?.name || destination.category_id}</td>
                 <td className="p-3 border">
                   {destination.average_rating ? (
                     <span className="flex items-center gap-1">

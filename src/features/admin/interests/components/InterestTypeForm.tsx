@@ -6,7 +6,7 @@ import type { InterestFormData } from "../types/interestType.type";
 
 interface InterestFormProps {
   onSubmit: (data: InterestFormData) => void;
-  defaultValues?: InterestFormData;
+  defaultValues?: InterestFormData | null;
   isSubmitting?: boolean;
 }
 

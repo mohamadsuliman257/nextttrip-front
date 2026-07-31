@@ -28,7 +28,7 @@ export default function CreateDestinationPage() {
   const handleSubmit = (data: DestinationFormData) => {
     createDestination(data, {
       onSuccess: () => {
-        // navigate("/admin/destinations");
+        navigate("/admin/destinations");
       },
     });
   };

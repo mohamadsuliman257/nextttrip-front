@@ -1,15 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormField from "../../../../components/FormField";
-import LocationMapPicker from "../../../../components/LocationMapPicker";
+import FormField from "@/components/FormField";
+import LocationMapPicker from "@/components/LocationMapPicker";
 import { destinationSchema, type DestinationSchema } from "../schemas/destinationSchema";
 import type { DestinationFormData } from "../types/destination.type";
-import { useQuery } from "@tanstack/react-query";
-import { getCities } from "../../cities/api/getCities.api";
-import { getCategories } from "../../categories/api/getCategories.api";
-import { getInterests } from "../../interests/api/getInterestTypes.api";
 import { useState } from "react";
 import { X } from "lucide-react";
+import { useCategories, useCities, useInterests } from "@/features/lookups";
 
 interface DestinationFormProps {
     onSubmit: (data: DestinationFormData) => void;
@@ -18,22 +15,39 @@ interface DestinationFormProps {
 }
 
 export default function DestinationForm({ onSubmit, defaultValues, isSubmitting }: DestinationFormProps) {
-    const { data: cities } = useQuery({
-        queryKey: ["admin-cities"],
-        queryFn: getCities,
-    });
-    const { data: categories } = useQuery({
-        queryKey: ["admin-categories"],
-        queryFn: getCategories,
-    });
-    const { data: interests } = useQuery({
-        queryKey: ["admin-interests"],
-        queryFn: getInterests,
-    });
+    const { data: cities } = useCities();    
+    const { data: categories } = useCategories();    
+    const { data: interests } = useInterests();    
+    
 
-    const [existingImages, setExistingImages] = useState<string[]>(defaultValues?.existing_images || []);
+    const [existingImages, setExistingImages] = useState<Array<{ id: number; image_url: string }>>(
+      (defaultValues?.existing_images || []).map((image) =>
+        typeof image === "string" ? { id: -1, image_url: image } : image
+      )
+    );
     const [imagesToDelete, setImagesToDelete] = useState<number[]>([]);
     const [newImagePreviews, setNewImagePreviews] = useState<string[]>([]);
+    const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
+
+    const toNumber = (v: unknown): number | undefined => {
+      if (v === undefined || v === null || v === "") return undefined;
+      const n = Number(v);
+      return Number.isNaN(n) ? undefined : n;
+    };
+
+    const toArray = (v: unknown): string[] | undefined => {
+      if (v === undefined || v === null || v === "") return undefined;
+      if (Array.isArray(v)) return v.map(String);
+      if (typeof v === "string") {
+        try {
+          const parsed = JSON.parse(v);
+          if (Array.isArray(parsed)) return parsed.map(String);
+        } catch {
+          /* ignore */
+        }
+      }
+      return undefined;
+    };
 
     const {
         register,
@@ -50,15 +64,15 @@ export default function DestinationForm({ onSubmit, defaultValues, isSubmitting 
             description: defaultValues.description || "",
             phone: defaultValues.phone || "",
             address: defaultValues.address || "",
-            cost: defaultValues.cost || undefined,
-            expected_duration_minutes: defaultValues.expected_duration_minutes || undefined,
+            cost: toNumber(defaultValues.cost),
+            expected_duration_minutes: toNumber(defaultValues.expected_duration_minutes),
             activity_level: defaultValues.activity_level || undefined,
             is_outdoor: defaultValues.is_outdoor || false,
-            best_seasons: defaultValues.best_seasons || [],
-            recommended_times: defaultValues.recommended_times || [],
+            best_seasons: toArray(defaultValues.best_seasons) || [],
+            recommended_times: toArray(defaultValues.recommended_times) || [],
             opening_hours: defaultValues.opening_hours || "",
-            latitude: defaultValues.latitude || undefined,
-            longitude: defaultValues.longitude || undefined,
+            latitude: toNumber(defaultValues.latitude),
+            longitude: toNumber(defaultValues.longitude),
             interests: defaultValues.interests || [],
         } : {
             name: "",
@@ -113,27 +127,32 @@ export default function DestinationForm({ onSubmit, defaultValues, isSubmitting 
     const times = ["صباحاً", "ظهراً", "عصراً", "مساءً"];
 
     const handleFormSubmit = (data: DestinationSchema) => {
-        const formData = { ...data, existing_images: existingImages, images_to_delete: imagesToDelete } as DestinationFormData;
+        const formData = {
+            ...data,
+            images: newImageFiles,
+            existing_images: existingImages.map((image) => image.image_url),
+            images_to_delete: imagesToDelete,
+        } as DestinationFormData;
         onSubmit(formData);
     };
 
-    const handleRemoveExistingImage = (index: number) => {
-        setImagesToDelete([...imagesToDelete, index]);
-        setExistingImages(existingImages.filter((_, i) => i !== index));
+    const handleRemoveExistingImage = (image: { id: number; image_url: string }) => {
+        setImagesToDelete([...imagesToDelete, image.id]);
+        setExistingImages(existingImages.filter((img) => img !== image));
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files) {
-            const previews: string[] = [];
-            Array.from(files).forEach((file) => {
-                previews.push(URL.createObjectURL(file));
-            });
-            setNewImagePreviews([...newImagePreviews, ...previews]);
+            const fileArray = Array.from(files);
+            setNewImageFiles([...newImageFiles, ...fileArray]);
+            setNewImagePreviews([...newImagePreviews, ...fileArray.map((file) => URL.createObjectURL(file))]);
         }
+        e.target.value = "";
     };
 
     const handleRemoveNewImage = (index: number) => {
+        setNewImageFiles(newImageFiles.filter((_, i) => i !== index));
         setNewImagePreviews(newImagePreviews.filter((_, i) => i !== index));
     };
 
@@ -248,8 +267,8 @@ export default function DestinationForm({ onSubmit, defaultValues, isSubmitting 
                         <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
                             {existingImages.map((image, index) => (
                                 <div key={index} className="relative group">
-                                    <img src={image} alt={`Existing ${index + 1}`} className="w-full h-24 object-cover rounded-lg border" />
-                                    <button type="button" onClick={() => handleRemoveExistingImage(index)}
+                                    <img src={image.image_url} alt={`Existing ${index + 1}`} className="w-full h-24 object-cover rounded-lg border" />
+                                    <button type="button" onClick={() => handleRemoveExistingImage(image)}
                                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <X size={16} />
                                     </button>
@@ -274,7 +293,7 @@ export default function DestinationForm({ onSubmit, defaultValues, isSubmitting 
                         </div>
                     </div>
                 )}
-                <input type="file" accept="image/*" multiple {...register("images")} onChange={handleImageChange}
+                <input type="file" accept="image/*" multiple onChange={handleImageChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
                 <p className="text-xs text-gray-500 mt-1">يمكنك رفع صور متعددة</p>
             </div>

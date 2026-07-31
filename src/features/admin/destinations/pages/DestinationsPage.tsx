@@ -5,6 +5,17 @@ import DestinationForm from "../components/DestinationForm";
 import type { Destination } from "../types/destination.type";
 import DestinationTable from "../components/DestinationTable";
 
+const openingHoursToDisplay = (value: Destination["opening_hours"]): string | undefined => {
+  if (!value) return undefined;
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) {
+    return value.map((h) => (typeof h === "string" ? h : JSON.stringify(h))).join(", ");
+  }
+  return Object.values(value)
+    .map((h) => (typeof h === "string" ? h : JSON.stringify(h)))
+    .join(", ");
+};
+
 export default function DestinationsPage() {
   const { destinations, isLoading, deleteDestination, isDeleting, createDestination, updateDestination, isCreating, isUpdating } = useDestinations();
   const [editingDestination, setEditingDestination] = useState<Destination | null>(null);
@@ -67,7 +78,8 @@ export default function DestinationsPage() {
             ...editingDestination,
             images: undefined,
             existing_images: editingDestination.images || [],
-            opening_hours: editingDestination.opening_hours?.join(', ') || undefined,
+            interests: editingDestination.interests?.map((i: any) => (typeof i === 'number' ? i : i.id)) || [],
+            opening_hours: openingHoursToDisplay(editingDestination.opening_hours),
           } : undefined}
           isSubmitting={isCreating || isUpdating}
         />

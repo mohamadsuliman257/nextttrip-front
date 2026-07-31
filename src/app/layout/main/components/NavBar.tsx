@@ -111,6 +111,16 @@ const NavBar = () => {
                   </>
                 )}
 
+                {(user.role === "tourist" || user.role === "guide") && (
+                  <Link
+                    to={user.role === "tourist" ? "/tourist/suggest-place" : "/guide/suggest-place"}
+                    className="hover:text-primary-500 transition cursor-pointer"
+                    onClick={closeMenu}
+                  >
+                    اقتراح مكان جديد
+                  </Link>
+                )}
+
                 <li
                   className="hover:text-primary-500 transition cursor-pointer"
                   onClick={() => {

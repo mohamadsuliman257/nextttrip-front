@@ -2,6 +2,7 @@ import axios from "@/lib/axios";
 
 export async function updateDestination(id: number, data: any): Promise<void> {
   const formData = new FormData();
+  formData.append("method", "put");
   formData.append("city_id", data.city_id.toString());
   formData.append("category_id", data.category_id.toString());
   formData.append("name", data.name);
@@ -58,7 +59,7 @@ export async function updateDestination(id: number, data: any): Promise<void> {
     });
   }
   
-  await axios.put(`/admin/places/${id}`, formData, {
+  await axios.post(`/admin/places/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

@@ -14,11 +14,9 @@ export const destinationSchema = z.object({
   best_seasons: z.array(z.string()).optional(),
   recommended_times: z.array(z.string()).optional(),
   opening_hours: z.string().optional(), // Accept string for form input, will be converted to array
-  average_rating: z.number().min(0).max(5).optional(),
-  reviews_count: z.number().optional(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
-  images: z.array(z.any()).optional(),
+  // images: z.array(z.any()).optional(),
   interests: z.array(z.number()).optional(),
 });
 

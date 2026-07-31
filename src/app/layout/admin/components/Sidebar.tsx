@@ -15,7 +15,7 @@ import {
   Lightbulb,
   Building
 } from "lucide-react";
-import { useState, useEffect, type ReactNode, type RefAttributes } from "react";
+import { useState, useEffect } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
 
 export default function Sidebar() {

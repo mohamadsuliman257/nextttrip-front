@@ -6,7 +6,7 @@ import type { Destination } from "../types/destination.type";
 import DestinationTable from "../components/DestinationTable";
 
 export default function DestinationsPage() {
-  const { destinations, isLoading, deleteDestination, isDeleting } = useDestinations();
+  const { destinations, isLoading, deleteDestination, isDeleting, createDestination, updateDestination, isCreating, isUpdating } = useDestinations();
   const [editingDestination, setEditingDestination] = useState<Destination | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -24,6 +24,15 @@ export default function DestinationsPage() {
   const handleFormClose = () => {
     setEditingDestination(null);
     setIsFormVisible(false);
+  };
+
+  const handleFormSubmit = (data: any) => {
+    if (editingDestination) {
+      updateDestination({ id: editingDestination.id, data });
+    } else {
+      createDestination(data);
+    }
+    handleFormClose();
   };
 
   if (isLoading) {
@@ -53,16 +62,14 @@ export default function DestinationsPage() {
         maxWidthClassName="max-w-3xl"
       >
         <DestinationForm
-          onSubmit={() => {
-            handleFormClose();
-          }}
+          onSubmit={handleFormSubmit}
           defaultValues={editingDestination ? {
             ...editingDestination,
             images: undefined,
             existing_images: editingDestination.images || [],
             opening_hours: editingDestination.opening_hours?.join(', ') || undefined,
           } : undefined}
-          isSubmitting={false}
+          isSubmitting={isCreating || isUpdating}
         />
       </AdminModal>
       <DestinationTable 

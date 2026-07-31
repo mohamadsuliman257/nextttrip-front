@@ -10,6 +10,7 @@ import NotificationsPage from "@/features/notifications/pages/NotificationsPage"
 import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPage";
 
 import LeafletMapPage from "@/features/tourist/map/pages/LeafletMapPage";
+import SuggestPlacePage from "@/features/tourist/suggest-place/pages/SuggestPlacePage";
 
 
 const touristRoutes = [
@@ -52,6 +53,12 @@ const touristRoutes = [
   {
     path: "/tourist/map",
     element: <LeafletMapPage />
+  },
+  {
+    path: "/tourist/suggest-place",
+    element: <ProtectedRoute role="tourist">
+      <SuggestPlacePage />
+    </ProtectedRoute>,
   },
 ];
 

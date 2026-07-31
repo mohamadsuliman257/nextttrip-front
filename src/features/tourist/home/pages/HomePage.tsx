@@ -1,5 +1,5 @@
 import useAuthStore from "@/features/auth/store/authStore";
-import {  Heart, Star,  StarsIcon,  Globe, Bell } from "lucide-react";
+import {  Heart, Star,  StarsIcon,  Globe, Bell, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function UserHomePage() {
@@ -44,6 +44,14 @@ export default function UserHomePage() {
       borderColor: "border-yellow-200",
       iconColor: "text-yellow-300",
       titleColor: "text-yellow-500",
+    },
+    {
+      title: "اقتراح مكان",
+      to: "/tourist/suggest-place",
+      icon: MapPin,
+      borderColor: "border-green-200",
+      iconColor: "text-green-500",
+      titleColor: "text-green-700",
     },
   ];
 

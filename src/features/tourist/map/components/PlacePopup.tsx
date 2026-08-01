@@ -1,4 +1,5 @@
 import { Plus, Star } from "lucide-react";
+import { useMap } from "react-leaflet";
 import toast from "react-hot-toast";
 import type { Destination } from "@/features/admin/destinations/types/destination.type";
 
@@ -16,6 +17,8 @@ export function PlacePopup({
   distance,
   onDrawRoute,
 }: PlacePopupProps) {
+  const map = useMap();
+
   return (
     <div dir="rtl" className="min-w-48">
       <strong>{place.name}</strong>
@@ -32,14 +35,27 @@ export function PlacePopup({
       )}
       
       <button
-        onClick={() => onDrawRoute(place)}
+        type="button"
+        onMouseDown={(event) => event.stopPropagation()}
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          map.closePopup();
+          onDrawRoute(place);
+        }}
         className="mt-2 rounded bg-primary-600 px-2 py-1 text-white"
       >
         عرض المسار
       </button>
       
       <button
-        onClick={() => toast("سيتم ربط إضافة المكان بخدمة الرحلات عند توفرها.")}
+        type="button"
+        onMouseDown={(event) => event.stopPropagation()}
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          toast("سيتم ربط إضافة المكان بخدمة الرحلات عند توفرها.");
+        }}
         className="mr-2 mt-2 rounded border border-primary-300 px-2 py-1 text-primary-700"
       >
         <Plus size={13} className="inline" />

@@ -86,6 +86,8 @@ export default function LocationMapPicker({
           zoom={7}
           className="h-full w-full"
           scrollWheelZoom={false}
+          doubleClickZoom={false}
+          touchZoom={false}
           dragging={true}
           zoomControl={true}
         >

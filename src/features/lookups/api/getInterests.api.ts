@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import type { Interest } from "../types/Interest.type";
+import type { Interest } from "../types/interest.type";
 
 export async function getInterests(): Promise<Interest[]> {
   const res = await axios.get("/public/interests");

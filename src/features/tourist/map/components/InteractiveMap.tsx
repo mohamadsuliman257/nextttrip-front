@@ -56,6 +56,44 @@ function ViewController({
   return null;
 }
 
+function CircleBoundsController({
+  nearbyMode,
+  searchPosition,
+  radius,
+  route,
+}: {
+  nearbyMode: boolean;
+  searchPosition: [number, number] | null;
+  radius: number;
+  route: [number, number][];
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!nearbyMode || !searchPosition || route.length > 0) return;
+
+    // Ensure the map container has been laid out and sizes are correct
+    // before calling fitBounds — prevents clipped circle on initial load.
+    map.invalidateSize();
+
+    const fit = () => {
+      try {
+        const bounds = L.latLng(searchPosition).toBounds(radius * 1000);
+        // Increase padding and cap maxZoom to avoid over-zooming/clipping
+        map.fitBounds(bounds, { padding: [100, 100], maxZoom: 13 });
+      } catch (err) {
+        // swallow errors — defensive
+      }
+    };
+
+    // Delay to next frame and allow layout to settle (tiles/styles may affect size)
+    const raf = requestAnimationFrame(() => setTimeout(fit, 60));
+    return () => cancelAnimationFrame(raf);
+  }, [map, nearbyMode, searchPosition, radius, route]);
+
+  return null;
+}
+
 function FitBounds({ bounds }: { bounds: [number, number][] }) {
   const map = useMap();
 
@@ -109,10 +147,18 @@ export function InteractiveMap({
         />
         
         {!route.length && (
-          <ViewController
-            nearbyMode={nearbyMode}
-            point={userPosition ?? searchPosition}
-          />
+          <>
+            <ViewController
+              nearbyMode={nearbyMode}
+              point={userPosition ?? searchPosition}
+            />
+            <CircleBoundsController
+              nearbyMode={nearbyMode}
+              searchPosition={searchPosition}
+              radius={radius}
+              route={route}
+            />
+          </>
         )}
         {route.length > 0 && <FitBounds bounds={route} />}
 

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createSmartTripPlan } from "../api/tripPlanner.api";
+import { getTouristInterests } from "@/features/tourist/interests/api/getTouristInterests.api";
+import useAuthStore from "@/features/auth/store/authStore";
 import type { TripPlan, TripPlannerRequest } from "../types/tripPlanner.types";
 import FormField from "@/components/FormField";
 
@@ -47,8 +51,18 @@ const paceOptions = [
 ];
 
 export default function TripPlannerPage() {
+  const navigate = useNavigate();
+  const user = useAuthStore((s) => s.user);
+  const isTourist = user?.role === "tourist";
+
   const [plan, setPlan] = useState<TripPlan | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: savedInterests = [], isLoading: interestsLoading } = useQuery({
+    queryKey: ["tourist-interests-saved"],
+    queryFn: getTouristInterests,
+    enabled: isTourist,
+  });
 
   const form = useForm<TripPlannerRequest>({
     defaultValues: defaultRequest,
@@ -82,6 +96,12 @@ export default function TripPlannerPage() {
   };
 
   const submit = async (data: TripPlannerRequest) => {
+    if (isTourist && savedInterests.length === 0) {
+      toast.error("حدد اهتماماتك أولاً قبل تخطيط الرحلة");
+      navigate("/tourist/interests", { state: { from: "/tourist/trip" } });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -107,6 +127,21 @@ export default function TripPlannerPage() {
         <h1 className="mb-6 text-center text-2xl font-bold text-primary-500">
           مخطط الرحلات الذكي
         </h1>
+
+        {isTourist && !interestsLoading && savedInterests.length === 0 && (
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary-200 bg-primary-50 p-4">
+            <p className="text-sm font-medium text-primary-700">
+              لم تحدد اهتماماتك بعد — حددها الآن لتخصيص خطط رحلاتك
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate("/tourist/interests", { state: { from: "/tourist/trip" } })}
+              className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-700"
+            >
+              تحديد اهتماماتي
+            </button>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(submit)} className="mb-8 grid gap-4 rounded-xl bg-white p-5 shadow md:grid-cols-2">
           <FormField

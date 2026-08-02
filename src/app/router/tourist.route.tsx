@@ -11,6 +11,7 @@ import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPa
 
 import LeafletMapPage from "@/features/tourist/map/pages/LeafletMapPage";
 import SuggestPlacePage from "@/features/tourist/suggest-place/pages/SuggestPlacePage";
+import TouristInterestsPage from "@/features/tourist/interests/pages/TouristInterestsPage";
 
 
 const touristRoutes = [
@@ -58,6 +59,12 @@ const touristRoutes = [
     path: "/tourist/suggest-place",
     element: <ProtectedRoute role="tourist">
       <SuggestPlacePage />
+    </ProtectedRoute>,
+  },
+  {
+    path: "/tourist/interests",
+    element: <ProtectedRoute role="tourist">
+      <TouristInterestsPage />
     </ProtectedRoute>,
   },
 ];

@@ -108,6 +108,14 @@ const NavBar = () => {
                     >
                       تقييماتي للمرشدين
                     </Link>
+
+                    <Link
+                      to="tourist/interests"
+                      className="hover:text-primary-500 transition cursor-pointer"
+                      onClick={closeMenu}
+                    >
+                      اهتماماتي
+                    </Link>
                   </>
                 )}
 

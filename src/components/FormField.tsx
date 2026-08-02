@@ -34,7 +34,7 @@ export default function FormField({ label, name, register, errors, type = "text"
   // الحالات الافتراضية لباقي الحقول
   return (
     <div className={`space-y-1 md:col-span-${col}`}>
-      <label className="block text-sm font-medium text-primary-700">{label}</label>
+      {label && <label className="block text-sm font-medium text-primary-700">{label}</label>}
 
       {children ? (
         <select className={inputClassName} {...register(name, options)}>

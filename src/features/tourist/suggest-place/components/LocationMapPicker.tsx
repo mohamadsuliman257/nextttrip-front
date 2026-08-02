@@ -33,8 +33,6 @@ interface LocationMapPickerProps {
 }
 
 export default function LocationMapPicker({
-  latitude,
-  longitude,
   onLocationSelect,
   register,
   errors,

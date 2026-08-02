@@ -14,7 +14,7 @@ export default function CreateDestinationPage() {
   const getInitialValues = (): Partial<DestinationFormData> => {
     if (fromSuggestion) {
       return {
-        city_id: fromSuggestion.city_id || 0,
+        city_id: fromSuggestion.city.id || 0,
         name: fromSuggestion.name,
         description: fromSuggestion.description,
         latitude: fromSuggestion.latitude,

@@ -21,7 +21,7 @@ import useAuthStore from "@/features/auth/store/authStore";
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const  logout  = useAuthStore((s) => s.logout);
+  const logout = useAuthStore((s) => s.logout);
   const [open, setOpen] = useState(false);
 
   // حالة فتح القوائم الفرعية
@@ -68,27 +68,24 @@ export default function Sidebar() {
     {
       label: "الحجوزات ",
       icon: CalendarCheck,
-      to: "/admin/users",
+      to: "/admin/bookings",
     },
     {
       label: "الوجهات السياحية ",
       children: [
-        {
-          label: "اقتراحات الأماكن",
-          to: "/admin/suggested-places",
-          icon: Lightbulb,
-        },
-        {
-          label: "إدارة الأماكن",
-          to: "/admin/places",
-          icon: Building,
-        },
-        {
-          label: "إشعارات الأماكن",
-          to: "/admin/notifications",
-          icon: Bell,
-        }
-      ]
+        { label: "اقتراحات الأماكن", to: "/admin/suggested-places", icon: Lightbulb },
+        { label: "إدارة الأماكن", to: "/admin/places", icon: Building },
+        { label: "إشعارات الأماكن", to: "/admin/notifications", icon: Bell }]
+    },
+    {
+      label: "تقييمات الأماكن",
+      icon: Users,
+      to: "/admin/users",
+    },
+    {
+      label: "تقييمات المرشدين ",
+      icon: CalendarCheck,
+      to: "/admin/bookings",
     },
   ];
 
@@ -140,7 +137,7 @@ export default function Sidebar() {
 
         <nav className="flex flex-col gap-2 px-4 text-lg">
           {menu.map((item) => {
-            const Icon  = item.icon ;
+            const Icon = item.icon;
 
             // عنصر رئيسي بدون children
             if (!item.children) {
@@ -170,7 +167,7 @@ export default function Sidebar() {
                   onClick={() => toggleMenu(item.label)}
                   className="flex items-center  w-full py-2 px-3 rounded-md hover:bg-secondary-300/60 transition"
                 >
-                   <ChevronDown
+                  <ChevronDown
                     size={18}
                     className={`me-2 transition ${openMenus[item.label] ? "" : "rotate-90"
                       }`}
@@ -190,8 +187,7 @@ export default function Sidebar() {
                           to={child.to}
                           onClick={() => setOpen(false)}
                           className={({ isActive }) =>
-                            `flex items-center gap-2 py-1 transition  ${
-                              isActive ? "bg-secondary-100" : "hover:bg-secondary-300/60"
+                            `flex items-center gap-2 py-1 transition  ${isActive ? "bg-secondary-100" : "hover:bg-secondary-300/60"
                             }`
                           }
                         >

@@ -1,4 +1,4 @@
-import type { UserFilters, UserType, AccountStatus } from "../types/user.type";
+import type { UserFilters,  AccountStatus } from "../types/user.type";
 
 interface UserFiltersProps {
   filters: UserFilters;
@@ -23,8 +23,8 @@ export default function UserFilters({ filters, onFiltersChange }: UserFiltersPro
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">نوع المستخدم</label>
           <select
-            value={filters.user_type || ""}
-            onChange={(e) => onFiltersChange({ ...filters, user_type: e.target.value as UserType || undefined })}
+            value={filters.role || ""}
+            onChange={(e) => onFiltersChange({ ...filters, role: e.target.value as UserType || undefined })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           >
             <option value="">الكل</option>
@@ -36,8 +36,8 @@ export default function UserFilters({ filters, onFiltersChange }: UserFiltersPro
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">حالة الحساب</label>
           <select
-            value={filters.account_status || ""}
-            onChange={(e) => onFiltersChange({ ...filters, account_status: e.target.value as AccountStatus || undefined })}
+            value={filters.status || ""}
+            onChange={(e) => onFiltersChange({ ...filters, status: e.target.value as AccountStatus || undefined })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           >
             <option value="">الكل</option>

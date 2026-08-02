@@ -1,4 +1,6 @@
-import { Navigation, Search } from "lucide-react";
+import { Navigation } from "lucide-react";
+import type { ChangeEvent } from "react";
+import FormField from "@/components/FormField";
 import type { Category } from "../types/category.type";
 import type { City } from "@/features/lookups/types/city.type";
 
@@ -44,13 +46,47 @@ export function MapSidebar({
   onMinCostChange,
   onMaxCostChange,
 }: MapSidebarProps) {
+  // دالة register محلية لربط الحقول بقيمها وسماعات التغيير
+  // بما أن MapSidebar لا يستخدم react-hook-form (الحقول مُدارة من الصفحة الأم)
+  const register = (name: string) => {
+    const fieldProps: Record<
+      string,
+      { value: string; onChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void }
+    > = {
+      searchQuery: {
+        value: searchQuery,
+        onChange: (event) => onSearchQueryChange(event.target.value),
+      },
+      city: {
+        value: city,
+        onChange: (event) => onCityChange(event.target.value),
+      },
+      minCost: {
+        value: minCost?.toString() ?? "",
+        onChange: (event) => {
+          const value = event.target.value;
+          onMinCostChange(value === "" ? undefined : Number(value));
+        },
+      },
+      maxCost: {
+        value: maxCost?.toString() ?? "",
+        onChange: (event) => {
+          const value = event.target.value;
+          onMaxCostChange(value === "" ? undefined : Number(value));
+        },
+      },
+      category: {
+        value: category,
+        onChange: (event) => onCategoryChange(event.target.value),
+      },
+    };
+
+    return fieldProps[name] ?? {};
+  };
+
   return (
     <aside className="rounded-2xl bg-white p-2 shadow-sm">
-      <div className="mb-5 flex items-center gap-2 font-bold">
-        <Search size={19} />
-        البحث القريب
-      </div>
-
+     
       <label className="mb-3 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm">
         <span className="flex items-center gap-2">
           <Navigation size={16} />
@@ -70,15 +106,7 @@ export function MapSidebar({
         />
       </label>
 
-      <button
-        onClick={onLocate}
-        className="mb-5 flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-white disabled:cursor-not-allowed disabled:opacity-60"
-        disabled={!nearbyMode}
-      >
-        <Navigation size={18} />
-        تحديد الموقع الحالي
-      </button>
-
+      
       <label className={`mb-2 block text-sm ${!nearbyMode ? "text-slate-400" : "text-slate-700"}`}>
         نصف قطر البحث عن الأماكن القريبة: {radius} كم
       </label>
@@ -93,76 +121,58 @@ export function MapSidebar({
         onChange={(event) => onRadiusChange(Number(event.target.value))}
       />
 
-      <label className="mb-2 block text-sm">
-        بحث متعدد المفاتيح
-      </label>
-      <input
-        className="mb-4 w-full rounded-lg border p-2.5 text-right"
-        type="search"
-        placeholder="ابحث باسم المكان، المدينة، العنوان أو الوصف"
-        value={searchQuery}
-        onChange={(event) => onSearchQueryChange(event.target.value)}
-      />
+      <div className="mb-4">
+        <FormField
+          label="بحث متعدد المفاتيح"
+          name="searchQuery"
+          type="search"
+          register={register}
+          errors={{}}
+          inputProps={{ placeholder: "ابحث باسم المكان، المدينة، العنوان أو الوصف" }}
+        />
+      </div>
 
-      <label className="mb-2 block text-sm">
-        اختر المدينة
-      </label>
-      <select
-        className="mb-5 w-full rounded-lg border p-2.5"
-        value={city}
-        onChange={(event) => onCityChange(event.target.value)}
-      >
-        <option value="all">كل المدن</option>
-        {cities.map((c) => (
-          <option key={c.id} value={String(c.id)}>
-            {c.name}
-          </option>
-        ))}
-      </select>
+      <div className="mb-5">
+        <FormField label="اختر المدينة" name="city" register={register} errors={{}}>
+          <option value="all">كل المدن</option>
+          {cities.map((c) => (
+            <option key={c.id} value={String(c.id)}>
+              {c.name}
+            </option>
+          ))}
+        </FormField>
+      </div>
 
       <label className="mb-2 block text-sm">
         الميزانية (د.ل)
       </label>
       <div className="grid gap-3 md:grid-cols-2 mb-5">
-        <input
-          className="w-full rounded-lg border p-2.5 text-right"
+        <FormField
+          label=""
+          name="minCost"
           type="number"
-          min="0"
-          value={minCost ?? ""}
-          placeholder="الحد الأدنى"
-          onChange={(event) => {
-            const value = event.target.value;
-            onMinCostChange(value === "" ? undefined : Number(value));
-          }}
+          register={register}
+          errors={{}}
+          inputProps={{ min: 0, placeholder: "الحد الأدنى" }}
         />
-        <input
-          className="w-full rounded-lg border p-2.5 text-right"
+        <FormField
+          label=""
+          name="maxCost"
           type="number"
-          min="0"
-          value={maxCost ?? ""}
-          placeholder="الحد الأقصى"
-          onChange={(event) => {
-            const value = event.target.value;
-            onMaxCostChange(value === "" ? undefined : Number(value));
-          }}
+          register={register}
+          errors={{}}
+          inputProps={{ min: 0, placeholder: "الحد الأقصى" }}
         />
       </div>
 
-      <label className="mb-2 block text-sm">
-        نوع المكان
-      </label>
-      <select
-        className="w-full rounded-lg border p-2.5"
-        value={category}
-        onChange={(event) => onCategoryChange(event.target.value)}
-      >
+      <FormField label="نوع المكان" name="category" register={register} errors={{}}>
         <option value="all">كل الأنواع</option>
         {categories.map((cat) => (
           <option key={cat.id} value={String(cat.id)}>
             {cat.name}
           </option>
         ))}
-      </select>
+      </FormField>
 
       <p className="mt-5 text-sm text-slate-500">
         {visiblePlacesCount} وجهة مطابقة

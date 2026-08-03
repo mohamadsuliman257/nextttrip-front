@@ -1,13 +1,7 @@
-interface Booking {
-  id: number;
-  name: string;       // اسم السائح
-  date_range: string; // من الباك
-  duration: string;   // "3 أيام"
-  status: "pending" | "accepted" | "rejected";
-}
+import type { GuideDashboardResponse } from "../type";
 
 interface Props {
-  bookings: Booking[];
+  bookings: GuideDashboardResponse["latest_bookings"];
 }
 
 export default function RecentBookingsTable({ bookings }: Props) {

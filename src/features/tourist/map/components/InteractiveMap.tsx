@@ -76,19 +76,56 @@ function CircleBoundsController({
     // before calling fitBounds — prevents clipped circle on initial load.
     map.invalidateSize();
 
+    let rafId: number | null = null;
+    let timeoutId: number | null = null;
+
     const fit = () => {
       try {
         const bounds = L.latLng(searchPosition).toBounds(radius * 1000);
-        // Increase padding and cap maxZoom to avoid over-zooming/clipping
-        map.fitBounds(bounds, { padding: [100, 100], maxZoom: 13 });
+        const padSide = 80;
+        const padTop = 60; // extra top padding to avoid header/controls clipping
+        const padBottom = 60;
+        map.fitBounds(bounds, {
+          paddingTopLeft: [padSide, padTop],
+          paddingBottomRight: [padSide, padBottom],
+          maxZoom: 13,
+        });
       } catch (err) {
-        // swallow errors — defensive
+        // defensive: ignore
       }
     };
 
-    // Delay to next frame and allow layout to settle (tiles/styles may affect size)
-    const raf = requestAnimationFrame(() => setTimeout(fit, 60));
-    return () => cancelAnimationFrame(raf);
+    const tryFit = () => {
+      rafId = requestAnimationFrame(() => {
+        fit();
+        timeoutId = window.setTimeout(fit, 300);
+      });
+    };
+
+    // Initial attempt
+    tryFit();
+
+    // Also retry when tile layers finish loading — find tile layers and attach listener
+    const onTileLoad = () => tryFit();
+    map.eachLayer((layer: any) => {
+      if (layer instanceof L.TileLayer) {
+        layer.on("load", onTileLoad);
+      }
+    });
+
+    const onResize = () => tryFit();
+    map.on("resize", onResize);
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      if (timeoutId) clearTimeout(timeoutId);
+      map.eachLayer((layer: any) => {
+        if (layer instanceof L.TileLayer) {
+          layer.off("load", onTileLoad);
+        }
+      });
+      map.off("resize", onResize);
+    };
   }, [map, nearbyMode, searchPosition, radius, route]);
 
   return null;
@@ -135,7 +172,7 @@ export function InteractiveMap({
     (!searchPosition || userPosition[0] !== searchPosition[0] || userPosition[1] !== searchPosition[1]);
 
   return (
-    <div className="relative h-137.5 overflow-hidden rounded-2xl border shadow-sm">
+    <div className="relative h-160 overflow-hidden rounded-2xl border shadow-sm">
       {isLoading && <Overlay text="جاري تحميل الوجهات..." />}
       {isError && <Overlay text="تعذر تحميل الوجهات. تحقق من VITE_MAP_PLACES_ENDPOINT." />}
       

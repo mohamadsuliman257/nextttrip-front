@@ -7,6 +7,7 @@ const statusColors = {
   completed: "bg-blue-100 text-blue-700",
   cancelled_by_tourist: "bg-gray-100 text-gray-700",
   cancelled_by_guide: "bg-gray-200 text-gray-900",
+  expired: "bg-purple-100 text-purple-700",
 };
 
 const statusLabels = {
@@ -16,6 +17,7 @@ const statusLabels = {
   completed: "مكتمل",
   cancelled_by_tourist: "ملغي من قبل السائح",
   cancelled_by_guide: "ملغي من قبل المرشد",
+  expired: "انتهت صلاحيته",
 };
 
 export default function BookingTable() {
@@ -72,7 +74,7 @@ export default function BookingTable() {
                 <td className="p-3 ">
                   <span
                     className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[booking.status]}`}
-                  >
+                  >   
                     {statusLabels[booking.status]}
                   </span>
                 </td>

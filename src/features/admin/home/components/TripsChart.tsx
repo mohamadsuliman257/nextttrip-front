@@ -1,7 +1,6 @@
 interface TripsChartProps {
   data?: Array<{
     month: number;
-    month_name?: string;
     year: number;
     count: number;
   }>;
@@ -39,7 +38,7 @@ export default function TripsChart({ data = []}: TripsChartProps) {
             const label = MonthNames[item.month - 1] ;
 
             return (
-              <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2 group min-w-[35px] relative">
+              <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2 group min-w-[15px] relative">
                 
                 <div className="relative w-full flex-1 flex items-end justify-center">
                   

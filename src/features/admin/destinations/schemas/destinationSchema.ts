@@ -20,4 +20,4 @@ export const destinationSchema = z.object({
   interests: z.array(z.number()).optional(),
 });
 
-export type DestinationSchema = z.infer<typeof destinationSchema>;
+export type DestinationSchema = z.input<typeof destinationSchema>;

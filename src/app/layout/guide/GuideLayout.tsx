@@ -8,7 +8,7 @@ export default function GuideLayout() {
   
   const { data, isLoading } = useGuideDashboard();
 
-  if (isLoading) {
+if (isLoading || !data) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-2xl text-primary-500">جاري تحميل بياناتك ...</p>

@@ -13,7 +13,8 @@ export default function SuggestedPlaceDetails({ place, onClose, onStatusUpdate }
   const [note, setNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleStatusUpdate = async (status: "approved" | "rejected") => {
+const handleStatusUpdate = async (status: "approved" | "rejected") => {
+    if (!place) return;
     setIsSubmitting(true);
     try {
       await updateSuggestionStatus(place.id, { status, admin_notes: note });

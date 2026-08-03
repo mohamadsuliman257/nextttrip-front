@@ -7,13 +7,15 @@ import {
   Bell,
   ChevronDown,
   LogOut,
-  CalendarCheck,
   Building2,
   Layers,
   Heart,
   Globe,
   Lightbulb,
-  Building
+  Building,
+  // CalendarCheck,
+  // UserStar,
+  // MessageSquareDiff
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
@@ -65,11 +67,11 @@ export default function Sidebar() {
       icon: Users,
       to: "/admin/users",
     },
-    {
-      label: "الحجوزات ",
-      icon: CalendarCheck,
-      to: "/admin/bookings",
-    },
+    // {
+    //   label: "الحجوزات ",
+    //   icon: CalendarCheck,
+    //   to: "/admin/bookings",
+    // },
     {
       label: "الوجهات السياحية ",
       children: [
@@ -77,16 +79,21 @@ export default function Sidebar() {
         { label: "إدارة الأماكن", to: "/admin/places", icon: Building },
         { label: "إشعارات الأماكن", to: "/admin/notifications", icon: Bell }]
     },
-    {
-      label: "تقييمات الأماكن",
-      icon: Users,
-      to: "/admin/users",
-    },
-    {
-      label: "تقييمات المرشدين ",
-      icon: CalendarCheck,
-      to: "/admin/bookings",
-    },
+    // {
+    //   label: "تقييمات الأماكن",
+    //   icon: MessageSquareDiff,
+    //   to: "/admin/place-reviews",
+    // },
+    // {
+    //   label: "تقييمات المرشدين ",
+    //   icon: UserStar,
+    //   to: "/admin/guide-reviews",
+    // },
+    // {
+    //   label: "الرحلات ",
+    //   icon: UserStar,
+    //   to: "/admin/trips",
+    // },
   ];
 
   return (
@@ -154,7 +161,7 @@ export default function Sidebar() {
                     }`
                   }
                 >
-                  <Icon size={18} />
+                  {Icon && <Icon size={18} />}
                   <span>{item.label}</span>
                 </NavLink>
               );

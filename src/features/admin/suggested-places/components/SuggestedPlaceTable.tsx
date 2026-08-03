@@ -98,7 +98,7 @@ export default function SuggestedPlaceTable({ suggestedPlaces, onView }: Suggest
 
                 <td className="px-3 py-1 border border-primary-200">{place.name}</td>
 
-                <td className="px-3 py-1 border border-primary-200">{place.city_id || "-"}</td>
+                <td className="px-3 py-1 border border-primary-200">{place.city.id || "-"}</td>
 
                 <td className="px-3 py-1 border border-primary-200">{place.user.name}</td>
 

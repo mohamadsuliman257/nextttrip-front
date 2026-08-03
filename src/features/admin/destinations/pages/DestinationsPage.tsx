@@ -16,6 +16,20 @@ const openingHoursToDisplay = (value: Destination["opening_hours"]): string | un
     .join(", ");
 };
 
+const toArray = (value: string | string[] | undefined): string[] | undefined => {
+  if (value === undefined || value === null || value === "") return undefined;
+  if (Array.isArray(value)) return value.map(String);
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) return parsed.map(String);
+    } catch {
+      /* ignore */
+    }
+  }
+  return undefined;
+};
+
 export default function DestinationsPage() {
   const { destinations, isLoading, deleteDestination, isDeleting, createDestination, updateDestination, isCreating, isUpdating } = useDestinations();
   const [editingDestination, setEditingDestination] = useState<Destination | null>(null);
@@ -71,7 +85,7 @@ export default function DestinationsPage() {
         onClose={handleFormClose}
         title={editingDestination ? "تعديل المكان" : "إضافة مكان جديد"}
         maxWidthClassName="max-w-3xl"
-      >
+>
         <DestinationForm
           onSubmit={handleFormSubmit}
           defaultValues={editingDestination ? {
@@ -79,6 +93,8 @@ export default function DestinationsPage() {
             images: undefined,
             existing_images: editingDestination.images || [],
             interests: editingDestination.interests?.map((i: any) => (typeof i === 'number' ? i : i.id)) || [],
+            best_seasons: toArray(editingDestination.best_seasons) || [],
+            recommended_times: toArray(editingDestination.recommended_times) || [],
             opening_hours: openingHoursToDisplay(editingDestination.opening_hours),
           } : undefined}
           isSubmitting={isCreating || isUpdating}

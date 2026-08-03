@@ -136,20 +136,13 @@ export default function LeafletMapPage() {
   return (
     <main className="min-h-screen pb-8" dir="rtl">
       <section className="mx-auto md:text-center max-w-7xl px-4 -mt-15 mb-10">
-        <div className="grid gap-2 lg:grid-cols-[300px_1fr]">
-          <div>
-
-          </div>
-          <div className="">
-            <h1 className="text-lg md:text-2xl font-bold text-primary-500 px-3">
-              استكشف سوريا على الخريطة
-            </h1>
-            <p className="text-lg my-3 text-secondary-500">
-              اكتشف الوجهات القريبة ثم اعرض تفاصيلها وارسم طريقك إليها.
-            </p>
-          </div>
-        </div>
-        <div className="grid gap-2 lg:grid-cols-[320px_1fr]">
+        <h1 className="text-lg md:text-2xl font-bold text-primary-500 px-3">
+          استكشف سوريا على الخريطة
+        </h1>
+        <p className="text-lg my-3 text-secondary-500">
+          اكتشف الوجهات القريبة ثم اعرض تفاصيلها وارسم طريقك إليها.
+        </p>
+        <div className="grid gap-2 lg:grid-cols-[1fr_640px] bg-white/50 p-2 rounded-xl">
           <MapSidebar
             radius={radius}
             nearbyMode={nearbyMode}

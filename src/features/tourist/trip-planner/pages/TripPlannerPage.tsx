@@ -9,12 +9,15 @@ import useAuthStore from "@/features/auth/store/authStore";
 import type { TripPlan, TripPlannerRequest } from "../types/tripPlanner.types";
 import FormField from "@/components/FormField";
 
+const today = new Date().toISOString().split("T")[0];
+
 const defaultRequest: TripPlannerRequest = {
   latitude: 33.5138,
   longitude: 36.2765,
   interests: ["historic", "nature"],
   budget: 120,
-  days: 2,
+  start_date: today,
+  days: 3,
   season: "spring",
   weather: "sunny",
   preferred_time: "morning",
@@ -128,6 +131,7 @@ export default function TripPlannerPage() {
           مخطط الرحلات الذكي
         </h1>
 
+
         {isTourist && !interestsLoading && savedInterests.length === 0 && (
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary-200 bg-primary-50 p-4">
             <p className="text-sm font-medium text-primary-700">
@@ -143,6 +147,7 @@ export default function TripPlannerPage() {
           </div>
         )}
 
+      
         <form onSubmit={handleSubmit(submit)} className="mb-8 grid gap-4 rounded-xl bg-white p-5 shadow md:grid-cols-2">
           <FormField
             label="خط العرض"
@@ -257,6 +262,7 @@ export default function TripPlannerPage() {
             inputProps={{ min: 1, max: 4 }}
           />
 
+
           <div className="flex flex-wrap gap-3 md:col-span-2">
             <button
               className="rounded-lg border border-primary-500 px-4 py-2 text-primary-600"
@@ -280,6 +286,12 @@ export default function TripPlannerPage() {
             <div className="rounded-xl bg-white p-5 shadow">
               <h2 className="mb-3 text-xl font-semibold text-primary-500">ملخص الرحلة</h2>
               <div className="grid gap-3 text-sm md:grid-cols-4">
+
+                <span>Days: {plan.summary.days}</span>
+                <span>Start: {plan.summary.start_date}</span>
+                <span>Places: {plan.summary.total_places}</span>
+                <span>Cost: {plan.summary.total_cost}</span>
+
                 <span>الأيام: {plan.summary.days}</span>
                 <span>الأماكن: {plan.summary.total_places}</span>
                 <span>التكلفة: {plan.summary.total_cost}</span>
@@ -289,7 +301,13 @@ export default function TripPlannerPage() {
 
             {plan.days.map((day) => (
               <div key={day.day} className="rounded-xl bg-white p-5 shadow">
+
+                <h3 className="mb-4 text-lg font-semibold text-secondary-600">
+                  Day {day.day}{day.date ? ` - ${day.date}` : ""}
+                </h3>
+
                 <h3 className="mb-4 text-lg font-semibold text-secondary-600">اليوم {day.day}</h3>
+
                 <div className="space-y-3">
                   {day.activities.map((activity) => (
                     <div key={activity.place_id} className="rounded-lg border p-4">

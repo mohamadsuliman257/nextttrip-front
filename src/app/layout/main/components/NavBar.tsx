@@ -5,7 +5,7 @@ import useAuthStore from "@/features/auth/store/authStore";
 import NotificationBell from "@/features/notifications/components/NotificationBell";
 
 const publicLinks = [
-  { label: "خطط رحلتك", to: "/plan" },
+  { label: "خطط رحلتك", to: "/tourist/trip"},
   { label: "احجز مرشدك", to: "/tourist/guides" },
   { label: "حول المنصة", to: "/about" },
 ];
@@ -46,7 +46,7 @@ const NavBar = () => {
   const closeMenu = () => setOpen(false);
 
   return (
-    <nav className="px-8 py-3 w-full flex items-top justify-between absolute top-0">
+    <nav className="px-8 py-3 w-full flex items-top justify-between top-0">
 
       {/* زر الموبايل */}
       <button

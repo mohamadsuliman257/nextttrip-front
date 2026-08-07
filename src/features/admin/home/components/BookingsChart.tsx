@@ -1,26 +1,74 @@
-// src/features/admin/dashboard/components/BookingsChart.tsx
+interface BookingsChartProps {
+  data?: Array<{
+    month?: number;
+    week?: number;
+    month_name?: string;
+    week_label?: string;
+    year: number;
+    count: number;
+  }>;
+}
 
-export default function BookingsChart() {
+export default function BookingsChart({ data = [] }: BookingsChartProps) {
+  // حساب القيمة الأعلى للمخطط البياني بشكل آمن
+  const maxCount = Math.max(...data.map(d => d.count), 1);
+
+  // مصفوفة أسماء الأشهر العربية كخيار احتياطي
+  const MonthNames = ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول'];
+
   return (
-    <div className="bg-white shadow rounded-xl p-5 border border-primary-200">
-      <h3 className="text-xl font-semibold text-primary-900 mb-4">
-         حجوزات المرشدين
-      </h3>
-
-      <div className="h-40 flex items-end gap-3">
-        <div className="w-7 bg-primary-400 h-24 rounded"></div>
-        <div className="w-7 bg-primary-500 h-32 rounded"></div>
-        <div className="w-7 bg-primary-600 h-20 rounded"></div>
-        <div className="w-7 bg-primary-700 h-36 rounded"></div>
-        <div className="w-7 bg-primary-400 h-24 rounded"></div>
-        <div className="w-7 bg-primary-500 h-32 rounded"></div>
-        <div className="w-7 bg-primary-600 h-20 rounded"></div>
-        <div className="w-7 bg-primary-700 h-36 rounded"></div>
-        <div className="w-7 bg-primary-400 h-24 rounded"></div>
-        <div className="w-7 bg-primary-500 h-32 rounded"></div>
-        <div className="w-7 bg-primary-600 h-20 rounded"></div>
-        <div className="w-7 bg-primary-700 h-36 rounded"></div>
+    <div className="bg-white shadow-sm rounded-xl p-5 border border-purple-200 flex flex-col justify-between">
+      <div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-1">
+          معدل الحجوزات
+        </h3>
+        <p className="text-xs text-gray-500 mb-4">
+          عرض إحصائي لعدد الحجوزات
+        </p>
       </div>
+
+      {data.length === 0 ? (
+        <div className="h-64 flex items-center justify-center text-gray-400 text-sm">
+          لا توجد بيانات متوفرة لهذه الفترة
+        </div>
+      ) : (
+        /* الحاوية الأساسية للشارت مصفوفة بشكل flex أفقي وتوزع العناصر بالتساوي */
+        <div className="h-64 flex items-end justify-between gap-3 px-2 pt-6 border-b border-gray-100 w-full">
+          {data.map((item, index) => {
+            // حساب نسبة الارتفاع الصافية للعمود
+            const heightPercentage = (item.count / maxCount) * 100;
+
+            // تحديد النص الأسفل
+             const label = MonthNames[item.month - 1];
+
+            return (
+              <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2 group min-w-[35px] relative">
+
+                {/* 1. حاوية معزولة بارتفاع كامل مخصص فقط لرسم وتمدد العمود الرأسي */}
+                <div className="relative w-full flex-1 flex items-end justify-center">
+
+                  {/* بالون يعرض العدد عند تمرير الماوس Hover  */}
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded absolute pointer-events-none shadow-sm z-10 bottom-[105%] left-1/2 -translate-x-1/2 whitespace-nowrap mb-1">
+                    {item.count} حجز
+                  </div>
+
+                  {/* عامود الرسم البياني - يتمدد  رأسياً   بناءً على النسبة */}
+                  <div
+                    className="bg-purple-500 rounded-t w-full transition-all duration-500 ease-out hover:bg-purple-600 shadow-sm"
+                    style={{ height: `${heightPercentage}%`, minHeight: item.count > 0 ? '6px' : '2px' }}
+                    title={`${label}: ${item.count} حجز`}
+                  />
+                </div>
+
+                {/* 2. نص المحور الأفقي يقع تماماً خارج حاوية الرسم المئوي */}
+                <span className="text-[10px] font-medium text-gray-500 text-center truncate max-w-full block h-4 mt-1" title={label}>
+                  {label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

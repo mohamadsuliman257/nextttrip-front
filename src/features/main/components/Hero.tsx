@@ -28,7 +28,7 @@ const BirdLogo = () => {
 };
 export default function Hero() {
   return (
-    <section className="h-screen flex flex-col justify-center">
+    <section className="h-screen flex flex-col justify-center -mt-23 md:-mt-35">
       <div className="max-w-[90%] md:max-w-4xl mx-auto text-center">
 
         {/* العنوان */}

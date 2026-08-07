@@ -50,9 +50,9 @@ export default function UserHomePage() {
   return (
     <div className="min-h-screen">
       {/* ===== Header Section ===== */}
-      <h1 className="text-2xl font-bold text-primary-500 pt-28 text-center w-full ">مرحباً {user?.name} </h1>      
+      <h1 className="text-2xl font-bold text-primary-500 my-10 text-center w-full ">مرحباً {user?.name} </h1>      
 
-      <section className="grid grid-cols-5 gap-2 md:px-8 mb-10 mx-[5%] lg:mx-[22%] mt-40 sm:mt-28 md:mt-17 ">
+      <section className="grid grid-cols-5 gap-2 md:px-8 mb-10 mx-[5%] lg:mx-[22%]  ">
         {userCards.map((card, index) => {
           const Icon = card.icon;
 

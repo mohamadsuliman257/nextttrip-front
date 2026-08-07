@@ -1,32 +1,38 @@
 import { Route, MapPin, Users, Globe } from "lucide-react";
 import type { ElementType } from "react";
+import { Link } from "react-router-dom";
 
 interface FeatureItem {
   title: string;
   desc: string;
   icon: ElementType;
+  to: string;
 }
 
 const features: FeatureItem[] = [
   { 
     title: "تخطيط رحلة ذكي", 
     desc: "إنشاء برنامج يومي تلقائي حسب الوقت والمسافة والميزانية والاهتمامات.",
-    icon: Route
+    icon: Route,
+    to: "/tourist/trip"
   },
   { 
     title: "خريطة تفاعلية", 
     desc: "استكشف الأماكن السياحية على خريطة دقيقة.- اختر المكان الذي تريد وخذ معلومات كاملة عنه",
-    icon: MapPin
+    icon: MapPin,
+    to: "/tourist/map"
   },
   { 
     title: "مرشدين محليين", 
     desc: "ابحث واحجز مرشد سياحي موثوق - وفق اللغة التي تريدها .",
-    icon: Users
+    icon: Users,
+    to: "/tourist/guides"
   },
   { 
     title: "اكتشاف أماكن", 
     desc: "أكتشف أجمل الأماكن على مستوى العالم والموجودة في سوريا بلد الحضارة والجمال .",
-    icon: Globe
+    icon: Globe,
+    to: "/tourist/places"
   },
 ];
 
@@ -44,6 +50,7 @@ const Features = () => {
         {features.map((f, i) => {
           const Icon = f.icon;
           return (
+            <Link to={f.to}>
             <div
               key={i}
               className="max-w-80 mx-auto px-8 py-10 bg-white/80 shadow-sm shadow-secondary-700 rounded-lg text-center hover:shadow-md hover:bg-secondary-50 transition flex flex-col justify-between h-full"
@@ -64,6 +71,7 @@ const Features = () => {
                 <Icon className="w-12 h-12 text-primary-600" />
               </div>
             </div>
+            </Link>
           );
         })}
       </div>

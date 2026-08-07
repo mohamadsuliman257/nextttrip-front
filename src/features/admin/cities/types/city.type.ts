@@ -3,6 +3,7 @@ export interface City {
   name: string;
   description?: string;
   image?: string;
+  image_url?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -11,4 +12,5 @@ export interface CityFormData {
   name: string;
   description?: string;
   image?: string | File;
+  image_url?: string | File;
 }

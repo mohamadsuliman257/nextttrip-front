@@ -25,8 +25,8 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">إدارة المستخدمين</h1>
+    <div className="space-y-3">
+      <h1 className="text-2xl font-bold text-primary-700">إدارة المستخدمين</h1>
 
       <UserFilters filters={filters} onFiltersChange={setFilters} />
 

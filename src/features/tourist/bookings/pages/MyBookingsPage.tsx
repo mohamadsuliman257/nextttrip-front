@@ -22,8 +22,8 @@ export default function MyBookingsPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold mt-20 text-primary-500 text-center">
+    <div className="max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold text-primary-500 text-center -mt-10 mb-7">
         حجوزاتي
       </h1>
 
@@ -33,7 +33,7 @@ export default function MyBookingsPage() {
         </p>
       )}
 
-      <div className="max-w-[90%] md:max-w-2xl p-5 mx-auto space-y-4">
+      <div className="max-w-[90%] md:max-w-2xl p-5 pt-0 mx-auto space-y-4">
         {data.map((booking: Booking) => (
           <BookingCard key={booking.booking_id} booking={booking} />
         ))}

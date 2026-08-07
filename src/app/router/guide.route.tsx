@@ -5,7 +5,7 @@ import GuideProfilePage from "@/features/guide/profile/pages/GuideProfilePage";
 import AllBookingsPage from "@/features/guide/bookings/pages/AllBookingsPage";
 import GuideReviewsPage from "@/features/guide/reviews/pages/GuideReviewsPage";
 import GuideNotificationsPage from "@/features/notifications/pages/NotificationsPage";
-import NotFoundPage from "@/features/main/pages/NotFoundPage";
+import SuggestPlacePage from "@/features/tourist/suggest-place/pages/SuggestPlacePage";
 
 const guideRoutes = [
   {
@@ -38,7 +38,11 @@ const guideRoutes = [
       },
       {
         path: 'suggest-place',
-        element: <NotFoundPage />
+        element: (
+          <ProtectedRoute role="guide">
+            <SuggestPlacePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

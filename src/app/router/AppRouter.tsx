@@ -9,7 +9,7 @@ import adminRoutes from "./admin.route";
 import { GuestRoute } from "./components/GuestRoute";
 import ForbiddenPage from "@/features/main/pages/ForbiddenPage";
 import NotFoundPage from "@/features/main/pages/NotFoundPage";
-import userRoutes from "./tourist.route";
+import touristRoutes from "./tourist.route";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,11 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
-      ...userRoutes
+      {
+        path: "/suggest-place",
+        element: <About />,
+      },
+      ...touristRoutes
     ],
   },
   ...guideRoutes,

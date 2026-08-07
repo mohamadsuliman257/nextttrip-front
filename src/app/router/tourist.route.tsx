@@ -10,9 +10,11 @@ import NotificationsPage from "@/features/notifications/pages/NotificationsPage"
 import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPage";
 
 import LeafletMapPage from "@/features/tourist/map/pages/LeafletMapPage";
+import SuggestPlacePage from "@/features/tourist/suggest-place/pages/SuggestPlacePage";
+import TouristInterestsPage from "@/features/tourist/interests/pages/TouristInterestsPage";
 
 
-const userRoutes = [
+const touristRoutes = [
   {
     path: "/tourist",
     element: <ProtectedRoute role="tourist">
@@ -53,6 +55,18 @@ const userRoutes = [
     path: "/tourist/map",
     element: <LeafletMapPage />
   },
+  {
+    path: "/tourist/suggest-place",
+    element: <ProtectedRoute role="tourist">
+      <SuggestPlacePage />
+    </ProtectedRoute>,
+  },
+  {
+    path: "/tourist/interests",
+    element: <ProtectedRoute role="tourist">
+      <TouristInterestsPage />
+    </ProtectedRoute>,
+  },
 ];
 
-export default userRoutes;
+export default touristRoutes;

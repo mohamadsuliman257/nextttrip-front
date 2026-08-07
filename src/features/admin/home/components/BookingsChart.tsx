@@ -1,9 +1,6 @@
 interface BookingsChartProps {
   data?: Array<{
-    month?: number;
-    week?: number;
-    month_name?: string;
-    week_label?: string;
+    month: number;
     year: number;
     count: number;
   }>;
@@ -39,10 +36,10 @@ export default function BookingsChart({ data = [] }: BookingsChartProps) {
             const heightPercentage = (item.count / maxCount) * 100;
 
             // تحديد النص الأسفل
-             const label = MonthNames[item.month - 1];
+             const label = MonthNames[item.month - 1] ;
 
             return (
-              <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2 group min-w-[35px] relative">
+              <div key={index} className="flex-1 h-full flex flex-col justify-end items-center gap-2 group min-w-[15px] relative">
 
                 {/* 1. حاوية معزولة بارتفاع كامل مخصص فقط لرسم وتمدد العمود الرأسي */}
                 <div className="relative w-full flex-1 flex items-end justify-center">

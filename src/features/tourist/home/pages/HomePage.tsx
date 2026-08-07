@@ -1,5 +1,5 @@
 import useAuthStore from "@/features/auth/store/authStore";
-import {  Heart, Star,  StarsIcon,  Globe, Bell } from "lucide-react";
+import {  Heart, Star,  StarsIcon,  Globe, Bell, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function UserHomePage() {
@@ -45,6 +45,22 @@ export default function UserHomePage() {
       iconColor: "text-yellow-300",
       titleColor: "text-yellow-500",
     },
+    {
+      title: "اقتراح مكان",
+      to: "/tourist/suggest-place",
+      icon: MapPin,
+      borderColor: "border-green-200",
+      iconColor: "text-green-500",
+      titleColor: "text-green-700",
+    },
+    {
+      title: "اهتماماتي",
+      to: "/tourist/interests",
+      icon: Heart,
+      borderColor: "border-purple-300",
+      iconColor: "text-purple-500",
+      titleColor: "text-purple-700",
+    },
   ];
 
   return (
@@ -66,7 +82,7 @@ export default function UserHomePage() {
               >
                 <div className="text-center space-y-2">
                   <Icon className={`w-full ${card.iconColor}`} size={30} />
-                    <h3 className={`text-xs md:text-lg font-semibold ${card.titleColor}`}>{card.title}</h3>
+                    <h3 className={`text-xs md:text-lg font-semibold text-nowrap ${card.titleColor}`}>{card.title}</h3>
                 </div>
               </div>
             </Link>

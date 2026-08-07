@@ -3,7 +3,10 @@ export type SuggestionStatus = "pending" | "approved" | "rejected";
 export interface SuggestedPlace {
   id: number;
   user_id: number;
-  city_id?: number;
+  city: {
+    id: number;
+    name: string;
+  }
   name: string;
   description?: string;
   latitude?: number;
@@ -11,8 +14,10 @@ export interface SuggestedPlace {
   images?: string[];
   status: SuggestionStatus;
   admin_notes?: string;
-  user_name: string;
-  user_type: "guide" | "tourist";
+  user: {
+    name: string;
+    role: "guide" | "tourist";
+  };
   created_at?: string;
   updated_at?: string;
 }

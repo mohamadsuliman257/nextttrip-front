@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Circle, MapContainer, Marker, Polyline, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import type { Destination } from "@/features/admin/destinations/types/destination.type";
@@ -31,15 +32,121 @@ function MapEvents() {
   return null;
 }
 
-// مكون للتحرك إلى نقطة محددة على الخريطة
-function FlyTo({ point }: { point: [number, number] | null }) {
+// مكون للتحكم في العرض الحالي على الخريطة
+function ViewController({
+  nearbyMode,
+  point,
+}: {
+  nearbyMode: boolean;
+  point: [number, number] | null;
+}) {
   const map = useMap();
-  if (point) map.flyTo(point, 12);
+
+  useEffect(() => {
+    if (!nearbyMode) {
+      map.setView(SYRIA, 7);
+      return;
+    }
+
+    if (point) {
+      map.flyTo(point, 12);
+    }
+  }, [map, nearbyMode, point]);
+
+  return null;
+}
+
+function CircleBoundsController({
+  nearbyMode,
+  searchPosition,
+  radius,
+  route,
+}: {
+  nearbyMode: boolean;
+  searchPosition: [number, number] | null;
+  radius: number;
+  route: [number, number][];
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!nearbyMode || !searchPosition || route.length > 0) return;
+
+    // Ensure the map container has been laid out and sizes are correct
+    // before calling fitBounds — prevents clipped circle on initial load.
+    map.invalidateSize();
+
+    let rafId: number | null = null;
+    let timeoutId: number | null = null;
+
+    const fit = () => {
+      try {
+        const bounds = L.latLng(searchPosition).toBounds(radius * 1000);
+        const padSide = 80;
+        const padTop = 60; // extra top padding to avoid header/controls clipping
+        const padBottom = 60;
+        map.fitBounds(bounds, {
+          paddingTopLeft: [padSide, padTop],
+          paddingBottomRight: [padSide, padBottom],
+          maxZoom: 13,
+        });
+      } catch (err) {
+        // defensive: ignore
+      }
+    };
+
+    const tryFit = () => {
+      rafId = requestAnimationFrame(() => {
+        fit();
+        timeoutId = window.setTimeout(fit, 300);
+      });
+    };
+
+    // Initial attempt
+    tryFit();
+
+    // Also retry when tile layers finish loading — find tile layers and attach listener
+    const onTileLoad = () => tryFit();
+    map.eachLayer((layer: any) => {
+      if (layer instanceof L.TileLayer) {
+        layer.on("load", onTileLoad);
+      }
+    });
+
+    const onResize = () => tryFit();
+    map.on("resize", onResize);
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      if (timeoutId) clearTimeout(timeoutId);
+      map.eachLayer((layer: any) => {
+        if (layer instanceof L.TileLayer) {
+          layer.off("load", onTileLoad);
+        }
+      });
+      map.off("resize", onResize);
+    };
+  }, [map, nearbyMode, searchPosition, radius, route]);
+
+  return null;
+}
+
+function FitBounds({ bounds }: { bounds: [number, number][] }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!bounds || bounds.length === 0) return;
+    const latLngBounds = L.latLngBounds(bounds.map((coord) => L.latLng(coord)));
+    map.fitBounds(latLngBounds, { padding: [40, 40] });
+  }, [map, bounds]);
+
   return null;
 }
 
 interface InteractiveMapProps {
-  position: [number, number] | null;
+  nearbyMode: boolean;
+  searchPosition: [number, number] | null;
+  userPosition: [number, number] | null;
   radius: number;
   route: [number, number][];
   places: Destination[];
@@ -50,7 +157,9 @@ interface InteractiveMapProps {
 
 // حاوية الخريطة التفاعلية
 export function InteractiveMap({
-  position,
+  nearbyMode,
+  searchPosition,
+  userPosition,
   radius,
   route,
   places,
@@ -58,32 +167,56 @@ export function InteractiveMap({
   isError,
   onDrawRoute,
 }: InteractiveMapProps) {
+  const shouldShowUserPosition =
+    userPosition &&
+    (!searchPosition || userPosition[0] !== searchPosition[0] || userPosition[1] !== searchPosition[1]);
+
   return (
-    <div className="relative h-[550px] overflow-hidden rounded-2xl border shadow-sm">
+    <div className="relative h-160 overflow-hidden rounded-2xl border shadow-sm">
       {isLoading && <Overlay text="جاري تحميل الوجهات..." />}
       {isError && <Overlay text="تعذر تحميل الوجهات. تحقق من VITE_MAP_PLACES_ENDPOINT." />}
       
-      <MapContainer center={SYRIA} zoom={7} className="h-full w-full">
+      <MapContainer center={SYRIA} zoom={7} className="h-full w-full" scrollWheelZoom={false} doubleClickZoom={false} touchZoom={false}>
         <MapEvents />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        <FlyTo point={position} />
-        
-        {/* دائرة نطاق البحث حول موقع المستخدم */}
-        {position && (
+        {!route.length && (
+          <>
+            <ViewController
+              nearbyMode={nearbyMode}
+              point={userPosition ?? searchPosition}
+            />
+            <CircleBoundsController
+              nearbyMode={nearbyMode}
+              searchPosition={searchPosition}
+              radius={radius}
+              route={route}
+            />
+          </>
+        )}
+        {route.length > 0 && <FitBounds bounds={route} />}
+
+        {/* دائرة نطاق البحث حول موقع البحث */}
+        {searchPosition && (
           <>
             <Circle
-              center={position}
+              center={searchPosition}
               radius={radius * 1000}
               pathOptions={{ color: "#763f9e", fillOpacity: 0.08 }}
             />
-            <Marker position={position}>
-              <Popup>موقعك الحالي</Popup>
+            <Marker position={searchPosition}>
+              <Popup>نقطة البحث</Popup>
             </Marker>
           </>
+        )}
+
+        {shouldShowUserPosition && (
+          <Marker position={userPosition!}>
+            <Popup>موقعك الحالي</Popup>
+          </Marker>
         )}
 
         {/* رسم المسار المحدد */}
@@ -95,22 +228,26 @@ export function InteractiveMap({
         )}
 
         {/* عرض الأماكن المرئية على الخريطة */}
-        {places.map((place) => (
-          <Marker
-            key={place.id}
-            position={[place.latitude!, place.longitude!]}
-            icon={placeIcon(place)}
-          >
-            <Popup>
-              <PlacePopup
-                place={place}
-                userPosition={position}
-                distance={position ? distanceKm(position, [place.latitude!, place.longitude!]) : 0}
-                onDrawRoute={onDrawRoute}
-              />
-            </Popup>
-          </Marker>
-        ))}
+        {places.map((place) => {
+          const currentPosition = userPosition ?? searchPosition;
+
+          return (
+            <Marker
+              key={place.id}
+              position={[place.latitude!, place.longitude!]}
+              icon={placeIcon(place)}
+            >
+              <Popup>
+                <PlacePopup
+                  place={place}
+                  userPosition={currentPosition}
+                  distance={currentPosition ? distanceKm(currentPosition, [place.latitude!, place.longitude!]) : 0}
+                  onDrawRoute={onDrawRoute}
+                />
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );

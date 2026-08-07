@@ -46,7 +46,7 @@ const NavBar = () => {
   const closeMenu = () => setOpen(false);
 
   return (
-    <nav className="px-8 py-3 w-full flex items-top justify-between top-0">
+    <nav className="px-8  w-full flex items-top justify-between top-0">
 
       {/* زر الموبايل */}
       <button
@@ -108,7 +108,25 @@ const NavBar = () => {
                     >
                       تقييماتي للمرشدين
                     </Link>
+
+                    <Link
+                      to="tourist/interests"
+                      className="hover:text-primary-500 transition cursor-pointer"
+                      onClick={closeMenu}
+                    >
+                      اهتماماتي
+                    </Link>
                   </>
+                )}
+
+                {(user.role === "tourist" || user.role === "guide") && (
+                  <Link
+                    to={user.role === "tourist" ? "/tourist/suggest-place" : "/guide/suggest-place"}
+                    className="hover:text-primary-500 transition cursor-pointer"
+                    onClick={closeMenu}
+                  >
+                    اقتراح مكان جديد
+                  </Link>
                 )}
 
                 <li

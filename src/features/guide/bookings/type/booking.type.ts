@@ -35,4 +35,6 @@ export interface Booking {
   can_guide_react: boolean; 
   // بيانات إضافية
   created_at: string;
+
+  logs: Log[]
 }

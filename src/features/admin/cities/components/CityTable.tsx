@@ -10,13 +10,13 @@ interface CityTableProps {
 
 export default function CityTable({ cities, onEdit, onDelete, isDeleting }: CityTableProps) {
   return (
-    <div className="bg-white shadow rounded-xl border border-primary-200 mb-10 p-2">
+    <div className="bg-white shadow rounded-xl border border-primary-200 mb-10 p-2 overflow-x-auto">
       <table className="w-full text-right border-collapse">
         <thead>
           <tr className="bg-primary-50 text-primary-900">
             <th className="p-3 border border-primary-200">#</th>
             <th className="p-3 border border-primary-200">اسم المدينة</th>
-            <th className="p-3 border border-primary-200">الوصف</th>
+            <th className="p-3 border border-primary-200 min-w-50">الوصف</th>
             <th className="p-3 border border-primary-200">الصورة</th>
             <th className="p-3 border border-primary-200">الإجراءات</th>
           </tr>

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createSmartTripPlan } from "../api/tripPlanner.api";
+import { getTouristInterests } from "@/features/tourist/interests/api/getTouristInterests.api";
+import useAuthStore from "@/features/auth/store/authStore";
 import type { TripPlan, TripPlannerRequest } from "../types/tripPlanner.types";
 import FormField from "@/components/FormField";
 
@@ -50,8 +54,18 @@ const paceOptions = [
 ];
 
 export default function TripPlannerPage() {
+  const navigate = useNavigate();
+  const user = useAuthStore((s) => s.user);
+  const isTourist = user?.role === "tourist";
+
   const [plan, setPlan] = useState<TripPlan | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: savedInterests = [], isLoading: interestsLoading } = useQuery({
+    queryKey: ["tourist-interests-saved"],
+    queryFn: getTouristInterests,
+    enabled: isTourist,
+  });
 
   const form = useForm<TripPlannerRequest>({
     defaultValues: defaultRequest,
@@ -85,6 +99,12 @@ export default function TripPlannerPage() {
   };
 
   const submit = async (data: TripPlannerRequest) => {
+    if (isTourist && savedInterests.length === 0) {
+      toast.error("حدد اهتماماتك أولاً قبل تخطيط الرحلة");
+      navigate("/tourist/interests", { state: { from: "/tourist/trip" } });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -112,141 +132,22 @@ export default function TripPlannerPage() {
         </h1>
 
 
-        <form onSubmit={submit} className="mb-8 grid gap-4 rounded-xl bg-white p-5 shadow md:grid-cols-2">
-          <label className="space-y-1 text-sm font-medium">
-            Latitude
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              type="number"
-              step="any"
-              value={form.latitude}
-              onChange={(event) => updateForm("latitude", Number(event.target.value))}
-            />
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Longitude
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              type="number"
-              step="any"
-              value={form.longitude}
-              onChange={(event) => updateForm("longitude", Number(event.target.value))}
-            />
-          </label>
-
-          <label className="space-y-1 text-sm font-medium md:col-span-2">
-            Interests
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              value={interestText}
-              onChange={(event) => setInterestText(event.target.value)}
-              placeholder="historic, nature"
-            />
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Budget
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              type="number"
-              min={0}
-              value={form.budget}
-              onChange={(event) => updateForm("budget", Number(event.target.value))}
-            />
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Start date
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              type="date"
-              min={today}
-              value={form.start_date}
-              onChange={(event) => updateForm("start_date", event.target.value)}
-            />
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Days
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              type="number"
-              min={1}
-              max={14}
-              value={form.days}
-              onChange={(event) => updateForm("days", Number(event.target.value))}
-            />
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Season
-            <select
-              className="w-full rounded-lg border px-3 py-2"
-              value={form.season}
-              onChange={(event) => updateForm("season", event.target.value as TripPlannerRequest["season"])}
+        {isTourist && !interestsLoading && savedInterests.length === 0 && (
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary-200 bg-primary-50 p-4">
+            <p className="text-sm font-medium text-primary-700">
+              لم تحدد اهتماماتك بعد — حددها الآن لتخصيص خطط رحلاتك
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate("/tourist/interests", { state: { from: "/tourist/trip" } })}
+              className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-700"
             >
-              <option value="winter">winter</option>
-              <option value="spring">spring</option>
-              <option value="summer">summer</option>
-              <option value="autumn">autumn</option>
-            </select>
-          </label>
+              تحديد اهتماماتي
+            </button>
+          </div>
+        )}
 
-          <label className="space-y-1 text-sm font-medium">
-            Weather
-            <select
-              className="w-full rounded-lg border px-3 py-2"
-              value={form.weather}
-              onChange={(event) => updateForm("weather", event.target.value as TripPlannerRequest["weather"])}
-            >
-              <option value="sunny">sunny</option>
-              <option value="cloudy">cloudy</option>
-              <option value="rainy">rainy</option>
-              <option value="hot">hot</option>
-              <option value="cold">cold</option>
-            </select>
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Preferred time
-            <select
-              className="w-full rounded-lg border px-3 py-2"
-              value={form.preferred_time}
-              onChange={(event) => updateForm("preferred_time", event.target.value as TripPlannerRequest["preferred_time"])}
-            >
-              <option value="morning">morning</option>
-              <option value="afternoon">afternoon</option>
-              <option value="evening">evening</option>
-              <option value="sunset">sunset</option>
-            </select>
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Pace
-            <select
-              className="w-full rounded-lg border px-3 py-2"
-              value={form.pace}
-              onChange={(event) => updateForm("pace", event.target.value as TripPlannerRequest["pace"])}
-            >
-              <option value="slow">slow</option>
-              <option value="balanced">balanced</option>
-              <option value="intensive">intensive</option>
-            </select>
-          </label>
-
-          <label className="space-y-1 text-sm font-medium">
-            Activity level
-            <input
-              className="w-full rounded-lg border px-3 py-2"
-              type="number"
-              min={1}
-              max={4}
-              value={form.preferred_activity_level}
-              onChange={(event) => updateForm("preferred_activity_level", Number(event.target.value))}
-            />
-          </label>
-
+      
         <form onSubmit={handleSubmit(submit)} className="mb-8 grid gap-4 rounded-xl bg-white p-5 shadow md:grid-cols-2">
           <FormField
             label="خط العرض"

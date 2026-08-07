@@ -12,8 +12,8 @@ import {
   Hourglass,
   Star,
 } from "lucide-react";
-import type { Booking } from "../../../types/bookingTypes";
 import ReviewModal from "./ReviewModal";
+import type { Booking } from "../types/bookingTypes";
 
 interface Props {
   booking: Booking;

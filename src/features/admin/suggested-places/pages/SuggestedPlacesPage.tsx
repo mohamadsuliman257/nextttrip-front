@@ -16,7 +16,7 @@ export default function SuggestedPlacesPage() {
       // Navigate to destination creation page with suggestion data
       const suggestion = suggestedPlaces.find(p => p.id === id);
       if (suggestion) {
-        navigate(`/admin/destinations/create`, { state: { fromSuggestion: suggestion } });
+        navigate(`/admin/places/create`, { state: { fromSuggestion: suggestion } });
       }
     }
   };

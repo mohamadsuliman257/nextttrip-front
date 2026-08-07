@@ -7,13 +7,15 @@ import {
   Bell,
   ChevronDown,
   LogOut,
-  CalendarCheck,
   Building2,
   Layers,
   Heart,
   Globe,
   Lightbulb,
-  Building
+  Building,
+  // CalendarCheck,
+  // UserStar,
+  // MessageSquareDiff
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
@@ -21,11 +23,11 @@ import useAuthStore from "@/features/auth/store/authStore";
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { logout } = useAuthStore();
+  const logout = useAuthStore((s) => s.logout);
   const [open, setOpen] = useState(false);
 
   // حالة فتح القوائم الفرعية
-  const [openMenus, setOpenMenus] = useState({});
+  const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
 
   const toggleMenu = (label: any) => {
     setOpenMenus((prev: any) => ({ ...prev, [label]: !prev[label] }));
@@ -55,7 +57,7 @@ export default function Sidebar() {
       label: "إدارة الجداول الأساسية",
       children: [
         { label: "المدن", to: "/admin/cities", icon: Building2 },
-        { label: "أنواع الأماكن", to: "/admin/categories", icon: Layers },
+        { label: "تصنيفات الوجهات السياحية", to: "/admin/categories", icon: Layers },
         { label: "الاهتمامات", to: "/admin/interests", icon: Heart },
         { label: "اللغات", to: "/admin/languages", icon: Globe },
       ],
@@ -65,31 +67,33 @@ export default function Sidebar() {
       icon: Users,
       to: "/admin/users",
     },
+    // {
+    //   label: "الحجوزات ",
+    //   icon: CalendarCheck,
+    //   to: "/admin/bookings",
+    // },
     {
-      label: "الحجوزات ",
-      icon: CalendarCheck,
-      to: "/admin/users",
-    },
-    {
-      label: "الأماكن ",
+      label: "الوجهات السياحية ",
       children: [
-        {
-          label: "اقتراحات الأماكن",
-          to: "/admin/suggested-places",
-          icon: Lightbulb,
-        },
-        {
-          label: "إدارة الأماكن",
-          to: "/admin/places",
-          icon: Building,
-        },
-        {
-          label: "إشعارات الأماكن",
-          to: "/admin/notifications",
-          icon: Bell,
-        }
-      ]
+        { label: "اقتراحات الأماكن", to: "/admin/suggested-places", icon: Lightbulb },
+        { label: "إدارة الأماكن", to: "/admin/places", icon: Building },
+        { label: "إشعارات الأماكن", to: "/admin/notifications", icon: Bell }]
     },
+    // {
+    //   label: "تقييمات الأماكن",
+    //   icon: MessageSquareDiff,
+    //   to: "/admin/place-reviews",
+    // },
+    // {
+    //   label: "تقييمات المرشدين ",
+    //   icon: UserStar,
+    //   to: "/admin/guide-reviews",
+    // },
+    // {
+    //   label: "الرحلات ",
+    //   icon: UserStar,
+    //   to: "/admin/trips",
+    // },
   ];
 
   return (
@@ -113,7 +117,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 right-0 w-64 z-50 h-full
+          fixed top-0 right-0 w-78 z-50 h-full
           text-secondary-800 md:bg-white/10 bg-white/90
           flex flex-col py-6 overflow-y-auto
           ${open ? "translate-x-0" : "translate-x-full"}
@@ -157,7 +161,7 @@ export default function Sidebar() {
                     }`
                   }
                 >
-                  <Icon size={18} />
+                  {Icon && <Icon size={18} />}
                   <span>{item.label}</span>
                 </NavLink>
               );
@@ -170,7 +174,7 @@ export default function Sidebar() {
                   onClick={() => toggleMenu(item.label)}
                   className="flex items-center  w-full py-2 px-3 rounded-md hover:bg-secondary-300/60 transition"
                 >
-                   <ChevronDown
+                  <ChevronDown
                     size={18}
                     className={`me-2 transition ${openMenus[item.label] ? "" : "rotate-90"
                       }`}
@@ -190,8 +194,7 @@ export default function Sidebar() {
                           to={child.to}
                           onClick={() => setOpen(false)}
                           className={({ isActive }) =>
-                            `flex items-center gap-2 py-1 transition  ${
-                              isActive ? "bg-secondary-100" : "hover:bg-secondary-300/60"
+                            `flex items-center gap-2 py-1 transition  ${isActive ? "bg-secondary-100" : "hover:bg-secondary-300/60"
                             }`
                           }
                         >

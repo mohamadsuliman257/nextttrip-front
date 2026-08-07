@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import type { City } from "../types/City";
+import type { City } from "../types/city.type";
 
 export async function getCities(): Promise<City[]> {
   const res = await axios.get("/public/cities");

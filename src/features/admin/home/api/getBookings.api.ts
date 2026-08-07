@@ -3,6 +3,6 @@ import type { Booking } from "../types/booking.type";
 
 export async function getBookings(): Promise<Booking[]> {
   const res = await axios.get("/admin/bookings");
-  console.log(res.data);
+  console.log(res.data.data);
   return res.data.data;
 }

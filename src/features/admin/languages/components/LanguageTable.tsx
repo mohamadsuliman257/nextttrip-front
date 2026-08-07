@@ -10,7 +10,7 @@ interface LanguageTableProps {
 
 export default function LanguageTable({ languages, onEdit, onDelete, isDeleting }: LanguageTableProps) {
   return (
-    <div className="bg-white shadow rounded-xl border border-primary-200 mb-10 p-2">
+    <div className="bg-white shadow rounded-xl border  border-primary-200 overflow-x-auto mb-10 p-2">
       <table className="w-full text-right border-collapse">
         <thead>
           <tr className="bg-primary-50 text-primary-900">

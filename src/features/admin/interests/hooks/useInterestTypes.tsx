@@ -17,6 +17,7 @@ export function useInterests() {
     mutationFn: createInterest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-interests"] });
+      queryClient.invalidateQueries({ queryKey: ["interests"] });
       toast.success("تم إضافة الاهتمام بنجاح");
     },
     onError: () => {
@@ -28,6 +29,7 @@ export function useInterests() {
     mutationFn: ({ id, data }: { id: number; data: any }) => updateInterest(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-interests"] });
+      queryClient.invalidateQueries({ queryKey: ["interests"] });
       toast.success("تم تحديث الاهتمام بنجاح");
     },
     onError: () => {
@@ -39,6 +41,7 @@ export function useInterests() {
     mutationFn: deleteInterest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-interests"] });
+      queryClient.invalidateQueries({ queryKey: ["interests"] });
       toast.success("تم حذف الاهتمام بنجاح");
     },
     onError: () => {

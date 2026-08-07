@@ -1,68 +1,178 @@
-import { Navigation, Search } from "lucide-react";
+import { Navigation } from "lucide-react";
+import type { ChangeEvent } from "react";
+import FormField from "@/components/FormField";
 import type { Category } from "../types/category.type";
+import type { City } from "@/features/lookups/types/city.type";
 
 interface MapSidebarProps {
   radius: number;
+  nearbyMode: boolean;
   category: string;
+  city: string;
+  searchQuery: string;
+  minCost?: number;
+  maxCost?: number;
   categories: Category[];
+  cities: City[];
   visiblePlacesCount: number;
   onLocate: () => void;
+  onNearbyModeChange: (value: boolean) => void;
   onRadiusChange: (value: number) => void;
   onCategoryChange: (value: string) => void;
+  onCityChange: (value: string) => void;
+  onSearchQueryChange: (value: string) => void;
+  onMinCostChange: (value: number | undefined) => void;
+  onMaxCostChange: (value: number | undefined) => void;
 }
 
 // الشريط الجانبي للبحث والتصفية
 export function MapSidebar({
   radius,
   category,
+  city,
+  searchQuery,
+  minCost,
+  maxCost,
   categories,
+  cities,
   visiblePlacesCount,
   onLocate,
+  nearbyMode,
+  onNearbyModeChange,
   onRadiusChange,
   onCategoryChange,
+  onCityChange,
+  onSearchQueryChange,
+  onMinCostChange,
+  onMaxCostChange,
 }: MapSidebarProps) {
+  // دالة register محلية لربط الحقول بقيمها وسماعات التغيير
+  // بما أن MapSidebar لا يستخدم react-hook-form (الحقول مُدارة من الصفحة الأم)
+  const register = (name: string) => {
+    const fieldProps: Record<
+      string,
+      { value: string; onChange: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void }
+    > = {
+      searchQuery: {
+        value: searchQuery,
+        onChange: (event) => onSearchQueryChange(event.target.value),
+      },
+      city: {
+        value: city,
+        onChange: (event) => onCityChange(event.target.value),
+      },
+      minCost: {
+        value: minCost?.toString() ?? "",
+        onChange: (event) => {
+          const value = event.target.value;
+          onMinCostChange(value === "" ? undefined : Number(value));
+        },
+      },
+      maxCost: {
+        value: maxCost?.toString() ?? "",
+        onChange: (event) => {
+          const value = event.target.value;
+          onMaxCostChange(value === "" ? undefined : Number(value));
+        },
+      },
+      category: {
+        value: category,
+        onChange: (event) => onCategoryChange(event.target.value),
+      },
+    };
+
+    return fieldProps[name] ?? {};
+  };
+
   return (
-    <aside className="rounded-2xl bg-white p-5 shadow-sm mt-20">
-      <div className="mb-5 flex items-center gap-2 font-bold">
-        <Search size={19} />
-        البحث القريب
-      </div>
+    <aside className="rounded-2xl bg-white p-2 shadow-sm">
+     
+      <label className="mb-3 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm">
+        <span className="flex items-center gap-2">
+          <Navigation size={16} />
+          اكتشاف الأماكن القريبة
+        </span>
+        <input
+          type="checkbox"
+          checked={nearbyMode}
+          onChange={(event) => {
+            const nextValue = event.target.checked;
+            onNearbyModeChange(nextValue);
+            if (nextValue) {
+              onLocate();
+            }
+          }}
+          className="h-4 w-4 rounded border-slate-300"
+        />
+      </label>
 
-      <button
-        onClick={onLocate}
-        className="mb-5 flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-white"
-      >
-        <Navigation size={18} />
-        استكشاف الأماكن القريبة
-      </button>
-
-      <label className="mb-2 block text-sm">
-        نطاق البحث: {radius} كم
+      
+      <label className={`mb-2 block text-sm ${!nearbyMode ? "text-slate-400" : "text-slate-700"}`}>
+        نصف قطر البحث عن الأماكن القريبة: {radius} كم
       </label>
       <input
-        className="mb-5 w-full accent-primary-600"
+        className="mb-5 w-full accent-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
         type="range"
         min="1"
-        max="5"
+        max="20"
+        step="1"
         value={radius}
+        disabled={!nearbyMode}
         onChange={(event) => onRadiusChange(Number(event.target.value))}
       />
 
+      <div className="mb-4">
+        <FormField
+          label="بحث متعدد المفاتيح"
+          name="searchQuery"
+          type="search"
+          register={register}
+          errors={{}}
+          inputProps={{ placeholder: "ابحث باسم المكان، المدينة، العنوان أو الوصف" }}
+        />
+      </div>
+
+      <div className="mb-5">
+        <FormField label="اختر المدينة" name="city" register={register} errors={{}}>
+          <option value="all">كل المدن</option>
+          {cities.map((c) => (
+            <option key={c.id} value={String(c.id)}>
+              {c.name}
+            </option>
+          ))}
+        </FormField>
+      </div>
+
       <label className="mb-2 block text-sm">
-        نوع المكان
+        الميزانية (د.ل)
       </label>
-      <select
-        className="w-full rounded-lg border p-2.5"
-        value={category}
-        onChange={(event) => onCategoryChange(event.target.value)}
-      >
+      <div className="grid gap-3 md:grid-cols-2 mb-5">
+        <FormField
+          label=""
+          name="minCost"
+          type="number"
+          register={register}
+          errors={{}}
+          inputProps={{ min: 0, placeholder: "الحد الأدنى" }}
+        />
+        <FormField
+          label=""
+          name="maxCost"
+          type="number"
+          register={register}
+          errors={{}}
+          inputProps={{ min: 0, placeholder: "الحد الأقصى" }}
+        />
+      </div>
+
+      <FormField label="نوع المكان" name="category" register={register} errors={{}}>
         <option value="all">كل الأنواع</option>
         {categories.map((cat) => (
           <option key={cat.id} value={String(cat.id)}>
             {cat.name}
           </option>
         ))}
-      </select>
+      </FormField>
 
       <p className="mt-5 text-sm text-slate-500">
         {visiblePlacesCount} وجهة مطابقة

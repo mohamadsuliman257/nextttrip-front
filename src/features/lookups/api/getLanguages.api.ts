@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import type { Language } from "../types/Language";
+import type { Language } from "../types/language.type";
 
 export async function getLanguages(): Promise<Language[]> {
   const res = await axios.get("/public/languages");

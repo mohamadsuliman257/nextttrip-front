@@ -10,7 +10,7 @@ interface InterestTableProps {
 
 export default function InterestTable({ interests, onEdit, onDelete, isDeleting }: InterestTableProps) {
   return (
-    <div className="bg-white shadow rounded-xl p-5 border border-purple-200">
+    <div className="bg-white shadow rounded-xl p-5 border border-primary-200 overflow-x-auto">
 
       <table className="w-full text-right border-collapse">
         <thead>

@@ -66,8 +66,8 @@ export default function PlaceSuggestionTable() {
             {places.map((p) => (
               <tr key={p.id} className="hover:bg-gray-50/80 transition-colors">
                 <td className="p-3 text-gray-700 font-medium">{p.name}</td>
-                <td className="p-3 text-gray-600">{p.user_name}</td>
-                <td className="p-3 text-gray-500">{userTypeLabels[p.user_type]}</td>
+                <td className="p-3 text-gray-600">{p.user?.name}</td>
+                <td className="p-3 text-gray-500">{userTypeLabels[p.user?.role]}</td>
                 <td className="p-3 text-gray-500">{formatDate(p.created_at)}</td>
                 <td className="p-3 text-center">
                   <span className={`px-3 py-1 rounded-full text-xs font-medium inline-block ${statusColors[p.status]}`}>

@@ -4,9 +4,9 @@ import RecentBookingsTable from "../components/RecentBookingsTable";
 import { useGuideDashboard } from "../hooks/useGuideDashboard";
 
 export default function GuideHomePage() {
-  const { data , isLoading } = useGuideDashboard();
+  const { data  , isLoading } = useGuideDashboard();
 
-  if (isLoading) {
+  if (isLoading || ! data) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <p className="text-2xl text-primary-500">جاري تحميل المرشدين...</p>

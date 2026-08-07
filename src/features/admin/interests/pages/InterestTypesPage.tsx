@@ -80,12 +80,9 @@ export default function InterestsPage() {
       >
         <InterestForm
           onSubmit={handleFormSubmit}
-          defaultValues={editingInterest ? {
-            name: editingInterest.name,
-            question: editingInterest.question
-          } : undefined}
+          defaultValues={editingInterest}
           isSubmitting={isCreating || isUpdating}
-        />
+        />       
       </AdminModal>
     </div>
   );

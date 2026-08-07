@@ -29,7 +29,7 @@ const SummaryCard = ({ averageRating, totalReviews, ratingsDistribution }: Props
       <div className="flex-1">
         <h3 className="mb-3 text-md font-semibold text-gray-800">توزيع النجوم</h3>
 
-        {[5, 4, 3, 2, 1].map((star) => {
+        {([5, 4, 3, 2, 1] as const).map((star) => {
           const count = ratingsDistribution[star] ?? 0;
           const percentage = safeTotal > 0 ? (count / safeTotal) * 100 : 0;
 

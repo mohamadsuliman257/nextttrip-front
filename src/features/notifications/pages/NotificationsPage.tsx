@@ -74,6 +74,16 @@ function NotificationItem({ notification }: { notification: Notification }) {
             </>
           )}
 
+          {type === "suggested-place-reviewed" && (
+            <>
+              <p className={`font-bold ${data.status === "approved" ? "text-emerald-700" : "text-red-700"}`}>{data.message}</p>
+              <p className="text-sm text-gray-600 mt-1">اسم المكان: {data.place_name}</p>
+              {data.city_name && <p className="text-sm text-gray-600 mt-1">المدينة: {data.city_name}</p>}
+              <p className="text-sm text-gray-600 mt-1">الحالة: {data.status === "approved" ? "تم القبول" : "تم الرفض"}</p>
+              {data.admin_notes && <p className="text-sm text-gray-600 mt-1">ملاحظة الإدارة: {data.admin_notes}</p>}
+            </>
+          )}
+
           {type === "suggested-place-submitted" && (
             <>
               <p className="font-bold">{data.message}</p>

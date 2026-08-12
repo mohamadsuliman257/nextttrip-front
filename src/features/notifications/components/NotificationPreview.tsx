@@ -23,6 +23,17 @@ export default function NotificationPreview({ notification  }: { notification: N
     );
   }
 
+  if (data.type === "suggested-place-reviewed") {
+    const isApproved = data.status === "approved";
+    return (
+      <div>
+        <p className={`font-bold ${isApproved ? "text-emerald-700" : "text-red-700"}`}>{data.message}</p>
+        <p className="text-sm text-gray-600">{data.place_name}{data.city_name ? ` - ${data.city_name}` : ""}</p>
+        {data.admin_notes && <p className="text-sm text-gray-600">ملاحظة الإدارة: {data.admin_notes}</p>}
+      </div>
+    );
+  }
+
   if (data.type === "suggested-place-submitted") {
     return (
       <div>

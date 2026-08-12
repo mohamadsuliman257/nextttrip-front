@@ -64,7 +64,7 @@ export default function HeroSlider() {
             <SwiperSlide key={slide.id}>
               <div className="relative w-full h-full">
                 <img
-                  src={slide.image_url || "/images/placeholder.jpg"}
+                  src={slide.image || ""}
                   className="swiper-lazy w-full h-full object-cover"
                   alt={slide.name}
                 />

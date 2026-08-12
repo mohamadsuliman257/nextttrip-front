@@ -127,6 +127,7 @@ export default function SuggestPlacePage() {
 
           <LocationMapPicker
             onLocationChange={handleLocationChange}
+            title="Select place location"
           />
 
           <div>

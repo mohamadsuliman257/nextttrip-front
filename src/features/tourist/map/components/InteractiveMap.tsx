@@ -56,6 +56,18 @@ function ViewController({
   return null;
 }
 
+// مكون للانتقال إلى مكان محدد عند الطلب من جدول النتائج
+function FocusController({ point }: { point: [number, number] | null }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!point) return;
+    map.flyTo(point, 14, { duration: 1.2 });
+  }, [map, point]);
+
+  return null;
+}
+
 function CircleBoundsController({
   nearbyMode,
   searchPosition,
@@ -150,9 +162,11 @@ interface InteractiveMapProps {
   radius: number;
   route: [number, number][];
   places: Destination[];
+  focusPoint: [number, number] | null;
   isLoading: boolean;
   isError: boolean;
   onDrawRoute: (place: Destination) => void;
+  onAddToTrip: (place: Destination) => void;
 }
 
 // حاوية الخريطة التفاعلية
@@ -163,9 +177,11 @@ export function InteractiveMap({
   radius,
   route,
   places,
+  focusPoint,
   isLoading,
   isError,
   onDrawRoute,
+  onAddToTrip,
 }: InteractiveMapProps) {
   const shouldShowUserPosition =
     userPosition &&
@@ -198,6 +214,8 @@ export function InteractiveMap({
           </>
         )}
         {route.length > 0 && <FitBounds bounds={route} />}
+
+        <FocusController point={focusPoint} />
 
         {/* دائرة نطاق البحث حول موقع البحث */}
         {searchPosition && (
@@ -243,6 +261,7 @@ export function InteractiveMap({
                   userPosition={currentPosition}
                   distance={currentPosition ? distanceKm(currentPosition, [place.latitude!, place.longitude!]) : 0}
                   onDrawRoute={onDrawRoute}
+                  onAddToTrip={onAddToTrip}
                 />
               </Popup>
             </Marker>

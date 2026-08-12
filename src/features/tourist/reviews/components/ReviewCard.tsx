@@ -11,7 +11,10 @@ const ReviewCard = ({ review }: Props) => {
   return (
     <div className="border border-secondary-300 rounded-lg p-4 shadow-sm bg-white/70">
       <div className="flex justify-between items-center">
-        <h3 className="font-bold text-lg">{guide.user.name}</h3>
+        <div className="flex items-center gap-2">
+          <img className="rounded-full w-10" src={guide.avatar ?? ""} alt="" />
+          <h3 className="font-bold text-lg">{guide.user.name}</h3>
+        </div>
         <span className="text-yellow-500 text-xl">⭐ {review.rating}</span>
       </div>
 

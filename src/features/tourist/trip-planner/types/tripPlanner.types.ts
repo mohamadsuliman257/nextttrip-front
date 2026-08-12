@@ -1,4 +1,5 @@
 export type TripPlannerRequest = {
+  title: string;
   latitude: number;
   longitude: number;
   interests: string[];
@@ -60,4 +61,6 @@ export type TripPlan = {
     population_size: number;
   };
   days: TripDay[];
+  trip_id?: number | null;
+  trip?: Record<string, unknown> | null;
 };

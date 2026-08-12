@@ -13,9 +13,9 @@ import {
   Globe,
   Lightbulb,
   Building,
-  // CalendarCheck,
-  // UserStar,
-  // MessageSquareDiff
+  UserStar,
+  MessageSquareDiff,
+  CalendarCheck,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
@@ -67,11 +67,11 @@ export default function Sidebar() {
       icon: Users,
       to: "/admin/users",
     },
-    // {
-    //   label: "الحجوزات ",
-    //   icon: CalendarCheck,
-    //   to: "/admin/bookings",
-    // },
+    {
+      label: "الحجوزات ",
+      icon: CalendarCheck,
+      to: "/admin/bookings",
+    },
     {
       label: "الوجهات السياحية ",
       children: [
@@ -79,16 +79,13 @@ export default function Sidebar() {
         { label: "إدارة الأماكن", to: "/admin/places", icon: Building },
         { label: "إشعارات الأماكن", to: "/admin/notifications", icon: Bell }]
     },
-    // {
-    //   label: "تقييمات الأماكن",
-    //   icon: MessageSquareDiff,
-    //   to: "/admin/place-reviews",
-    // },
-    // {
-    //   label: "تقييمات المرشدين ",
-    //   icon: UserStar,
-    //   to: "/admin/guide-reviews",
-    // },
+    {
+      label: "التقييمات ",
+      children: [
+        { label: "تقييمات الأماكن", to: "/admin/place-reviews", icon: MessageSquareDiff },
+        { label: "تقييمات المرشدين ", to: "/admin/guide-reviews", icon: UserStar },
+      ]
+    },
     // {
     //   label: "الرحلات ",
     //   icon: UserStar,
@@ -156,8 +153,8 @@ export default function Sidebar() {
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
                     `flex items-center gap-3 py-2 px-3 rounded-md transition ${isActive
-                      ? "bg-secondary-100"
-                      : "hover:bg-secondary-300/60"
+                      ? "bg-primary-100"
+                      : "hover:bg-primary-100/50"
                     }`
                   }
                 >
@@ -172,7 +169,7 @@ export default function Sidebar() {
               <div key={item.label}>
                 <button
                   onClick={() => toggleMenu(item.label)}
-                  className="flex items-center  w-full py-2 px-3 rounded-md hover:bg-secondary-300/60 transition"
+                  className="flex items-center  w-full py-2 px-3 rounded-md hover:bg-primary-100/50 transition"
                 >
                   <ChevronDown
                     size={18}
@@ -194,7 +191,7 @@ export default function Sidebar() {
                           to={child.to}
                           onClick={() => setOpen(false)}
                           className={({ isActive }) =>
-                            `flex items-center gap-2 py-1 transition  ${isActive ? "bg-secondary-100" : "hover:bg-secondary-300/60"
+                            `flex items-center gap-2 py-1 transition  ${isActive ? "bg-primary-100" : "hover:bg-primary-100/50"
                             }`
                           }
                         >
@@ -209,7 +206,7 @@ export default function Sidebar() {
             );
           })}
         </nav>
-        <button className="flex py-2 px-6 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-400/60 hover:text-primary-50" onClick={() => logout(() => navigate("/"))}>
+        <button className="flex py-2 px-6 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-100/50 " onClick={() => logout(() => navigate("/"))}>
           <LogOut size={18} /> تسجيل الخروج
         </button>
       </aside>

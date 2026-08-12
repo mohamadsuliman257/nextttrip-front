@@ -27,12 +27,15 @@ interface LocationMapPickerProps {
   latitude?: string;
   longitude?: string;
   onLocationChange: (lat: string, lng: string) => void;
+  title: string
+
 }
 
 export default function LocationMapPicker({
   latitude: initialLat,
   longitude: initialLng,
   onLocationChange,
+  title="الموقع على الخريطة"
 }: LocationMapPickerProps) {
   const [mapLocation, setMapLocation] = useState<[number, number] | null>(
     initialLat && initialLng ? [parseFloat(initialLat), parseFloat(initialLng)] : null
@@ -67,8 +70,11 @@ export default function LocationMapPicker({
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <label className="block text-sm font-medium text-gray-700">
+        {/* <label className="block text-sm font-medium text-gray-700">
           الموقع على الخريطة <span className="text-gray-400 text-xs">(اختياري)</span>
+        </label> */}
+        <label htmlFor="">
+          {title}
         </label>
         <button
           type="button"
@@ -100,15 +106,11 @@ export default function LocationMapPicker({
             <Marker position={mapLocation} icon={selectedIcon} />
           )}
         </MapContainer>
-      </div>
-
-      <p className="text-xs text-gray-400 mt-1.5 text-center">
-        اضغط على الخريطة لتحديد موقع المكان
-      </p>
+      </div>      
 
       <div className="grid grid-cols-2 gap-4 mt-3">
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">خط العرض</label>
+          <label className="block font-medium text-gray-500 mb-1">خط العرض</label>
           <input
             value={latDisplay}
             readOnly
@@ -118,7 +120,7 @@ export default function LocationMapPicker({
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">خط الطول</label>
+          <label className="block font-medium text-gray-500 mb-1">خط الطول</label>
           <input
             value={lngDisplay}
             readOnly

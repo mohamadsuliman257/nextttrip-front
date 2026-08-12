@@ -1,20 +1,40 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import Select, { components, type OptionProps } from "react-select";
 import toast from "react-hot-toast";
+import { tripPlannerSchema } from "../schemas/tripPlanner.schema";
 import { createSmartTripPlan } from "../api/tripPlanner.api";
 import { getTouristInterests } from "@/features/tourist/interests/api/getTouristInterests.api";
+import { getAllInterests } from "@/features/tourist/interests/api/getAllInterests.api";
 import useAuthStore from "@/features/auth/store/authStore";
 import type { TripPlan, TripPlannerRequest } from "../types/tripPlanner.types";
 import FormField from "@/components/FormField";
+import LocationMapPicker from "@/components/LocationMapPicker";
 
 const today = new Date().toISOString().split("T")[0];
 
+type InterestOption = { value: string; label: string };
+
+function InterestSelectOption(props: OptionProps<InterestOption, true>) {
+  return (
+    <components.Option {...props}>
+      <div className="flex items-center gap-2">
+        <input type="checkbox" checked={props.isSelected} readOnly className="h-4 w-4 accent-primary-600" />
+        <span>{props.label}</span>
+      </div>
+    </components.Option>
+  );
+}
+
 const defaultRequest: TripPlannerRequest = {
+  title: "رحلة مميزة",
   latitude: 33.5138,
   longitude: 36.2765,
-  interests: ["historic", "nature"],
+  interests: [],
+  // interests: ["historic", "nature"],
   budget: 120,
   start_date: today,
   days: 3,
@@ -56,7 +76,7 @@ const paceOptions = [
 export default function TripPlannerPage() {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
-  const isTourist = user?.role === "tourist";
+  const isTourist = user?.role === "tourist";//X
 
   const [plan, setPlan] = useState<TripPlan | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,11 +84,18 @@ export default function TripPlannerPage() {
   const { data: savedInterests = [], isLoading: interestsLoading } = useQuery({
     queryKey: ["tourist-interests-saved"],
     queryFn: getTouristInterests,
-    enabled: isTourist,
+    enabled: isTourist,//X
+  });
+
+  const { data: allInterests = [], isLoading: allInterestsLoading } = useQuery({
+    queryKey: ["tourist-interests-all"],
+    queryFn: getAllInterests,
   });
 
   const form = useForm<TripPlannerRequest>({
     defaultValues: defaultRequest,
+    resolver: zodResolver(tripPlannerSchema),
+    mode: "onTouched",
   });
 
   const {
@@ -79,32 +106,25 @@ export default function TripPlannerPage() {
     formState: { errors },
   } = form;
 
-  const interestsValue = watch("interests");
-  const interestText = interestsValue ? interestsValue.join(", ") : "";
+  const watchedInterests = watch("interests");
+  const interestsValue = Array.isArray(watchedInterests) ? watchedInterests : [];
+  const interestsInitialized = useRef(false);
 
-  const useCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      toast.error("المتصفح لا يدعم تحديد الموقع");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setValue("latitude", Number(position.coords.latitude.toFixed(6)));
-        setValue("longitude", Number(position.coords.longitude.toFixed(6)));
-        toast.success("تم تحديد نقطة البداية");
-      },
-      () => toast.error("تعذر تحديد الموقع الحالي")
+  useEffect(() => {
+    if (interestsInitialized.current || allInterestsLoading || interestsLoading) return;
+    setValue(
+      "interests",
+      isTourist
+        ? allInterests.filter((interest) => savedInterests.includes(interest.id)).map((interest) => interest.name)
+        : [],
+      { shouldValidate: false }
     );
-  };
+    interestsInitialized.current = true;
+  }, [allInterests, allInterestsLoading, interestsLoading, isTourist, savedInterests, setValue]);
+  const selectedLatitude = watch("latitude");
+  const selectedLongitude = watch("longitude");
 
   const submit = async (data: TripPlannerRequest) => {
-    if (isTourist && savedInterests.length === 0) {
-      toast.error("حدد اهتماماتك أولاً قبل تخطيط الرحلة");
-      navigate("/tourist/interests", { state: { from: "/tourist/trip" } });
-      return;
-    }
-
     setIsLoading(true);
 
     try {
@@ -116,7 +136,11 @@ export default function TripPlannerPage() {
 
       const result = await createSmartTripPlan({ ...data, interests });
       setPlan(result);
-      toast.success("تم إنشاء خطة الرحلة بنجاح");
+      toast.success(
+        isTourist && result.trip_id
+          ? "تم إنشاء خطة الرحلة وحفظها في رحلاتي بنجاح"
+          : "تم إنشاء خطة الرحلة بنجاح"
+      );
     } catch (error) {
       toast.error("فشل إنشاء خطة الرحلة");
     } finally {
@@ -125,7 +149,7 @@ export default function TripPlannerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-24">
+    <div className="min-h-screen -mt-10 px-4 ">
       <div className="mx-auto max-w-5xl">
         <h1 className="mb-6 text-center text-2xl font-bold text-primary-500">
           مخطط الرحلات الذكي
@@ -147,40 +171,35 @@ export default function TripPlannerPage() {
           </div>
         )}
 
-      
-        <form onSubmit={handleSubmit(submit)} className="mb-8 grid gap-4 rounded-xl bg-white p-5 shadow md:grid-cols-2">
-          <FormField
-            label="خط العرض"
-            name="latitude"
-            register={register}
-            errors={errors}
-            type="number"
-            inputProps={{ step: "any" }}
-          />
 
-          <FormField
-            label="خط الطول"
-            name="longitude"
-            register={register}
-            errors={errors}
-            type="number"
-            inputProps={{ step: "any" }}
-          />
+        <form onSubmit={handleSubmit(submit)} className="mb-8 grid gap-4 rounded-xl bg-white/60 p-5 shadow md:grid-cols-2">
 
-          <FormField
-            label="الاهتمامات"
-            name="interests"
+{/* ??????????????????? should be written from user, but here can be modified - should br multi-select*/}
+          <div className="space-y-1 md:col-span-2">
+            <label className="block text-sm font-medium text-primary-700">الاهتمامات</label>
+            <Select<InterestOption, true>
+              isMulti
+              closeMenuOnSelect={false}
+              hideSelectedOptions={false}
+              isLoading={allInterestsLoading}
+              isDisabled={allInterestsLoading}
+              options={allInterests.map((interest) => ({ value: interest.name, label: interest.name }))}
+              value={allInterests
+                .filter((interest) => interestsValue.includes(interest.name))
+                .map((interest) => ({ value: interest.name, label: interest.name }))}
+              onChange={(selected) => setValue("interests", selected.map((interest) => interest.value), { shouldValidate: true })}
+              components={{ Option: InterestSelectOption }}
+              placeholder="اختر اهتماماتك"
+              noOptionsMessage={() => "لا توجد اهتمامات"}
+              className="text-right"
+              classNamePrefix="interest-select"
+            />
+            {errors.interests && <p className="text-sm text-red-500">{errors.interests.message}</p>}
+          </div>          <FormField
+            label="العنوان"
+            name="title"
             register={register}
             errors={errors}
-            col={2}
-            inputProps={{ 
-              value: interestText,
-              onChange: (e: any) => {
-                const interests = e.target.value.split(",").map((item: string) => item.trim()).filter(Boolean);
-                setValue("interests", interests);
-              },
-              placeholder: "تاريخي, طبيعي"
-            }}
           />
 
           <FormField
@@ -190,6 +209,14 @@ export default function TripPlannerPage() {
             errors={errors}
             type="number"
             inputProps={{ min: 0 }}
+          />
+
+          <FormField
+            label="تاريخ البدء"
+            name="start_date"
+            register={register}
+            errors={errors}
+            type="date"
           />
 
           <FormField
@@ -262,15 +289,19 @@ export default function TripPlannerPage() {
             inputProps={{ min: 1, max: 4 }}
           />
 
+          <div className="md:col-span-2">
+            <LocationMapPicker
+              latitude={selectedLatitude?.toString()}
+              longitude={selectedLongitude?.toString()}
+              onLocationChange={(lat, lng) => {
+                setValue("latitude", Number(lat), { shouldValidate: true });
+                setValue("longitude", Number(lng), { shouldValidate: true });
+              }}
+              title="حدد بداية الرحلة"
+            />
+          </div>
 
           <div className="flex flex-wrap gap-3 md:col-span-2">
-            <button
-              className="rounded-lg border border-primary-500 px-4 py-2 text-primary-600"
-              type="button"
-              onClick={useCurrentLocation}
-            >
-              استخدام موقعي الحالي
-            </button>
             <button
               className="rounded-lg bg-primary-500 px-4 py-2 text-white disabled:opacity-60"
               type="submit"
@@ -298,6 +329,21 @@ export default function TripPlannerPage() {
                 <span>وقت السفر: {plan.summary.total_travel_time} دقيقة</span>
               </div>
             </div>
+
+            {plan.trip_id && (
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                <p className="text-sm font-medium text-emerald-800">
+                  تم حفظ هذه الخطة في رحلاتك ويمكنك مشاهدتها أو إضافة أماكن إليها لاحقاً.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate("/tourist/my-trips")}
+                  className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+                >
+                  عرض رحلاتي
+                </button>
+              </div>
+            )}
 
             {plan.days.map((day) => (
               <div key={day.day} className="rounded-xl bg-white p-5 shadow">

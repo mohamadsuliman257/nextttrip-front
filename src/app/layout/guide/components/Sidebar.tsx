@@ -19,7 +19,7 @@ type Props = {
 };
 
 
-export default function Sidebar({guide} :Props) {
+export default function Sidebar({ guide }: Props) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
@@ -57,7 +57,7 @@ export default function Sidebar({guide} :Props) {
         className={`
           fixed top-0 right-0 w-64 z-50 h-screen          
           text-secondary-800 md:bg-white/10 bg-white/90
-          flex flex-col items-center py-6 shadow-xl
+          flex flex-col items-center py-6 
           ${open ? "translate-x-0" : "translate-x-full"}
           md:static md:translate-x-0
           transform transition-transform duration-500
@@ -90,8 +90,8 @@ export default function Sidebar({guide} :Props) {
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-3 py-2 px-3 rounded-md transition ${isActive
-                  ? "bg-primary-200"
-                  : "hover:bg-primary-400/60 hover:text-primary-50"
+                  ? "bg-primary-100"
+                  : "hover:bg-primary-100/50"
                 }`
               }
             >
@@ -101,7 +101,7 @@ export default function Sidebar({guide} :Props) {
           ))}
         </nav>
 
-        <button className="flex py-2 px-3 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-400/60 hover:text-primary-50" onClick={() => logout(() => navigate("/"))}>
+        <button className="flex py-2 px-3 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-100 " onClick={() => logout(() => navigate("/"))}>
           <LogOut size={18} /> تسجيل الخروج
         </button>
       </aside>

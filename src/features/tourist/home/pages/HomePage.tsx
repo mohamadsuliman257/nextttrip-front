@@ -13,14 +13,22 @@ export default function UserHomePage() {
       iconColor: "text-secondary-300",
       titleColor: "text-secondary-500",
     },
-    {
+{
       title: "تقييماتي للمرشدين",
       to: "/tourist/reviews",
       icon: Star,
       borderColor: "border-primary-300",
       iconColor: "text-primary-300",
       titleColor: "text-primary-500",
-    },      
+    },
+    {
+      title: "تقييماتي للأماكن",
+      to: "/tourist/reviews/places",
+      icon: Star,
+      borderColor: "border-yellow-300",
+      iconColor: "text-yellow-500",
+      titleColor: "text-yellow-600",
+    },
      {
       title: "كافة الإشعارات",
       to: "/tourist/notifications",
@@ -28,14 +36,14 @@ export default function UserHomePage() {
       borderColor: "border-primary-500",
       iconColor: "text-primary-500",
       titleColor: "text-primary-800",
-    },
+    },    
     {
-      title: "رحلاتي لسوريا",
-      to: "/tourist/trip",
-      icon: Heart,
-      borderColor: "border-secondary-500",
-      iconColor: "text-secondary-600",
-      titleColor: "text-secondary-800",
+      title: "رحلاتي المحفوظة",
+      to: "/tourist/my-trips",
+      icon: StarsIcon,
+      borderColor: "border-indigo-300",
+      iconColor: "text-indigo-500",
+      titleColor: "text-indigo-700",
     },
     {
       title: "خريطة تفاعلية",
@@ -66,9 +74,9 @@ export default function UserHomePage() {
   return (
     <div className="min-h-screen">
       {/* ===== Header Section ===== */}
-      <h1 className="text-2xl font-bold text-primary-500 my-10 text-center w-full ">مرحباً {user?.name} </h1>      
+      <h1 className="text-2xl font-bold text-primary-500 my-10 text-center w-full -mt-10 ">مرحباً {user?.name} </h1>      
 
-      <section className="grid grid-cols-5 gap-2 md:px-8 mb-10 mx-[5%] lg:mx-[22%]  ">
+      <section className="grid grid-cols-4 gap-2 gap-y-15 md:px-8  pt-10 mb-10 mx-[5%] lg:mx-[22%]  ">
         {userCards.map((card, index) => {
           const Icon = card.icon;
 
@@ -76,7 +84,7 @@ export default function UserHomePage() {
             <Link key={index} to={card.to}>
               <div
                 className={`
-                   bg-white shadow-md rounded-xl pt-2 pb-5 border-t-4 border-r-4 text-center hover:translate-y-[-10px] transition skew-y-15 skew-x-5               
+                   bg-white/90 shadow-md rounded-xl pt-2 pb-5 border-t-4 border-r-4 text-center hover:translate-y-2.5 transition skew-y-17 skew-x-7               
             ${card.borderColor}
           `}
               >
@@ -88,10 +96,7 @@ export default function UserHomePage() {
             </Link>
           );
         })}
-      </section>
-
-    
-      <main className="px-8 pb-16"></main>
+      </section>    
     </div>
   );
 }

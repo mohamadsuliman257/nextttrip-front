@@ -94,6 +94,14 @@ const NavBar = () => {
                 {user.role === "tourist" && (
                   <>
                     <Link
+                      to="tourist/my-trips"
+                      className="hover:text-primary-500 transition cursor-pointer"
+                      onClick={closeMenu}
+                    >
+                      رحلاتي
+                    </Link>
+
+                    <Link
                       to="tourist/my-bookings"
                       className="hover:text-primary-500 transition cursor-pointer"
                       onClick={closeMenu}

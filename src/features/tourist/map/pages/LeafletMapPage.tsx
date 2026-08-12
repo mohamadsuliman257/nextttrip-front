@@ -6,6 +6,9 @@ import { useCategories } from "../hook/useCategories";
 import { useCities } from "@/features/lookups";
 import { MapSidebar } from "../components/MapSidebar";
 import { InteractiveMap } from "../components/InteractiveMap";
+import { PlacesTable } from "../components/PlacesTable";
+import { AddToTripModal } from "../components/AddToTripModal";
+import { useTouristGuard } from "../hook/useTouristGuard";
 import type { Destination } from "@/features/admin/destinations/types/destination.type";
 
 export default function LeafletMapPage() {
@@ -36,6 +39,19 @@ export default function LeafletMapPage() {
 
   // حالة المسار المرسوم على الخريطة
   const [route, setRoute] = useState<[number, number][]>([]);
+
+  // حالة المكان المحدد من جدول النتائج للانتقال إليه على الخريطة
+  const [focusPoint, setFocusPoint] = useState<[number, number] | null>(null);
+
+  // حالة المكان المحدد لإضافته إلى رحلة
+  const [addToTripPlace, setAddToTripPlace] = useState<Destination | null>(null);
+
+  const canManageTrips = useTouristGuard();
+
+  const openAddToTrip = useCallback((place: Destination) => {
+    if (!canManageTrips()) return;
+    setAddToTripPlace(place);
+  }, [canManageTrips]);
 
   const searchFilters = useMemo(() => ({
     q: searchQuery.trim() || undefined,
@@ -80,6 +96,7 @@ export default function LeafletMapPage() {
 
   useEffect(() => {
     setRoute([]);
+    setFocusPoint(null);
   }, [searchQuery, category, city, minCost, maxCost, radius, searchPosition, nearbyMode]);
 
   // دالة لرسم المسار إلى مكان محدد
@@ -133,6 +150,16 @@ export default function LeafletMapPage() {
     }
   };
 
+  // دالة لعرض مكان محدد من جدول النتائج على الخريطة
+  const showOnMap = useCallback((place: Destination) => {
+    if (!Number.isFinite(place.latitude) || !Number.isFinite(place.longitude)) {
+      toast.error("لا توجد إحداثيات لهذا المكان لعرضه على الخريطة.");
+      return;
+    }
+    setRoute([]);
+    setFocusPoint([place.latitude!, place.longitude!]);
+  }, []);
+
   return (
     <main className="min-h-screen pb-8" dir="rtl">
       <section className="mx-auto md:text-center max-w-7xl px-4 -mt-15 mb-10">
@@ -171,12 +198,32 @@ export default function LeafletMapPage() {
             radius={radius}
             route={route}
             places={visiblePlaces}
+            focusPoint={focusPoint}
             isLoading={isLoading}
             isError={isError}
             onDrawRoute={drawRoute}
+            onAddToTrip={openAddToTrip}
+          />
+        </div>
+
+        <div className="mt-4">
+          <PlacesTable
+            places={visiblePlaces}
+            categories={categories}
+            cities={cities}
+            onShowOnMap={showOnMap}
+            onDrawRoute={drawRoute}
+            onAddToTrip={openAddToTrip}
           />
         </div>
       </section>
+
+      {addToTripPlace && (
+        <AddToTripModal
+          place={addToTripPlace}
+          onClose={() => setAddToTripPlace(null)}
+        />
+      )}
     </main >
   );
 }

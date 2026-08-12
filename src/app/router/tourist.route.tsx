@@ -5,9 +5,11 @@ import HomePage from "@/features/tourist/home/pages/HomePage";
 import  GuidesPage  from "@/features/tourist/guides/pages/GuidesPage";
 import  GuideDetailsPage  from "@/features/tourist/guides/pages/GuideDetailsPage";
 import TouristReviewsPage from "@/features/tourist/reviews/pages/TouristReviewsPage";
+import TouristPlaceReviewsPage from "@/features/tourist/reviews/pages/TouristPlaceReviewsPage";
 import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 
 import TripPlannerPage from "@/features/tourist/trip-planner/pages/TripPlannerPage";
+import MyTripsPage from "@/features/tourist/my-trips/pages/MyTripsPage";
 
 import LeafletMapPage from "@/features/tourist/map/pages/LeafletMapPage";
 import SuggestPlacePage from "@/features/tourist/suggest-place/pages/SuggestPlacePage";
@@ -33,15 +35,27 @@ const touristRoutes = [
       <MyBookingsPage />
     </ProtectedRoute>,
   },
-  {
+{
     path: "/tourist/reviews",
     element: <ProtectedRoute role="tourist">
       <TouristReviewsPage />
     </ProtectedRoute>,
   },
   {
+    path: "/tourist/reviews/places",
+    element: <ProtectedRoute role="tourist">
+      <TouristPlaceReviewsPage />
+    </ProtectedRoute>,
+  },
+  {
     path: "/tourist/trip",
     element: <TripPlannerPage />
+  },
+  {
+    path: "/tourist/my-trips",
+    element: <ProtectedRoute role="tourist">
+      <MyTripsPage />
+    </ProtectedRoute>,
   },
   {
     path: "/tourist/guides",

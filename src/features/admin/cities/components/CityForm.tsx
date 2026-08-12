@@ -39,8 +39,8 @@ export default function CityForm({ onSubmit, defaultValues, isSubmitting }: City
       return () => URL.revokeObjectURL(previewUrl);
     } 
     // حالة 2: إذا لم يختر ملفاً جديداً، وكان هناك صورة قديمة قادمة من الباك-إند، اعرضها فوراً
-    else if (defaultValues?.image_url && typeof defaultValues.image_url === "string") {
-      setImagePreview(defaultValues.image_url);
+    else if (defaultValues?.image && typeof defaultValues.image === "string") {
+      setImagePreview(defaultValues.image);
     }
   }, [imageFile, defaultValues]); // مراقبة التغييرات لضمان التحديث التلقائي
 

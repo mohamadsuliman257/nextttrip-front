@@ -1,0 +1,69 @@
+interface BookingsChartProps {
+  data?: Array<{
+    month: number;
+    year: number;
+    count: number;
+  }>;
+}
+
+const MonthNames = [
+  "كانون الثاني",
+  "شباط",
+  "آذار",
+  "نيسان",
+  "أيار",
+  "حزيران",
+  "تموز",
+  "آب",
+  "أيلول",
+  "تشرين الأول",
+  "تشرين الثاني",
+  "كانون الأول",
+];
+
+export default function BookingsChart({ data = [] }: BookingsChartProps) {
+  const maxCount = Math.max(...data.map((d) => d.count), 1);
+
+  return (
+    <div className="bg-white shadow-sm rounded-xl p-5 border border-purple-200 flex flex-col justify-between">
+      <div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-1">معدل الحجوزات</h3>
+        <p className="text-xs text-gray-500 mb-4">عرض إحصائي لعدد الحجوزات شهرياً</p>
+      </div>
+
+      {data.length === 0 ? (
+        <div className="h-64 flex items-center justify-center text-gray-400 text-sm">
+          لا توجد بيانات متوفرة لهذه الفترة
+        </div>
+      ) : (
+        <div className="h-64 flex items-end justify-between gap-3 px-2 pt-6 border-b border-gray-100 w-full">
+          {data.map((item, index) => {
+            const heightPercentage = (item.count / maxCount) * 100;
+            const label = MonthNames[item.month - 1] || `${item.month}`;
+
+            return (
+              <div
+                key={index}
+                className="flex-1 h-full flex flex-col justify-end items-center gap-2 group min-w-[15px] relative"
+              >
+                <div className="relative w-full flex-1 flex items-end justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded absolute pointer-events-none shadow-sm z-10 bottom-[105%] left-1/2 -translate-x-1/2 whitespace-nowrap mb-1">
+                    {item.count} حجز
+                  </div>
+                  <div
+                    className="bg-purple-500 rounded-t w-full transition-all duration-500 ease-out hover:bg-purple-600 shadow-sm"
+                    style={{ height: `${heightPercentage}%`, minHeight: item.count > 0 ? "6px" : "2px" }}
+                    title={`${label}: ${item.count} حجز`}
+                  />
+                </div>
+                <span className="text-[10px] font-medium text-gray-500 text-center truncate max-w-full block h-4 mt-1" title={label}>
+                  {label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}

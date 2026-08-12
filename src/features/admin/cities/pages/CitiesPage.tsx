@@ -80,7 +80,7 @@ export default function CitiesPage() {
       >
         <CityForm
           onSubmit={handleFormSubmit}
-          defaultValues={editingCity ? { name: editingCity.name, description: editingCity.description, image_url: editingCity.image_url } : undefined}
+          defaultValues={editingCity ? { name: editingCity.name, description: editingCity.description, image: editingCity.image } : undefined}
           isSubmitting={isCreating || isUpdating}
         />
       </AdminModal>

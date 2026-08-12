@@ -38,7 +38,7 @@ export default function CityTable({ cities, onEdit, onDelete, isDeleting }: City
                 <td className="px-3 py-1 border border-primary-200">
                   {city.image ? (
                     <img
-                      src={city.image_url}
+                      src={city.image}
                       alt={city.name}
                       className="w-16 h-16 object-cover rounded-lg"
                     />

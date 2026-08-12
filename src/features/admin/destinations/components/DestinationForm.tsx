@@ -209,6 +209,7 @@ export default function DestinationForm({ onSubmit, defaultValues, isSubmitting 
                 latitude={defaultValues?.latitude?.toString()}
                 longitude={defaultValues?.longitude?.toString()}
                 onLocationChange={handleLocationChange}
+                title="Select destination location"
             />
 
             <FormField label="الوصف" name="description" register={register} errors={errors} type="textarea" />

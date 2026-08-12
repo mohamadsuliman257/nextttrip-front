@@ -12,5 +12,4 @@ export interface CityFormData {
   name: string;
   description?: string;
   image?: string | File;
-  image_url?: string | File;
 }

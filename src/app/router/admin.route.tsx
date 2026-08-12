@@ -2,6 +2,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "../layout/admin/AdminLayout";
 import { 
   AdminHomePage, 
+  AdminBookingsPage,
   CitiesPage, 
   CategoriesPage, 
   InterestsPage, 
@@ -9,7 +10,9 @@ import {
   UsersPage, 
   SuggestedPlacesPage,
   DestinationsPage,
-  CreateDestinationPage
+  CreateDestinationPage,
+  GuideReviewsPage,
+  PlaceReviewsPage
 } from "@/features/admin";
 import NotificationsPage from "@/features/notifications/pages/NotificationsPage";
 
@@ -66,11 +69,19 @@ const adminRoutes  = [
           </ProtectedRoute>
         ),
       },
-      {
+{
         path: "users",
         element: (
           <ProtectedRoute role="admin">
             <UsersPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "bookings",
+        element: (
+          <ProtectedRoute role="admin">
+            <AdminBookingsPage />
           </ProtectedRoute>
         ),
       },
@@ -114,11 +125,27 @@ const adminRoutes  = [
           </ProtectedRoute>
         ),
       },
-      {
+{
         path: "notifications",
         element: (
           <ProtectedRoute role="admin">
             <NotificationsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "guide-reviews",
+        element: (
+          <ProtectedRoute role="admin">
+            <GuideReviewsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "place-reviews",
+        element: (
+          <ProtectedRoute role="admin">
+            <PlaceReviewsPage />
           </ProtectedRoute>
         ),
       },

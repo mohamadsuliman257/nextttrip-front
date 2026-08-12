@@ -1,4 +1,5 @@
 export { default as AdminHomePage } from "./home/pages/AdminHomePage";
+export { AdminBookingsPage } from "./bookings";
 
 // Basic Tables Management
 export { CitiesPage } from "./cities";
@@ -14,3 +15,6 @@ export { SuggestedPlacesPage } from "./suggested-places";
 
 // Destinations Management
 export { DestinationsPage, CreateDestinationPage } from "./destinations";
+
+// Reviews Management
+export { GuideReviewsPage, PlaceReviewsPage } from "./reviews";

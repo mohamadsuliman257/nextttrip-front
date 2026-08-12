@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import Footer from "../shared/components/Footer";
+import ScrollToTop from "@/app/router/components/ScrollToTop";
 
 const MainLayout = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const MainLayout = () => {
       className="min-h-screen bg-gray-50    
                 bg-[url('/syria-map.svg'),radial-gradient(#ffffff50,#763f9e20,#14b8a620)]
                 bg-size-[100%_100%]  bg-fixed " dir="rtl" style={{ backgroundSize: "100% 100vh" }}>
+      <ScrollToTop />
       <NavBar />
 
       <main className="flex-1 px-1 md:px-5">

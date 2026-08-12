@@ -5,10 +5,12 @@ import { useMarkAllAsRead } from "../hooks/useMarkAllAsRead";
 import { Bell, X } from "lucide-react";
 import type { Notification } from "../type/notification.type";
 import NotificationPreview from "./NotificationPreview";
+import { useNavigate } from "react-router-dom";
 
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   const { data: unread = [] } = useUnreadNotifications();
   const { data: { count: unreadCount = 0 } = { count: 0 } } = useUnreadCount();
@@ -24,6 +26,11 @@ export default function NotificationBell() {
     if (unreadCount > 0) {
       markAllAsRead.mutate();
     }
+  };
+
+  const goToAllNotifications = () => {
+    closePreview();
+    navigate("/tourist/notifications");
   };
 
   // إغلاق النافذة عند النقر خارجها
@@ -88,6 +95,17 @@ export default function NotificationBell() {
               <NotificationPreview notification={n} />
             </div>
           ))}
+
+          {/* رابط كافة الإشعارات */}
+          <div className="mt-2 flex justify-center">
+            <button
+              type="button"
+              onClick={goToAllNotifications}
+              className="text-primary-500 font-bold text-sm hover:underline"
+            >
+              عرض كافة الإشعارات
+            </button>
+          </div>
         </div>
       )}
     </div>

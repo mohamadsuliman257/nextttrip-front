@@ -45,7 +45,7 @@ export default function MyTripsPage() {
           </div>
         </div>
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-5 mb-5">
           {trips.map((trip) => (
             <TripCard key={trip.id} trip={trip} />
           ))}

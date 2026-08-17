@@ -6,7 +6,7 @@ export interface TopPlace {
   city_id: number;
   average_rating: number;
   reviews_count: number;
-  image_url?: string;
+  image?: string;
   city?: {
     id: number;
     name: string;

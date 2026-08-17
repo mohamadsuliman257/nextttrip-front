@@ -5,7 +5,7 @@ import useAuthStore from "@/features/auth/store/authStore";
 import NotificationBell from "@/features/notifications/components/NotificationBell";
 
 const publicLinks = [
-  { label: "خطط رحلتك", to: "/tourist/trip"},
+  { label: "خطط رحلتك", to: "/tourist/trip" },
   { label: "احجز مرشدك", to: "/tourist/guides" },
   { label: "حول المنصة", to: "/about" },
 ];
@@ -17,16 +17,14 @@ const NavBar = () => {
 
   const { user, logout } = useAuthStore();
   const role = user?.role;
-  const homeUrl = user
-    ? role === "admin"
-      ? "/admin"
-      : role === "guide"
-      ? "/guide"
-      : "/tourist"
+  const homeUrl = user ?
+    role === "admin" ? "/admin" :
+      role === "guide" ? "/guide" : "/tourist"
     : "/";
 
   // إغلاق القائمة عند الضغط خارجها
   useEffect(() => {
+    //e.target: its type EventTarget
     const handleClickOutside = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setOpen(false);
@@ -50,7 +48,7 @@ const NavBar = () => {
 
       {/* زر الموبايل */}
       <button
-        className="lg:hidden text-secondary-700 -mt-10 pt-3"
+        className="lg:hidden text-secondary-700 -mt-10 pt-10"
         onClick={() => setOpen(!open)}
       >
         {open ? <X size={32} /> : <Menu size={32} />}
@@ -90,52 +88,7 @@ const NavBar = () => {
             <li className="relative group cursor-pointer text-secondary-600">
               <span className="flex gap-1">{user.name} <ChevronDown /></span>
 
-              <ul className="absolute hidden group-hover:flex flex-col bg-white border shadow-lg rounded-lg p-4 gap-3 right-0 top-7 w-50 z-50">
-                {user.role === "tourist" && (
-                  <>
-                    <Link
-                      to="tourist/my-trips"
-                      className="hover:text-primary-500 transition cursor-pointer"
-                      onClick={closeMenu}
-                    >
-                      رحلاتي
-                    </Link>
-
-                    <Link
-                      to="tourist/my-bookings"
-                      className="hover:text-primary-500 transition cursor-pointer"
-                      onClick={closeMenu}
-                    >
-                      حجوزاتي للمرشدين
-                    </Link>
-
-                    <Link
-                      to="tourist/reviews"
-                      className="hover:text-primary-500 transition cursor-pointer"
-                      onClick={closeMenu}
-                    >
-                      تقييماتي للمرشدين
-                    </Link>
-
-                    <Link
-                      to="tourist/interests"
-                      className="hover:text-primary-500 transition cursor-pointer"
-                      onClick={closeMenu}
-                    >
-                      اهتماماتي
-                    </Link>
-                  </>
-                )}
-
-                {(user.role === "tourist" || user.role === "guide") && (
-                  <Link
-                    to={user.role === "tourist" ? "/tourist/suggest-place" : "/guide/suggest-place"}
-                    className="hover:text-primary-500 transition cursor-pointer"
-                    onClick={closeMenu}
-                  >
-                    اقتراح مكان جديد
-                  </Link>
-                )}
+              <ul className="absolute text-center hidden group-hover:flex flex-col bg-white/50  shadow-lg  py-2 px-4 gap-3 right-0 top-7 w-40 z-50">
 
                 <li
                   className="hover:text-primary-500 transition cursor-pointer"
@@ -151,7 +104,7 @@ const NavBar = () => {
           )}
         </ul>
 
-        <div className="flex-1 flex justify-center pt-2">
+        <div className="flex-1 flex md:justify-center pt-2">
           {user && <NotificationBell />}
         </div>
       </div>

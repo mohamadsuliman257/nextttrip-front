@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Crosshair } from "lucide-react";
 import toast from "react-hot-toast";
-import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import L from "leaflet";
+import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 const selectedIcon = L.divIcon({
@@ -69,10 +69,7 @@ export default function LocationMapPicker({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
-        {/* <label className="block text-sm font-medium text-gray-700">
-          الموقع على الخريطة <span className="text-gray-400 text-xs">(اختياري)</span>
-        </label> */}
+      <div className="flex items-center justify-between mb-2">        
         <label htmlFor="">
           {title}
         </label>

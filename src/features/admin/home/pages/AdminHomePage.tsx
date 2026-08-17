@@ -30,7 +30,7 @@ export default function AdminHomePage() {
   }
 
   return (
-    <div className="space-y-4 pb-20">
+    <div className="space-y-4 pb-20 -mt-8">
       {/* قسم بطاقات الإحصائيات مع الأيقونات الحديثة */}
       <section className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <StatsCard 

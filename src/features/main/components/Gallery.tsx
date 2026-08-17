@@ -34,7 +34,7 @@ export default function MasonryGallery() {
               data-aos-duration="1000"
             >
               <img
-                src={item.image_url || "/images/placeholder.jpg"}
+                src={item.image || "/images/placeholder.jpg"}
                 alt={item.name}
                 loading="lazy"
                 className="w-full h-auto object-cover

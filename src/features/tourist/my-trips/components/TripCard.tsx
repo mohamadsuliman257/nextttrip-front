@@ -13,11 +13,11 @@ export default function TripCard({ trip }: { trip: { trip_places?: TripPlaceItem
   const isAi = trip.source === "ai";
 
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-sm">
+    <div className="rounded-2xl bg-white/70 p-4 shadow-sm">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-bold text-primary-700">{trip.title}</h2>
         {isAi ? (
-          <span className="flex items-center gap-1 rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
+          <span className="flex items-center gap-1 rounded-full bg-primary-100 px-3 py-1 text-xs font-semibold text-primary-700">
             <Sparkles size={13} />
             خطة ذكية
           </span>
@@ -51,7 +51,7 @@ export default function TripCard({ trip }: { trip: { trip_places?: TripPlaceItem
 
       {daysMap.size === 0 ? (
         <p className="py-4 text-center text-sm text-slate-500">
-          لا توجد أماكن في هذه الرحلة بعد. أضف أماكن من{" "}
+          لا توجد أماكن في هذه الرحلة بعد. أضف أماكن من
           <Link to="/tourist/map" className="font-semibold text-primary-600 hover:underline">
             الخريطة
           </Link>

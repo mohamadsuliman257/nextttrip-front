@@ -7,6 +7,7 @@ import NotificationBell from "@/features/notifications/components/NotificationBe
 const publicLinks = [
   { label: "خطط رحلتك", to: "/tourist/trip" },
   { label: "احجز مرشدك", to: "/tourist/guides" },
+  { label: "الأماكن القريبة (AI)", to: "/nearby-recommendations" },
   { label: "حول المنصة", to: "/about" },
 ];
 
@@ -59,7 +60,7 @@ const NavBar = () => {
         <ul
           ref={menuRef}
           className={`
-            justify-between w-3/5 text-secondary-600 font-medium text-base md:text-xl transition-all pt-5
+            justify-between w-4/6 text-secondary-600 text-base md:text-xl transition-all pt-5
             lg:flex lg:flex-row lg:static
             ${open ? "flex flex-col absolute top-20 right-8 bg-white/95 shadow-lg p-6 rounded-xl gap-6 z-40" : "hidden"}
           `}

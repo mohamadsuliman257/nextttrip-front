@@ -48,7 +48,7 @@ export function PlacesTable({
             <th className="border border-primary-200 p-3">المكان</th>
             <th className="border border-primary-200 p-3">النوع</th>
             <th className="border border-primary-200 p-3">المدينة</th>
-            <th className="border border-primary-200 p-3">التكلفة (د.ل)</th>
+            <th className="border border-primary-200 p-3">التكلفة </th>
             <th className="border border-primary-200 p-3">التقييم</th>
             <th className="border border-primary-200 p-3">الإجراءات</th>
           </tr>

@@ -10,6 +10,7 @@ import { GuestRoute } from "./components/GuestRoute";
 import ForbiddenPage from "@/features/main/pages/ForbiddenPage";
 import NotFoundPage from "@/features/main/pages/NotFoundPage";
 import touristRoutes from "./tourist.route";
+import NearbyRecommendationsPage from "@/features/main/pages/NearbyRecommendationsPage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/suggest-place",
         element: <About />,
+      },
+      {
+        path: "/nearby-recommendations",
+        element: <NearbyRecommendationsPage />,
       },
       ...touristRoutes
     ],

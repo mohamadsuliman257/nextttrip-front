@@ -135,6 +135,7 @@ export default function TripPlannerPage() {
         .filter(Boolean);
 
       const result = await createSmartTripPlan({ ...data, interests });
+      console.log(result);
       setPlan(result);
       toast.success(
         isTourist && result.trip_id
@@ -174,7 +175,6 @@ export default function TripPlannerPage() {
 
         <form onSubmit={handleSubmit(submit)} className="mb-8 grid gap-4 rounded-xl bg-white/60 p-5 shadow md:grid-cols-2">
 
-{/* ??????????????????? should be written from user, but here can be modified - should br multi-select*/}
           <div className="space-y-1 md:col-span-2">
             <label className="block text-sm font-medium text-primary-700">الاهتمامات</label>
             <Select<InterestOption, true>

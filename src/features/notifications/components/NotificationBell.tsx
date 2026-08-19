@@ -55,7 +55,7 @@ export default function NotificationBell() {
 
       {/* زر الجرس */}
       <button
-        className="absolute cursor-pointer right-13 top-3"
+        className="absolute cursor-pointer right-5 top-3"
         onClick={openPreview}
         disabled={markAllAsRead.isPending}
       >

@@ -346,7 +346,7 @@ export default function TripPlannerPage() {
             )}
 
             {plan.days.map((day) => (
-              <div key={day.day} className="rounded-xl bg-white p-5 shadow">
+              <div key={day.day} className="rounded-xl bg-white p-5 shadow mb-10">
 
                 <h3 className="mb-4 text-lg font-semibold text-secondary-600">
                   Day {day.day}{day.date ? ` - ${day.date}` : ""}
@@ -359,9 +359,7 @@ export default function TripPlannerPage() {
                     <div key={activity.place_id} className="rounded-lg border p-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <h4 className="font-semibold">{activity.name}</h4>
-                        <span className="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600">
-                          التقييم {activity.score}
-                        </span>
+                        
                       </div>
                       <p className="mt-2 text-sm text-gray-600">
                         {activity.category} | {activity.start_time} - {activity.end_time} | وقت السفر {activity.travel_time_from_previous} دقيقة

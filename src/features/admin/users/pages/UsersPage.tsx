@@ -2,11 +2,16 @@ import { useState } from "react";
 import { useUsers } from "../hooks/useUsers";
 import UserFilters from "../components/UserFilters";
 import UserTable from "../components/UserTable";
+import { useDebouncedValue } from "@/lib/useDebouncedValue";
 import type { UserFilters as UserFiltersType, AccountStatus } from "../types/user.type";
 
 export default function UsersPage() {
   const [filters, setFilters] = useState<UserFiltersType>({});
-  const { users, isLoading, updateUserStatus, makeAdmin, isUpdating } = useUsers(filters);
+  // تأخير البحث حتى يتوقف المستخدم عن الكتابة
+  const debouncedSearch = useDebouncedValue(filters.search, 500);
+  const appliedFilters = { ...filters, search: debouncedSearch };
+
+  const { users, isLoading, updateUserStatus, makeAdmin, isUpdating } = useUsers(appliedFilters);
 
   const handleStatusChange = (id: number, status: AccountStatus) => {
     updateUserStatus({ id, data: { status } });

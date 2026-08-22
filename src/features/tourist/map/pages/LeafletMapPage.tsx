@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useState } from "react";
+﻿import { useCallback, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
 import { useMapPlaces } from "../hook/useMapPlaces";
@@ -8,6 +8,7 @@ import { MapSidebar } from "../components/MapSidebar";
 import { InteractiveMap } from "../components/InteractiveMap";
 import { PlacesTable } from "../components/PlacesTable";
 import { AddToTripModal } from "../components/AddToTripModal";
+import { PlaceDetailsModal } from "../components/PlaceDetailsModal";
 import { useTouristGuard } from "../hook/useTouristGuard";
 import type { Destination } from "@/features/admin/destinations/types/destination.type";
 
@@ -46,6 +47,13 @@ export default function LeafletMapPage() {
   // حالة المكان المحدد لإضافته إلى رحلة
   const [addToTripPlace, setAddToTripPlace] = useState<Destination | null>(null);
 
+  // حالة معرف المكان المعروضة تفاصيله
+  const [detailsPlaceId, setDetailsPlaceId] = useState<number | null>(null);
+
+  const openDetails = useCallback((place: Destination) => {
+    setDetailsPlaceId(place.id);
+  }, []);
+
   const canManageTrips = useTouristGuard();
 
   const openAddToTrip = useCallback((place: Destination) => {
@@ -78,6 +86,15 @@ export default function LeafletMapPage() {
     [places]
   );
 
+  // إعادة تعيين المسار ونقطة التركيز عند تغيير أي عامل بحث
+  const withRouteReset =
+    <T,>(setter: (value: T) => void) =>
+    (value: T) => {
+      setter(value);
+      setRoute([]);
+      setFocusPoint(null);
+    };
+
   // دالة لتحديد موقع المستخدم الحالي
   const locate = useCallback(() => {
     if (!navigator.geolocation)
@@ -89,15 +106,11 @@ export default function LeafletMapPage() {
         setSearchPosition(location);
         setUserPosition(location);
         setRoute([]);
+        setFocusPoint(null);
       },
       () => toast.error("يرجى السماح بالوصول إلى موقعك.")
     );
   }, []);
-
-  useEffect(() => {
-    setRoute([]);
-    setFocusPoint(null);
-  }, [searchQuery, category, city, minCost, maxCost, radius, searchPosition, nearbyMode]);
 
   // دالة لرسم المسار إلى مكان محدد
   const drawRoute = async (place: Destination) => {
@@ -182,13 +195,13 @@ export default function LeafletMapPage() {
             cities={cities}
             visiblePlacesCount={visiblePlaces.length}
             onLocate={locate}
-            onNearbyModeChange={setNearbyMode}
-            onRadiusChange={setRadius}
-            onCategoryChange={setCategory}
-            onCityChange={setCity}
-            onSearchQueryChange={setSearchQuery}
-            onMinCostChange={setMinCost}
-            onMaxCostChange={setMaxCost}
+            onNearbyModeChange={withRouteReset(setNearbyMode)}
+            onRadiusChange={withRouteReset(setRadius)}
+            onCategoryChange={withRouteReset(setCategory)}
+            onCityChange={withRouteReset(setCity)}
+            onSearchQueryChange={withRouteReset(setSearchQuery)}
+            onMinCostChange={withRouteReset(setMinCost)}
+            onMaxCostChange={withRouteReset(setMaxCost)}
           />
 
           <InteractiveMap
@@ -203,6 +216,7 @@ export default function LeafletMapPage() {
             isError={isError}
             onDrawRoute={drawRoute}
             onAddToTrip={openAddToTrip}
+            onShowDetails={openDetails}
           />
         </div>
 
@@ -222,6 +236,13 @@ export default function LeafletMapPage() {
         <AddToTripModal
           place={addToTripPlace}
           onClose={() => setAddToTripPlace(null)}
+        />
+      )}
+
+      {detailsPlaceId != null && (
+        <PlaceDetailsModal
+          placeId={detailsPlaceId}
+          onClose={() => setDetailsPlaceId(null)}
         />
       )}
     </main >

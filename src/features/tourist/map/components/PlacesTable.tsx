@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Luggage, MapPin, Route, Star } from "lucide-react";
+import { Info, Luggage, MapPin, Route, Star } from "lucide-react";
 import type { Destination } from "@/features/admin/destinations/types/destination.type";
 import type { Category } from "../types/category.type";
 import type { City } from "@/features/lookups/types/city.type";
 import { RatePlaceModal } from "./RatePlaceModal";
+import { PlaceDetailsModal } from "./PlaceDetailsModal";
 
 interface PlacesTableProps {
   places: Destination[];
@@ -24,6 +25,7 @@ export function PlacesTable({
   onAddToTrip,
 }: PlacesTableProps) {
   const [ratePlace, setRatePlace] = useState<Destination | null>(null);
+  const [detailsPlace, setDetailsPlace] = useState<Destination | null>(null);
 
   const categoryName = (place: Destination) =>
     place.category?.name ??
@@ -94,6 +96,15 @@ export function PlacesTable({
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
+                      onClick={() => setDetailsPlace(place)}
+                      className="flex items-center gap-1 rounded border border-slate-300 px-2 py-1 text-slate-600 hover:bg-slate-50"
+                      title="تفاصيل المكان"
+                    >
+                      <Info size={14} />
+                      التفاصيل
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => onShowOnMap(place)}
                       className="flex items-center gap-1 rounded border border-primary-300 px-2 py-1 text-primary-700 hover:bg-primary-50"
                       title="عرض على الخريطة"
@@ -138,6 +149,13 @@ export function PlacesTable({
 
       {ratePlace && (
         <RatePlaceModal place={ratePlace} onClose={() => setRatePlace(null)} />
+      )}
+
+      {detailsPlace && (
+        <PlaceDetailsModal
+          placeId={detailsPlace.id}
+          onClose={() => setDetailsPlace(null)}
+        />
       )}
     </div>
   );

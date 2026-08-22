@@ -102,7 +102,7 @@ function CircleBoundsController({
           paddingBottomRight: [padSide, padBottom],
           maxZoom: 13,
         });
-      } catch (err) {
+      } catch {
         // defensive: ignore
       }
     };
@@ -119,7 +119,7 @@ function CircleBoundsController({
 
     // Also retry when tile layers finish loading — find tile layers and attach listener
     const onTileLoad = () => tryFit();
-    map.eachLayer((layer: any) => {
+    map.eachLayer((layer) => {
       if (layer instanceof L.TileLayer) {
         layer.on("load", onTileLoad);
       }
@@ -131,7 +131,7 @@ function CircleBoundsController({
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       if (timeoutId) clearTimeout(timeoutId);
-      map.eachLayer((layer: any) => {
+      map.eachLayer((layer) => {
         if (layer instanceof L.TileLayer) {
           layer.off("load", onTileLoad);
         }
@@ -167,6 +167,7 @@ interface InteractiveMapProps {
   isError: boolean;
   onDrawRoute: (place: Destination) => void;
   onAddToTrip: (place: Destination) => void;
+  onShowDetails: (place: Destination) => void;
 }
 
 // حاوية الخريطة التفاعلية
@@ -182,6 +183,7 @@ export function InteractiveMap({
   isError,
   onDrawRoute,
   onAddToTrip,
+  onShowDetails,
 }: InteractiveMapProps) {
   const shouldShowUserPosition =
     userPosition &&
@@ -262,6 +264,7 @@ export function InteractiveMap({
                   distance={currentPosition ? distanceKm(currentPosition, [place.latitude!, place.longitude!]) : 0}
                   onDrawRoute={onDrawRoute}
                   onAddToTrip={onAddToTrip}
+                  onShowDetails={onShowDetails}
                 />
               </Popup>
             </Marker>

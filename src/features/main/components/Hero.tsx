@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 const BirdLogo = () => {
   return (
     <div
@@ -51,14 +52,15 @@ export default function Hero() {
 
         {/* زر CTA */}
 
-        <button
-          className="mx-auto flex px-2 md:px-10 py-0.5 md:py-2 text-secondary-900 rounded-lg shadow-xl btn-animated  text-base md:text-xl"
+        <Link
+          className="mx-auto flex w-30 md:w-50 px-2 md:px-10 py-0.5 md:py-2 text-secondary-900 rounded-lg shadow-xl btn-animated  text-base md:text-xl"
           data-aos="zoom-out"
           data-aos-delay="600"
+          to="/tourist/trip"
         >
           صمم رحلتك الآن
           <BirdLogo />
-        </button>
+        </Link>
       </div>
     </section>
   );

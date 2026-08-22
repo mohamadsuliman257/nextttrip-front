@@ -4,7 +4,7 @@ export interface NearbyRecommendation {
   category?: string;
   score: number;
   
-  image_urls:  String[];
+  image_urls:  string[];
 }
 
 export interface NearbyRecommendationsRequest {

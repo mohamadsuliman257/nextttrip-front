@@ -74,7 +74,7 @@ export default function UserHomePage() {
   return (
     <div className="min-h-screen">
       {/* ===== Header Section ===== */}
-      <h1 className="text-2xl font-bold text-primary-500 my-10 text-center w-full -mt-10 ">مرحباً {user?.name} </h1>      
+      <h1 className="text-2xl font-bold text-primary-500 my-10 text-center w-full pt-10 md:pt-0 md:-mt-10 ">مرحباً {user?.name} </h1>      
 
       <section className="grid grid-cols-4 gap-2 gap-y-15 md:px-8  pt-10 mb-10 mx-[5%] lg:mx-[22%]  ">
         {userCards.map((card, index) => {

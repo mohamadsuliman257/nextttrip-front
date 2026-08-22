@@ -19,12 +19,14 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const logout = useAuthStore((s) => s.logout);
   const [open, setOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // حالة فتح القوائم الفرعية
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
@@ -206,10 +208,24 @@ export default function Sidebar() {
             );
           })}
         </nav>
-        <button className="flex py-2 px-6 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-100/50 " onClick={() => logout(() => navigate("/"))}>
+        <button className="flex py-2 px-6 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-100/50 " onClick={() => setShowLogoutConfirm(true)}>
           <LogOut size={18} /> تسجيل الخروج
         </button>
       </aside>
+
+      <ConfirmDialog
+        isOpen={showLogoutConfirm}
+        title="تسجيل الخروج"
+        message="هل أنت متأكد من رغبتك في تسجيل الخروج؟"
+        confirmText="نعم، تسجيل الخروج"
+        cancelText="تراجع"
+        icon={<LogOut size={26} />}
+        onConfirm={() => {
+          setShowLogoutConfirm(false);
+          logout(() => navigate("/"));
+        }}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </>
   );
 }

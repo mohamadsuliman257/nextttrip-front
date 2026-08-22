@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import useAuthStore from "@/features/auth/store/authStore";
 import type { GuideDashboardResponse } from "@/features/guide/home/type";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 type Props = {
   guide: GuideDashboardResponse["guide"];
@@ -23,6 +24,7 @@ export default function Sidebar({ guide }: Props) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const links = [
     { to: "/guide", icon: Home, label: "الرئيسية" },
@@ -101,10 +103,24 @@ export default function Sidebar({ guide }: Props) {
           ))}
         </nav>
 
-        <button className="flex py-2 px-3 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-100 " onClick={() => logout(() => navigate("/"))}>
+        <button className="flex py-2 px-3 w-10/12  gap-3 mt-3 rounded-md transition hover:bg-primary-100 " onClick={() => setShowLogoutConfirm(true)}>
           <LogOut size={18} /> تسجيل الخروج
         </button>
       </aside>
+
+      <ConfirmDialog
+        isOpen={showLogoutConfirm}
+        title="تسجيل الخروج"
+        message="هل أنت متأكد من رغبتك في تسجيل الخروج؟"
+        confirmText="نعم، تسجيل الخروج"
+        cancelText="تراجع"
+        icon={<LogOut size={26} />}
+        onConfirm={() => {
+          setShowLogoutConfirm(false);
+          logout(() => navigate("/"));
+        }}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </>
   );
 }

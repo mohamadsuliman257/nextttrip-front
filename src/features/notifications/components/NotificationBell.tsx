@@ -6,6 +6,7 @@ import { Bell, X } from "lucide-react";
 import type { Notification } from "../type/notification.type";
 import NotificationPreview from "./NotificationPreview";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/features/auth/store/authStore";
 
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
@@ -15,6 +16,8 @@ export default function NotificationBell() {
   const { data: unread = [] } = useUnreadNotifications();
   const { data: { count: unreadCount = 0 } = { count: 0 } } = useUnreadCount();
   const markAllAsRead = useMarkAllAsRead();
+  const { user } = useAuthStore();
+
 
   const openPreview = () => {
     setOpen(true);
@@ -30,7 +33,9 @@ export default function NotificationBell() {
 
   const goToAllNotifications = () => {
     closePreview();
-    navigate("/tourist/notifications");
+    const role = user?.role;
+    
+    navigate(`/${role}/notifications`);
   };
 
   // إغلاق النافذة عند النقر خارجها

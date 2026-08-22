@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, LogOut } from "lucide-react";
 import useAuthStore from "@/features/auth/store/authStore";
 import NotificationBell from "@/features/notifications/components/NotificationBell";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 const publicLinks = [
   { label: "خطط رحلتك", to: "/tourist/trip" },
@@ -14,6 +15,7 @@ const publicLinks = [
 const NavBar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const menuRef = useRef<HTMLUListElement | null>(null);
 
   const { user, logout } = useAuthStore();
@@ -60,7 +62,7 @@ const NavBar = () => {
         <ul
           ref={menuRef}
           className={`
-            justify-between w-4/6 text-secondary-600 text-base md:text-xl transition-all pt-5
+            justify-between w-5/6 text-secondary-600 text-base md:text-xl transition-all pt-5
             lg:flex lg:flex-row lg:static
             ${open ? "flex flex-col absolute top-20 right-8 bg-white/95 shadow-lg p-6 rounded-xl gap-6 z-40" : "hidden"}
           `}
@@ -89,13 +91,13 @@ const NavBar = () => {
             <li className="relative group cursor-pointer text-secondary-600">
               <span className="flex gap-1">{user.name} <ChevronDown /></span>
 
-              <ul className="absolute text-center hidden group-hover:flex flex-col bg-white/50  shadow-lg  py-2 px-4 gap-3 right-0 top-7 w-40 z-50">
+              <ul className="absolute text-center hidden group-hover:flex flex-col bg-white md:bg-white/50   py-2 px-4 gap-3 right-0 top-6 md:top-8 w-40 z-50 rounded-2xl shadow-xs shadow-primary-500">
 
                 <li
                   className="hover:text-primary-500 transition cursor-pointer"
                   onClick={() => {
-                    logout(() => navigate("/"));
                     closeMenu();
+                    setShowLogoutConfirm(true);
                   }}
                 >
                   تسجيل الخروج
@@ -118,6 +120,20 @@ const NavBar = () => {
           className="w-20 md:w-40 h-auto"
         />
       </Link>
+
+      <ConfirmDialog
+        isOpen={showLogoutConfirm}
+        title="تسجيل الخروج"
+        message="هل أنت متأكد من رغبتك في تسجيل الخروج؟"
+        confirmText="نعم، تسجيل الخروج"
+        cancelText="تراجع"
+        icon={<LogOut size={26} />}
+        onConfirm={() => {
+          setShowLogoutConfirm(false);
+          logout(() => navigate("/"));
+        }}
+        onCancel={() => setShowLogoutConfirm(false)}
+      />
     </nav>
   );
 };

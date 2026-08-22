@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { CalendarDays, Clock, MapPin, Pencil, Sparkles, Trash2, Wallet } from "lucide-react";
+import { CalendarDays, Clock, Info, MapPin, Pencil, Sparkles, Trash2, Wallet } from "lucide-react";
 import type { MyTrip, TripPlaceItem } from "../types/myTrip.types";
 import { Link } from "react-router-dom";
 import { EditTripModal } from "./EditTripModal";
@@ -8,6 +8,7 @@ import { EditTripPlaceModal } from "./EditTripPlaceModal";
 import { DeleteTripModal } from "./DeleteTripModal";
 import { useDeleteTripPlace } from "../hooks/useDeleteTripPlace";
 import { getEndTime } from "../utils/dateTime";
+import { PlaceDetailsModal } from "@/features/tourist/map/components/PlaceDetailsModal";
 
 interface TripCardProps {
   trip: MyTrip;
@@ -17,6 +18,7 @@ export default function TripCard({ trip }: TripCardProps) {
   const [editingTrip, setEditingTrip] = useState(false);
   const [deletingTrip, setDeletingTrip] = useState(false);
   const [editingItem, setEditingItem] = useState<TripPlaceItem | null>(null);
+  const [detailsPlaceId, setDetailsPlaceId] = useState<number | null>(null);
 
   const deleteItem = useDeleteTripPlace();
 
@@ -129,6 +131,16 @@ export default function TripCard({ trip }: TripCardProps) {
                     <div className="flex shrink-0 items-start gap-1">
                       <button
                         type="button"
+                        onClick={() => setDetailsPlaceId(item.place!.id)}
+                        disabled={!item.place}
+                        className="rounded-md p-1.5 text-slate-400 hover:bg-primary-50 hover:text-primary-600 disabled:cursor-not-allowed disabled:opacity-40"
+                        aria-label="تفاصيل المكان"
+                        title="تفاصيل المكان"
+                      >
+                        <Info size={14} />
+                      </button>
+                      <button
+                        type="button"
                         onClick={() => setEditingItem(item)}
                         disabled={deleteItem.isPending}
                         className="rounded-md p-1.5 text-slate-400 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-50"
@@ -180,6 +192,13 @@ export default function TripCard({ trip }: TripCardProps) {
           item={editingItem}
           maxDay={maxDay}
           onClose={() => setEditingItem(null)}
+        />
+      )}
+
+      {detailsPlaceId != null && (
+        <PlaceDetailsModal
+          placeId={detailsPlaceId}
+          onClose={() => setDetailsPlaceId(null)}
         />
       )}
     </div>

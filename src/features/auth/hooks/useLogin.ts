@@ -18,7 +18,7 @@ const useLogin = () => {
     },
 
     onError: () => {
-      toast.error("Invalid credentials");
+      toast.error("بيانات التوثق غير صحيحة");
     },
   });
 };

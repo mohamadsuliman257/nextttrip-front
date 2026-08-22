@@ -5,6 +5,7 @@ import type { MyTrip, TripPlaceItem } from "../types/myTrip.types";
 import { Link } from "react-router-dom";
 import { EditTripModal } from "./EditTripModal";
 import { EditTripPlaceModal } from "./EditTripPlaceModal";
+import { DeleteTripModal } from "./DeleteTripModal";
 import { useDeleteTripPlace } from "../hooks/useDeleteTripPlace";
 import { getEndTime } from "../utils/dateTime";
 
@@ -14,6 +15,7 @@ interface TripCardProps {
 
 export default function TripCard({ trip }: TripCardProps) {
   const [editingTrip, setEditingTrip] = useState(false);
+  const [deletingTrip, setDeletingTrip] = useState(false);
   const [editingItem, setEditingItem] = useState<TripPlaceItem | null>(null);
 
   const deleteItem = useDeleteTripPlace();
@@ -57,6 +59,15 @@ export default function TripCard({ trip }: TripCardProps) {
           >
             <Pencil size={13} />
             تعديل الرحلة
+          </button>
+          <button
+            type="button"
+            onClick={() => setDeletingTrip(true)}
+            className="flex items-center gap-1 rounded-lg border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50"
+            aria-label="حذف الرحلة"
+          >
+            <Trash2 size={13} />
+            حذف الرحلة
           </button>
         </div>
       </div>
@@ -155,6 +166,14 @@ export default function TripCard({ trip }: TripCardProps) {
       </div>
 
       {editingTrip && <EditTripModal trip={trip} onClose={() => setEditingTrip(false)} />}
+      {deletingTrip && (
+        <DeleteTripModal
+          tripId={trip.id}
+          tripTitle={trip.title}
+          placesCount={trip.trip_places?.length ?? 0}
+          onClose={() => setDeletingTrip(false)}
+        />
+      )}
       {editingItem && (
         <EditTripPlaceModal
           tripId={trip.id}

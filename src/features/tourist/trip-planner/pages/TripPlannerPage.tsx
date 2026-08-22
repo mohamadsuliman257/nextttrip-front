@@ -150,7 +150,7 @@ export default function TripPlannerPage() {
   };
 
   return (
-    <div className="min-h-screen -mt-10 px-4 ">
+    <div className="min-h-screen pt-5 md:pt-0 md:-mt-10 px-4 ">
       <div className="mx-auto max-w-5xl">
         <h1 className="mb-6 text-center text-2xl font-bold text-primary-500">
           مخطط الرحلات الذكي

@@ -75,7 +75,7 @@ export default function Sidebar() {
       to: "/admin/bookings",
     },
     {
-      label: "الوجهات السياحية ",
+      label: "الأماكن (الوجهات السياحية)",
       children: [
         { label: "اقتراحات الأماكن", to: "/admin/suggested-places", icon: Lightbulb },
         { label: "إدارة الأماكن", to: "/admin/places", icon: Building },
@@ -88,11 +88,7 @@ export default function Sidebar() {
         { label: "تقييمات المرشدين ", to: "/admin/guide-reviews", icon: UserStar },
       ]
     },
-    // {
-    //   label: "الرحلات ",
-    //   icon: UserStar,
-    //   to: "/admin/trips",
-    // },
+ 
   ];
 
   return (
@@ -100,7 +96,7 @@ export default function Sidebar() {
       {/* زر فتح القائمة في الجوال */}
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden fixed top-2 right-4 bg-secondary-200 shadow p-2 rounded-full text-primary-500 z-50"
+        className="md:hidden mt-5 ms-3 bg-secondary-200 shadow p-2 rounded-full text-primary-500 z-50"
       >
         <Menu size={22} />
       </button>
@@ -138,7 +134,7 @@ export default function Sidebar() {
         </Link>
 
         <h2 className="text-2xl mb-8 text-primary-700 font-bold text-center">
-          لوحة التحكم
+          لوحة تحكم مدير النظام
         </h2>
 
         <nav className="flex flex-col gap-2 px-4 text-lg">

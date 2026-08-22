@@ -60,3 +60,18 @@ export interface AddPlacePayload {
   start_time?: string;
   note?: string;
 }
+
+export interface UpdateTripPayload {
+  title?: string;
+  start_date?: string | null;
+  days?: number;
+  budget_max?: number | null;
+  trip_pace?: string;
+}
+
+export interface UpdateTripPlacePayload {
+  day_number?: number;
+  start_time?: string;
+  duration_minutes?: number;
+  note?: string;
+}

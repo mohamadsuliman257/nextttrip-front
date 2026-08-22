@@ -71,7 +71,7 @@ export default function DestinationsPage() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-primary-700">إدارة الوجهات السياحية</h1>
+        <h1 className="text-2xl font-bold text-primary-700">إدارة الأماكن (الوجهات السياحية)</h1>
         <button
           onClick={() => setIsFormVisible(true)}
           className="bg-secondary-600/70 text-white mx-2 px-4 py-2 rounded-lg hover:bg-primary-400 transition-all"

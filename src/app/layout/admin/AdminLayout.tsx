@@ -8,7 +8,7 @@ export default function AdminLayout() {
   return (
     <>
       <ScrollToTop />
-      <div className="flex min-h-screen bg-linear-0 from-primary-100/30 via-secondary-100/30 to-primary-100/30">
+      <div className="flex items-start min-h-screen bg-linear-0 from-primary-100/30 via-secondary-100/30 to-primary-100/30">
       {/* <div> */}
         <Sidebar />
         <div className="min-w-0 flex-1">

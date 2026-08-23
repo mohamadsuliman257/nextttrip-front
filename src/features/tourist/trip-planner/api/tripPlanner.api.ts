@@ -8,9 +8,10 @@ export async function createSmartTripPlan(
 
   const user = useAuthStore.getState().user;
 
-  const endpoint = user
-    ? "/tourist/ai/smart-trip-planner"
-    : "/public/ai/smart-trip-planner";
+  const endpoint =
+    user?.role === "tourist"
+      ? "/tourist/ai/smart-trip-planner"
+      : "/public/ai/smart-trip-planner";
 
   const response = await api.post(endpoint, payload, {
     timeout: 70000,
